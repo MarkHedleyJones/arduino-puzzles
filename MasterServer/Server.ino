@@ -34,7 +34,7 @@ void loop()
   Serial.println(device);
   Serial.print("Command: ");
   Serial.print(message);
-  
+
   Serial.println("Sending command...");
   Wire.beginTransmission(device); // transmit to device #4
   Wire.print(message);        // sends five bytes

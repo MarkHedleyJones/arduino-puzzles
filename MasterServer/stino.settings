@@ -1,0 +1,13 @@
+{
+    "arduino_folder": "/usr/share/arduino", 
+    "board": 10, 
+    "full_compilation": true, 
+    "platform": 1, 
+    "platform_name": "Arduino AVR Boards", 
+    "programmer": {
+        "1": 6
+    }, 
+    "serial_port": 0, 
+    "set_bare_gcc_only": false, 
+    "show_compilation_output": false
+}
