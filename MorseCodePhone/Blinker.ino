@@ -8,7 +8,9 @@
 #define RING_OSCILLATIE_PERIOD 30
 #define MORSE_FREQUENCY 800
 #define MORSE_UNIT_PERIOD_MS 200
-#define MSG_LEN 96
+#define BUF_LEN 96
+#define I2C_LEN 32
+#define MSG_LEN 20
 /*
 LOOP WITH DIALTONE IN BETWEEN
 RESET ON HANGUP
@@ -19,15 +21,15 @@ TIMINGS AS SET
 A4990MotorShield motors;
 
 
-char morse_message[21] = "sos";
+char morse_message[MSG_LEN+1] = "SOS";
 bool ringer_fault = false;
 bool execute_signal_recieved = false;
 bool phone_ringing = false;
 int play_count = 0;
 unsigned long seconds_since_reset = 0;
-char wire_buffer[MSG_LEN] = "";
+char wire_buffer[BUF_LEN+1] = "";
 int wire_count = 0;
-char tx_buffer[32] = "";
+char tx_buffer[I2C_LEN+1] = "";
 
 void stopIfFault() {
   if (motors.getFault()) {
@@ -59,19 +61,18 @@ void setup() {
 
 void transmitComms() {
   digitalWrite(PIN_LED, HIGH);
-  int offset = wire_count * 32;
-  for (int i=0; i < 32; i++) {
+  int offset = wire_count * I2C_LEN;
+  for (int i=0; i < I2C_LEN; i++) tx_buffer[i] = '\0';
+  for (int i=0; i < I2C_LEN; i++) {
     tx_buffer[i] = wire_buffer[i+offset];
   }
   Wire.write(tx_buffer);
-  Serial.println(offset);
-  Serial.println(wire_count);
+  Serial.print("Sending part ");
+  Serial.print(wire_count);
+  Serial.print(": ");
   Serial.println(tx_buffer);
-
   if (wire_count == 2) wire_count = 0;
   else wire_count++;
-
-  Serial.println("Done");
   digitalWrite(PIN_LED,0);
 }
 
@@ -118,7 +119,7 @@ void receiveComms(int howMany) {
   int i;
   digitalWrite(PIN_LED,1);
   Serial.println("Receiving message:");
-  for (i=0; i<MSG_LEN; i++) wire_buffer[i] = '\0';
+  for (i=0; i<BUF_LEN; i++) wire_buffer[i] = '\0';
   i = 0;
   while (Wire.available() > 0) {
     wire_buffer[i] = Wire.read();
@@ -136,7 +137,28 @@ void receiveComms(int howMany) {
     execute_signal_recieved = false;
     play_count = 0;
     ringer_fault = 0;
-    strcpy(morse_message, "sos");
+    strcpy(morse_message, "SOS");
+    load_status();
+  }
+  else if (wire_buffer[0] == '*' &&
+           wire_buffer[1] == 'M' &&
+           wire_buffer[2] == 'S' &&
+           wire_buffer[3] == 'G' &&
+           wire_buffer[4] == '=') {
+    for (i=0; i<MSG_LEN; i++) morse_message[i] = '\0';
+    for (i=0; i<MSG_LEN; i++) {
+      if (wire_buffer[i+5] == 32 ||
+          (wire_buffer[i+5] >= 48 && wire_buffer[i+5] <= 57) ||
+          (wire_buffer[i+5] >= 65 && wire_buffer[i+5] <= 90) ||
+          (wire_buffer[i+5] >= 97 && wire_buffer[i+5] <= 122)) {
+        morse_message[i] = wire_buffer[i+5];
+      }
+      else {
+        morse_message[i] = '\0';
+        break;
+      }
+
+    }
     load_status();
   }
 }
@@ -188,36 +210,36 @@ void play_morse(String input_message) {
   String code;
   Serial.print("Send message: ");
   Serial.println(input_message);
-  input_message.toLowerCase();
+  input_message.toUpperCase();
   for(i=0; i < input_message_length; i++) {
     if (phone_on_hook() || !execute_signal_recieved) return;
     else {
-      if (input_message[i] == 'a') code = ".-";
-      else if (input_message[i] == 'b') code = "-...";
-      else if (input_message[i] == 'c') code = "-.-.";
-      else if (input_message[i] == 'd') code = "-..";
-      else if (input_message[i] == 'e') code = ".";
-      else if (input_message[i] == 'f') code = "..-.";
-      else if (input_message[i] == 'g') code = "--.";
-      else if (input_message[i] == 'h') code = "....";
-      else if (input_message[i] == 'i') code = "..";
-      else if (input_message[i] == 'j') code = ".---";
-      else if (input_message[i] == 'k') code = "-.-";
-      else if (input_message[i] == 'l') code = ".-..";
-      else if (input_message[i] == 'm') code = "--";
-      else if (input_message[i] == 'n') code = "-.";
-      else if (input_message[i] == 'o') code = "---";
-      else if (input_message[i] == 'p') code = ".--.";
-      else if (input_message[i] == 'q') code = "--.-";
-      else if (input_message[i] == 'r') code = ".-.";
-      else if (input_message[i] == 's') code = "...";
-      else if (input_message[i] == 't') code = "-";
-      else if (input_message[i] == 'u') code = "..-";
-      else if (input_message[i] == 'v') code = "...-";
-      else if (input_message[i] == 'w') code = ".--";
-      else if (input_message[i] == 'x') code = "-..-";
-      else if (input_message[i] == 'y') code = "-.--";
-      else if (input_message[i] == 'z') code = "--..";
+      if (input_message[i] == 'A') code = ".-";
+      else if (input_message[i] == 'B') code = "-...";
+      else if (input_message[i] == 'C') code = "-.-.";
+      else if (input_message[i] == 'D') code = "-..";
+      else if (input_message[i] == 'E') code = ".";
+      else if (input_message[i] == 'F') code = "..-.";
+      else if (input_message[i] == 'G') code = "--.";
+      else if (input_message[i] == 'H') code = "....";
+      else if (input_message[i] == 'I') code = "..";
+      else if (input_message[i] == 'J') code = ".---";
+      else if (input_message[i] == 'K') code = "-.-";
+      else if (input_message[i] == 'L') code = ".-..";
+      else if (input_message[i] == 'M') code = "--";
+      else if (input_message[i] == 'N') code = "-.";
+      else if (input_message[i] == 'O') code = "---";
+      else if (input_message[i] == 'P') code = ".--.";
+      else if (input_message[i] == 'Q') code = "--.-";
+      else if (input_message[i] == 'R') code = ".-.";
+      else if (input_message[i] == 'S') code = "...";
+      else if (input_message[i] == 'T') code = "-";
+      else if (input_message[i] == 'U') code = "..-";
+      else if (input_message[i] == 'V') code = "...-";
+      else if (input_message[i] == 'W') code = ".--";
+      else if (input_message[i] == 'X') code = "-..-";
+      else if (input_message[i] == 'Y') code = "-.--";
+      else if (input_message[i] == 'Z') code = "--..";
       else if (input_message[i] == '0') code = "-----";
       else if (input_message[i] == '1') code = ".----";
       else if (input_message[i] == '2') code = "..---";
@@ -267,14 +289,15 @@ void dialTone() {
 
 void loop() {
   while (!execute_signal_recieved) {
-    dialTone();
+    if (!phone_on_hook()) dialTone();
+    else noTone(PIN_RECEIVER);
+    if (digitalRead(PIN_TRIGGER) == 0) execute_signal_recieved = true;
   }
   ring();
   noTone(PIN_RECEIVER);
   while (execute_signal_recieved) {
     noTone(PIN_RECEIVER);
     while(phone_on_hook()) delay(1); // Loop here if phone hung up
-
     for (int i=0; i < 2000 && !phone_on_hook() && execute_signal_recieved; i++) delay(1);
     play_morse(morse_message);
     for (int i=0; i < 500 && !phone_on_hook() && execute_signal_recieved; i++) delay(1);

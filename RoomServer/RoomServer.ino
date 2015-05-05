@@ -94,6 +94,7 @@ void url_decode(char* string) {
         else if (string[i+1] == '2' && string[i+2] == 'C') replacement = ',';
         else if (string[i+1] == '2' && string[i+2] == 'F') replacement = '/';
         else if (string[i+1] == '3' && string[i+2] == 'A') replacement = ':';
+        else if (string[i+1] == '3' && string[i+2] == 'D') replacement = '=';
         
         if (replacement != 0) {
           string[i] = replacement;
@@ -147,6 +148,7 @@ void communicate_with_device(int device, char* command) {
     }
   }
   i2c_stop();
+  delay(200);
   i2c_start_wait((device << 1) | I2C_READ);
   Serial.println();
   for (int i = 32; i < 64; i++) {
