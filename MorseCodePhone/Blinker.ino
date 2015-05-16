@@ -5,7 +5,8 @@
 #define PIN_HOOK 2
 #define PIN_TRIGGER 12
 #define PIN_LED 13
-#define RING_OSCILLATIE_PERIOD 30
+// #define RING_OSCILLATIE_PERIOD 40
+#define RING_OSCILLATIE_PERIOD 0
 #define MORSE_FREQUENCY 800
 #define MORSE_UNIT_PERIOD_MS 200
 #define BUF_LEN 96
@@ -163,13 +164,239 @@ void receiveComms(int howMany) {
   }
 }
 
+// void oscillate() {
+//   delay(RING_OSCILLATIE_PERIOD);
+//   motors.setM1Speed(400);
+//   stopIfFault();
+//   delay(RING_OSCILLATIE_PERIOD);
+//   motors.setM1Speed(-400);
+//   stopIfFault();
+// }
+
 void oscillate() {
-    delay(RING_OSCILLATIE_PERIOD);
-    motors.setM1Speed(400);
-    stopIfFault();
-    delay(RING_OSCILLATIE_PERIOD);
-    motors.setM1Speed(-400);
-    stopIfFault();
+  motors.setM1Speed(0);
+  delay(1);
+  motors.setM1Speed(23);
+  delay(1);
+  motors.setM1Speed(46);
+  delay(1);
+  motors.setM1Speed(68);
+  delay(1);
+  motors.setM1Speed(91);
+  delay(1);
+  motors.setM1Speed(113);
+  delay(1);
+  motors.setM1Speed(134);
+  delay(1);
+  motors.setM1Speed(156);
+  delay(1);
+  motors.setM1Speed(176);
+  delay(1);
+  motors.setM1Speed(197);
+  delay(1);
+  motors.setM1Speed(216);
+  delay(1);
+  motors.setM1Speed(235);
+  delay(1);
+  motors.setM1Speed(253);
+  delay(1);
+  motors.setM1Speed(270);
+  delay(1);
+  motors.setM1Speed(287);
+  delay(1);
+  motors.setM1Speed(302);
+  delay(1);
+  motors.setM1Speed(317);
+  delay(1);
+  motors.setM1Speed(330);
+  delay(1);
+  motors.setM1Speed(343);
+  delay(1);
+  motors.setM1Speed(354);
+  delay(1);
+  motors.setM1Speed(364);
+  delay(1);
+  motors.setM1Speed(373);
+  delay(1);
+  motors.setM1Speed(380);
+  delay(1);
+  motors.setM1Speed(387);
+  delay(1);
+  motors.setM1Speed(392);
+  delay(1);
+  motors.setM1Speed(396);
+  delay(1);
+  motors.setM1Speed(399);
+  delay(1);
+  motors.setM1Speed(400);
+  delay(1);
+  motors.setM1Speed(400);
+  delay(1);
+  motors.setM1Speed(399);
+  delay(1);
+  motors.setM1Speed(396);
+  delay(1);
+  motors.setM1Speed(392);
+  delay(1);
+  motors.setM1Speed(387);
+  delay(1);
+  motors.setM1Speed(380);
+  delay(1);
+  motors.setM1Speed(373);
+  delay(1);
+  motors.setM1Speed(364);
+  delay(1);
+  motors.setM1Speed(354);
+  delay(1);
+  motors.setM1Speed(343);
+  delay(1);
+  motors.setM1Speed(330);
+  delay(1);
+  motors.setM1Speed(317);
+  delay(1);
+  motors.setM1Speed(302);
+  delay(1);
+  motors.setM1Speed(287);
+  delay(1);
+  motors.setM1Speed(270);
+  delay(1);
+  motors.setM1Speed(253);
+  delay(1);
+  motors.setM1Speed(235);
+  delay(1);
+  motors.setM1Speed(216);
+  delay(1);
+  motors.setM1Speed(197);
+  delay(1);
+  motors.setM1Speed(176);
+  delay(1);
+  motors.setM1Speed(156);
+  delay(1);
+  motors.setM1Speed(134);
+  delay(1);
+  motors.setM1Speed(113);
+  delay(1);
+  motors.setM1Speed(91);
+  delay(1);
+  motors.setM1Speed(68);
+  delay(1);
+  motors.setM1Speed(46);
+  delay(1);
+  motors.setM1Speed(23);
+  delay(1);
+  motors.setM1Speed(0);
+  delay(1);
+  motors.setM1Speed(-23);
+  delay(1);
+  motors.setM1Speed(-46);
+  delay(1);
+  motors.setM1Speed(-68);
+  delay(1);
+  motors.setM1Speed(-91);
+  delay(1);
+  motors.setM1Speed(-113);
+  delay(1);
+  motors.setM1Speed(-134);
+  delay(1);
+  motors.setM1Speed(-156);
+  delay(1);
+  motors.setM1Speed(-176);
+  delay(1);
+  motors.setM1Speed(-197);
+  delay(1);
+  motors.setM1Speed(-216);
+  delay(1);
+  motors.setM1Speed(-235);
+  delay(1);
+  motors.setM1Speed(-253);
+  delay(1);
+  motors.setM1Speed(-270);
+  delay(1);
+  motors.setM1Speed(-287);
+  delay(1);
+  motors.setM1Speed(-302);
+  delay(1);
+  motors.setM1Speed(-317);
+  delay(1);
+  motors.setM1Speed(-330);
+  delay(1);
+  motors.setM1Speed(-343);
+  delay(1);
+  motors.setM1Speed(-354);
+  delay(1);
+  motors.setM1Speed(-364);
+  delay(1);
+  motors.setM1Speed(-373);
+  delay(1);
+  motors.setM1Speed(-380);
+  delay(1);
+  motors.setM1Speed(-387);
+  delay(1);
+  motors.setM1Speed(-392);
+  delay(1);
+  motors.setM1Speed(-396);
+  delay(1);
+  motors.setM1Speed(-399);
+  delay(1);
+  motors.setM1Speed(-400);
+  delay(1);
+  motors.setM1Speed(-400);
+  delay(1);
+  motors.setM1Speed(-399);
+  delay(1);
+  motors.setM1Speed(-396);
+  delay(1);
+  motors.setM1Speed(-392);
+  delay(1);
+  motors.setM1Speed(-387);
+  delay(1);
+  motors.setM1Speed(-380);
+  delay(1);
+  motors.setM1Speed(-373);
+  delay(1);
+  motors.setM1Speed(-364);
+  delay(1);
+  motors.setM1Speed(-354);
+  delay(1);
+  motors.setM1Speed(-343);
+  delay(1);
+  motors.setM1Speed(-330);
+  delay(1);
+  motors.setM1Speed(-317);
+  delay(1);
+  motors.setM1Speed(-302);
+  delay(1);
+  motors.setM1Speed(-287);
+  delay(1);
+  motors.setM1Speed(-270);
+  delay(1);
+  motors.setM1Speed(-253);
+  delay(1);
+  motors.setM1Speed(-235);
+  delay(1);
+  motors.setM1Speed(-216);
+  delay(1);
+  motors.setM1Speed(-197);
+  delay(1);
+  motors.setM1Speed(-176);
+  delay(1);
+  motors.setM1Speed(-156);
+  delay(1);
+  motors.setM1Speed(-134);
+  delay(1);
+  motors.setM1Speed(-113);
+  delay(1);
+  motors.setM1Speed(-91);
+  delay(1);
+  motors.setM1Speed(-68);
+  delay(1);
+  motors.setM1Speed(-46);
+  delay(1);
+  motors.setM1Speed(-23);
+  delay(1);
+  motors.setM1Speed(0);
+  delay(1);
+
 }
 
 void ring() {
@@ -207,6 +434,7 @@ void play_morse(String input_message) {
   int i;
   int j;
   int input_message_length = input_message.length();
+  int delay_millis = 0;
   String code;
   Serial.print("Send message: ");
   Serial.println(input_message);
@@ -255,7 +483,7 @@ void play_morse(String input_message) {
       if (code == " ") {
         // Play an inter-word space
         noTone(PIN_RECEIVER);
-        delay(MORSE_UNIT_PERIOD_MS * 10);
+        hook_delay(MORSE_UNIT_PERIOD_MS * 10);
       }
       else {
         // Play a letter
@@ -263,24 +491,30 @@ void play_morse(String input_message) {
           if(code[j] == '.') {
             tone(PIN_RECEIVER, MORSE_FREQUENCY);
             Serial.print("*");
-            delay(MORSE_UNIT_PERIOD_MS);
+            hook_delay(MORSE_UNIT_PERIOD_MS);
           }
           else {
             tone(PIN_RECEIVER, MORSE_FREQUENCY);
             Serial.print("***");
-            delay(MORSE_UNIT_PERIOD_MS * 3);
+            hook_delay(MORSE_UNIT_PERIOD_MS * 3);
           }
           noTone(PIN_RECEIVER);
           Serial.print("_");
-          delay(MORSE_UNIT_PERIOD_MS);
+          hook_delay(MORSE_UNIT_PERIOD_MS);
         }
         noTone(PIN_RECEIVER);
         Serial.print("__");
-        delay(MORSE_UNIT_PERIOD_MS * 5);
+        hook_delay(MORSE_UNIT_PERIOD_MS * 5);
       }
     }
   }
   play_count++;
+}
+
+void hook_delay(int milliseconds) {
+  for (int i=0; i < milliseconds && !phone_on_hook(); i++) {
+    delay(1);
+  }
 }
 
 void dialTone() {
