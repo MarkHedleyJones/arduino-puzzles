@@ -135,6 +135,7 @@ void communicate_with_device(int device, char* command) {
   Serial.print(command);
   Serial.print("' to device: ");
   Serial.println(device);
+  delay(200);
   i2c_start_wait((device << 1) | I2C_READ);
   for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
   for (int i = 0; i < 32; i++) {
@@ -148,7 +149,7 @@ void communicate_with_device(int device, char* command) {
     }
   }
   i2c_stop();
-  delay(200);
+  delay(50);
   i2c_start_wait((device << 1) | I2C_READ);
   Serial.println();
   for (int i = 32; i < 64; i++) {
@@ -162,6 +163,7 @@ void communicate_with_device(int device, char* command) {
     }
   }
   i2c_stop();
+  delay(50);
   i2c_start_wait((device << 1) | I2C_READ);
   Serial.println();
   for (int i = 64; i < 95; i++) {
