@@ -12,6 +12,6 @@
     "programmer": {
         "1": 6
     }, 
-    "serial_port": 0, 
+    "serial_port": 1, 
     "set_bare_gcc_only": false
 }

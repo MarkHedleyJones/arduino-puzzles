@@ -6,6 +6,7 @@
 #define PIN_GROUND    4
 #define PIN_METER     6
 #define PIN_LED       13
+#define PIN_BATT      A5
 #define AVGS          24
 
 unsigned int strength[AVGS] = {0};
@@ -22,6 +23,7 @@ void setup() {
   pinMode(PIN_GROUND, OUTPUT);
   pinMode(2, OUTPUT);
   pinMode(3, INPUT);
+  pinMode(PIN_BATT, INPUT);
   digitalWrite(2, LOW);
   digitalWrite(PIN_GROUND, LOW);
   pinMode(13, OUTPUT);
@@ -92,6 +94,10 @@ void set_needle_position(unsigned int input) {
   analogWrite(PIN_METER, input);
 }
 
+float get_battery_voltage() {
+  return analogRead(PIN_BATT) * 0.017994723;
+}
+
 
 void loop() {
 
@@ -108,7 +114,7 @@ void loop() {
   if (output < 0) output = 0;
 
   analogWrite(PIN_METER, output);
-  Serial.println(sig_strength);
+  Serial.println(get_battery_voltage());
   delay(200);
 //  Serial.write("test");
 }
