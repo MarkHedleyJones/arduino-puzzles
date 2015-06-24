@@ -25,6 +25,7 @@ char temp[BUFLEN] = "";
 //char comms_response[BUFLEN] = "";
 int index = 0;
 int device = 0;
+char success = false;
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -48,17 +49,17 @@ void get_value_with_key(char* input, char* key, char* value) {
   int len_match = strlen(key);
   boolean match = true;
   for (int i=0; i < BUFLEN - len_match; i++) {
-    
+
     key_index_start = i;
     match = true;
-    
+
     for (int j=0; j < len_match; j++) {
       if (input[i+j] != key[j]) {
         match = false;
         break;
       }
     }
-    
+
     if (match) {
       key_index_end = key_index_start + len_match;
       break;
@@ -95,7 +96,7 @@ void url_decode(char* string) {
         else if (string[i+1] == '2' && string[i+2] == 'F') replacement = '/';
         else if (string[i+1] == '3' && string[i+2] == 'A') replacement = ':';
         else if (string[i+1] == '3' && string[i+2] == 'D') replacement = '=';
-        
+
         if (replacement != 0) {
           string[i] = replacement;
           for (int j=i+1; j<string_length; j++) string[j] = string[j+2];
@@ -103,7 +104,7 @@ void url_decode(char* string) {
         }
       }
     }
-  } 
+  }
 }
 
 void parse_command(char* http_params, char* command, int* device_addr) {
@@ -123,12 +124,18 @@ void parse_command(char* http_params, char* command, int* device_addr) {
   *device_addr = atoi(device_string);
 }
 
-void communicate_with_device(int device, char* command) {
+char communicate_with_device(int device, char* command) {
   boolean comms_broke = false;
-  i2c_start_wait((device << 1) | I2C_WRITE);
+  boolean ack = false;
+  Serial.println("Starting to wait");
+  i2c_start((device << 1) | I2C_WRITE);
+  Serial.println("Waiting over");
   for (int i=0; i < BUFLEN; i++) {
-    if (!i2c_write(command[i])) Serial.println("Slave not acknowledging");
-    if (command[i] == '\0') break;              
+    if (!i2c_write(command[i])) {
+      Serial.println("Slave not acknowledging - Aborting");
+      return 0;
+    }
+    if (command[i] == '\0') break;
   }
   i2c_stop();
   Serial.print("Sent '");
@@ -136,7 +143,7 @@ void communicate_with_device(int device, char* command) {
   Serial.print("' to device: ");
   Serial.println(device);
   delay(200);
-  i2c_start_wait((device << 1) | I2C_READ);
+  i2c_start((device << 1) | I2C_READ);
   for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
   for (int i = 0; i < 32; i++) {
     command[i] = i2c_read(false);
@@ -150,7 +157,7 @@ void communicate_with_device(int device, char* command) {
   }
   i2c_stop();
   delay(50);
-  i2c_start_wait((device << 1) | I2C_READ);
+  i2c_start((device << 1) | I2C_READ);
   Serial.println();
   for (int i = 32; i < 64; i++) {
     command[i] = i2c_read(false);
@@ -164,7 +171,7 @@ void communicate_with_device(int device, char* command) {
   }
   i2c_stop();
   delay(50);
-  i2c_start_wait((device << 1) | I2C_READ);
+  i2c_start((device << 1) | I2C_READ);
   Serial.println();
   for (int i = 64; i < 95; i++) {
     command[i] = i2c_read(false);
@@ -182,24 +189,25 @@ void communicate_with_device(int device, char* command) {
   Serial.print("Device responded: '");
   Serial.print(command);
   Serial.println("'");
+  return 1;
 }
 
 void loop() {
   // listen for incoming clients
   EthernetClient client = server.available();
   if (client) {
-    Serial.println("---------------------------------");    
+    Serial.println("---------------------------------");
     Serial.println("new client");
     // an http request ends with a blank line
     boolean redirect = false;
     boolean currentLineIsBlank = true;
     boolean client_receive = true;
-    
+
     while (client.connected()) {
       if (client.available()) {
         while (client_receive) {
           char c = client.read();
-          if (c == '\n' && currentLineIsBlank) client_receive = false;          
+          if (c == '\n' && currentLineIsBlank) client_receive = false;
           else if (c == '\n') {
             currentLineIsBlank = true;
             http_buffer[index] = '\n';
@@ -221,7 +229,7 @@ void loop() {
             index++;
           }
         }
-        
+
         // Finished receiving data from the client, time to respond
         if (redirect) {
           Serial.println("Redirecting client (got GET parameters)");
@@ -229,14 +237,19 @@ void loop() {
           client.println("HTTP/1.1 301 Moved Permanently");
           client.println("Location: /");
           client.println();
-          
+
           int device_addr;
           for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
           parse_command(http_params, wire_buffer, &device_addr);
-          for (int i=0; i<BUFLEN; i++) wire_prevCommand[i] = wire_buffer[i];          
+          for (int i=0; i<BUFLEN; i++) wire_prevCommand[i] = wire_buffer[i];
+          for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
           Serial.print("The device is: ");
           Serial.println(device_addr);
-          communicate_with_device(device_addr, wire_buffer);
+          if (communicate_with_device(device_addr, wire_buffer) == false) {
+            strcpy(wire_buffer,"No response");
+            strcat(wire_buffer,'\0');
+            
+          }
           break;
         }
         else {
@@ -270,60 +283,11 @@ void loop() {
     delay(1);
     // close the connection:
     client.stop();
-    
+
     Serial.println("client disconnected");
-    
+
     // Clean up
     for (int i = 0; i < BUFLEN; i++) http_buffer[i] = '\0';
     index = 0;
   }
 }
-
-
-
-
-
-//            int dev = get_device(http_params);
-//            Serial.println(dev);
-//            filter_message(http_params);
-//            
-//            // Want a function to go parse_command(message, int &device, char &command);
-//            
-//            communicate(http_params);
-
-            // Determine the device and the command
-
-//            for (int i = 0; i < BUFLEN; i++) {
-//              if (http_params[i+17] == '\n') {
-//                command[i] = '\0';
-//                break;
-//              }
-//              else command[i] = http_params[i+17];
-//            }
-//            Serial.println("Sending command: ");
-//            digitalWrite(13,HIGH);
-//            i2c_start((device << 1) | I2C_WRITE);
-//            for (int i=0; i < BUFLEN; i++) {
-//              i2c_write(command[i]);
-//              Serial.print(command[i]);
-//              if (command[i] == '\0') break;              
-//            }
-//            Serial.println();
-//            Serial.println("To device: ");
-//            Serial.println(device<<1);
-//            i2c_stop();
-////            delay(1);
-////            i2c_start((device << 1) | I2C_READ);
-////            for (int i = 0; i < BUFLEN; i++) comms_response[i] = '\0';
-////            Serial.println("Client responding:");
-////            for (int i = 0; i < BUFLEN; i++) {
-////              comms_response[i] = i2c_read(false);
-////              if (comms_response[i] == '\0') {
-////                i2c_read(true); // Close the communication
-////                Serial.println();
-////                Serial.println("Closing comms with client");
-////                break;
-////              }
-////            }
-//            
-//            digitalWrite(13,LOW);
