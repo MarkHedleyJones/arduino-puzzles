@@ -127,6 +127,7 @@ void parse_command(char* http_params, char* command, int* device_addr) {
 char communicate_with_device(int device, char* command) {
   boolean comms_broke = false;
   boolean ack = false;
+  Serial.println(command);
   Serial.println("Starting to wait");
   i2c_start((device << 1) | I2C_WRITE);
   Serial.println("Waiting over");
@@ -242,13 +243,13 @@ void loop() {
           for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
           parse_command(http_params, wire_buffer, &device_addr);
           for (int i=0; i<BUFLEN; i++) wire_prevCommand[i] = wire_buffer[i];
-          for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
+//          for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
           Serial.print("The device is: ");
           Serial.println(device_addr);
           if (communicate_with_device(device_addr, wire_buffer) == false) {
             strcpy(wire_buffer,"No response");
             strcat(wire_buffer,'\0');
-            
+
           }
           break;
         }
