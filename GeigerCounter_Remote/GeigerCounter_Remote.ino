@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #define PIN_DIAL_ZERO 8
 #define PIN_DIAL_X100 9
 #define PIN_DIAL_X10  10
@@ -11,6 +13,8 @@
 
 unsigned int strength[AVGS] = {0};
 unsigned char index = 0;
+char tx_buffer[20] = {0};
+float battvolt = 1.23;
 
 void setup() {
   // initialize digital pin 13 as an output.
@@ -102,7 +106,6 @@ float get_battery_voltage() {
 void loop() {
 
   unsigned int sig_strength, offset, multiplier, output;
-
   sig_strength = get_signal_strength();
   offset = get_dial_setting();
   multiplier = get_multiplier_setting();
@@ -114,7 +117,7 @@ void loop() {
   if (output < 0) output = 0;
 
   analogWrite(PIN_METER, output);
-  Serial.println(get_battery_voltage());
+  battvolt = get_battery_voltage();    
+  Serial.println(battvolt);
   delay(200);
-//  Serial.write("test");
 }
