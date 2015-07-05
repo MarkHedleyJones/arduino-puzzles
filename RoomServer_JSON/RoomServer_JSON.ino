@@ -197,13 +197,13 @@ void loop() {
   // listen for incoming clients
   EthernetClient client = server.available();
   if (client) {
+    String line;
     Serial.println("---------------------------------");
     Serial.println("new client");
     // an http request ends with a blank line
-    boolean respond = false;
+    boolean server_relay = false;
     boolean currentLineIsBlank = true;
     boolean client_receive = true;
-
     while (client.connected()) {
       if (client.available()) {
         while (client_receive) {
@@ -215,12 +215,13 @@ void loop() {
             index++;
             for (int i = 0; (index + i) < BUFLEN; i++) http_buffer[index+i] = '\0';
             index = 0;
-            if (http_buffer[0] == 'G' && http_buffer[1] == 'E' && http_buffer[2] == 'T' && http_buffer[5] == '?') {
+            line = String(http_buffer);
+            if (line.startsWith("GET") && line.indexOf("device=") != -1 && line.indexOf("command=") != -1) {
               for (int i = 0; i < BUFLEN; i++) http_params[i] = '\0';
               for (int i = 6; i < (BUFLEN-6); i++) {
                 if (http_buffer[i] == ' ') break;
                 else http_params[i-6] = http_buffer[i];
-                respond = true;
+                server_relay = true;
               }
             }
           }
@@ -230,15 +231,9 @@ void loop() {
             index++;
           }
         }
-
+        
         // Finished receiving data from the client, time to respond
-        if (respond) {
-          Serial.println("responding client (got GET parameters)");
-          // respond the client, but remember - we have data to act on.
-//          client.println("HTTP/1.1 301 Moved Permanently");
-//          client.println("Location: /");
-//          client.println();
-
+        if (server_relay) {
           int device_addr;
           for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
           parse_command(http_params, wire_buffer, &device_addr);
@@ -249,61 +244,39 @@ void loop() {
           if (communicate_with_device(device_addr, wire_buffer) == false) {
             strcpy(wire_buffer,"No response");
             strcat(wire_buffer,'\0');
-
           }
-//          break;
-
+          Serial.println(device_addr);
+          Serial.println(wire_buffer);
+          Serial.println("Sending page");
+          client.println("HTTP/1.1 200 OK");
+          client.println("Access-Control-Allow-Origin: *");
+          client.println("Content-Type: application/json");
+          client.println("Connection: close");  // the connection will be closed after completion of the response
+          client.println();
+          client.println("{");
+          client.print(" \"device\":");
+          client.print(device_addr);
+          client.println(",");
+          client.print(" \"command\":\"");
+          client.print(wire_prevCommand);
+          client.println("\",");
+          client.print(" \"response\":\"");
+          client.print(wire_buffer);
+          client.println("\"");
+          client.println("}");
+          break;
+        }
+        else {
           Serial.println("Sending page");
           client.println("HTTP/1.1 200 OK");
           client.println("Access-Control-Allow-Origin: *");
           client.println("Content-Type: text/html");
           client.println("Connection: close");  // the connection will be closed after completion of the response
           client.println();
-//          client.println("<!DOCTYPE HTML>");
-//          client.println("<html>");
-
-//          client.println("<form id=\"mainForm\" action=\"/\" method=\"GET\" style=\"display: none\">");
-//          client.println("  <input id=\"deviceID\" type=\"hidden\" name=\"device\" value=\"\">");
-//          client.println("  <input id=\"deviceMSG\" type=\"hidden\" name=\"command\" value=\"\">");
-//          client.println("</form>");
-//          client.println("<h3>Door Controller</h3>");
-//          client.println("<button onclick=\"sendMessage(3,'*STAT?');\">Status</button>");
-//          client.println("<button onclick=\"sendMessage(3,'*IDN?');\">Identify</button>");
-//          client.println("<button onclick=\"sendMessage(3,'*SET=0');\">Set 0%</button>");
-//          client.println("<button onclick=\"sendMessage(3,'*SET=99');\">Set 33%</button>");
-//          client.println("<button onclick=\"sendMessage(3,'*SET=198');\">Set 66%</button>");
-//          client.println("<button onclick=\"sendMessage(3,'*SET=300');\">Set 100%</button>");
-//          client.println("<script type=\"text/javascript\">");
-//          client.println("function sendMessage(id, msg) {");
-//          client.println(" document.getElementById('deviceID').value = id;");
-//          client.println(" document.getElementById('deviceMSG').value = msg;");
-//          client.println(" document.forms[\"mainForm\"].submit();");
-//          client.println("</script>");
-////          client.println("<form action=\"/\" method=\"GET\" style=\"display: inline\">");
-////          client.println("  <input type=\"hidden\" name=\"device\" value=\"8\">");
-////          client.println("  <input type=\"hidden\" name=\"command\" value=\"*IDN?\">");
-////          client.println("  <input type=\"submit\" value=\"Identify\">");
-////          client.println("</form>");                    
-//          client.println("<html>");
-//          client.println("<h2>Command</h2>");
-//          client.println("<pre>");
-          client.println("{");
-          client.print(" 'device':");
-          client.print(device);
-          client.println(",");
-          client.print(" 'command':'");
-          client.print(wire_prevCommand);
-          client.println("',");
-          client.print(" 'response':'");
-          client.print(wire_buffer);
-          client.println("'");
-          client.println("}");
-//          client.println("</pre>");
-//          client.println("<h2>Response</h2>");
-//          client.println("<pre>");
-//          client.write(wire_buffer);
-//          client.println("</pre>");
-//          client.println("</html>");
+          client.println("<!DOCTYPE HTML>");
+          client.println("<html>");
+          client.println("Blank Page");
+          client.println("</html>");
           break;
         }
       }
