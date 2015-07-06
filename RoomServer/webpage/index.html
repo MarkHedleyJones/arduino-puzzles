@@ -37,6 +37,39 @@
         <td><span id="3_resp"></span></td>
       </tr>
     </table>
+
+    <h3>Geiger Counter</h3>
+    <button onclick="sendMessage(7,'*STAT?')">Status</button>
+    <button onclick="sendMessage(7,'*IDN?')">Identify</button>
+    <button onclick="sendMessage(7,'*RST')">Reset</button>
+    <table>
+      <tr>
+        <th>Command:</th>
+        <td><form onsubmit="return false;"><input type="text" id="7_cmd"><button type="submit" onclick="sendMessage(7, document.getElementById('7_cmd').value)">Send</button></form></td>
+      </tr>
+      <tr>
+        <th>Response:</th>
+        <td><span id="7_resp"></span></td>
+      </tr>
+    </table>
+
+    <h3>Morse Code Interpreter</h3>
+    <button onclick="sendMessage(5,'*STAT?')">Status</button>
+    <button onclick="sendMessage(5,'*IDN?')">Identify</button>
+    <button onclick="sendMessage(5,'*RST')">Reset</button>
+    <button onclick="sendMessage(5,'*MSG=SOS')">Message = SOS</button>
+    <button onclick="sendMessage(5,'*MSG=CATS')">Message = CATS</button>
+    <table>
+      <tr>
+        <th>Command:</th>
+        <td><form onsubmit="return false;"><input type="text" id="5_cmd"><button type="submit" onclick="sendMessage(5, document.getElementById('5_cmd').value)">Send</button></form></td>
+      </tr>
+      <tr>
+        <th>Response:</th>
+        <td><span id="5_resp"></span></td>
+      </tr>
+    </table>
+
     <script type="text/javascript">
     function sendMessage(id, msg) {
       $.ajax({

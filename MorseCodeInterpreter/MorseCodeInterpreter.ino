@@ -1,22 +1,18 @@
 #include <Wire.h>
+#include <toneAC.h>
 
 #define BUF_LEN 96
 #define I2C_LEN 32
 #define MSG_LEN 20
 #define PIN_LED 13
 #define PIN_MORSE 12
-
-/*
- 
- GND
-*/
+#define WIRE_ADDR 5
 
 const int maxNumberTaps = 100;
 const int waitTime = 50;               // Time in us for each tap count
 const long timeoutLength = 20000;       // Time in us for timeout
 const int maxMessageLength = 20;
 const float disambiguationFactor = 0.2; // Zone between - and .
-const int i2cAddress = 8;
 
 char defaultMessage[6] = {'B', 'R', 'A', 'V', 'O', 0};
 char expectedMessage[maxNumberTaps] = {0};
@@ -24,6 +20,8 @@ char expectedMessageText[maxMessageLength] = {0};
 
 int completed = 0;                      // 1 for puzzle done
 int totalTaps = 0;                      // Tap counter
+int attempts = 0;
+char last_attempt[maxMessageLength] = {0};      // Prevous attempt
 
 unsigned long seconds_since_reset = 0;
 int wire_count = 0;
@@ -80,10 +78,7 @@ void transmitComms() {
 
 void load_status() {
   wire_count = 0;
-  strcpy(wire_buffer, "CORRECT=");
-  if (completed) strcat(wire_buffer, "1");
-  else strcat(wire_buffer, "0");
-  strcat(wire_buffer, ",TIME=");
+  strcpy(wire_buffer, "TIME=");
   unsigned long seconds = millis();
   seconds = seconds / 1000;
   seconds = seconds - seconds_since_reset;
@@ -102,13 +97,21 @@ void load_status() {
   if (seconds <= 10) strcat(wire_buffer, "0");
   sprintf(tmp, "%d", seconds);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",TAPS=");
-  sprintf(tmp, "%d", totalTaps);
+  strcat(wire_buffer, ",DONE=");
+  if (completed) strcat(wire_buffer, "1");
+  else strcat(wire_buffer, "0");
+  strcat(wire_buffer, ",ATTEMPTS=");
+  sprintf(tmp, "%d", attempts);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",MSG=");
   strcat(wire_buffer, expectedMessageText);
-  strcat(wire_buffer, ",PATTERN=");
+//  strcat(wire_buffer, ",TAPS=");
+//  sprintf(tmp, "%d", totalTaps);
+//  strcat(wire_buffer, tmp);
+  strcat(wire_buffer, ",TARG=");
   strcat(wire_buffer, expectedMessage);
+  strcat(wire_buffer, ",LAST=");
+  strcat(wire_buffer, last_attempt);
   strcat(wire_buffer, '\0');
 }
 
@@ -134,7 +137,9 @@ void receiveComms(int howMany) {
     seconds_since_reset = millis() / 1000;
     totalTaps = 0;
     completed = 0;
+    for (int i=0; i < maxMessageLength; i++) last_attempt[i] = 0;
     setMessage_v2(defaultMessage);
+    attempts = 0;
     load_status();
   }
   else if (wire_buffer[0] == '*' &&
@@ -158,6 +163,7 @@ void receiveComms(int howMany) {
     setMessage_v2(message_buffer);
     load_status();
   }
+  else strcpy(wire_buffer, "Unknown command");
 }
 
 void setup() {
@@ -165,7 +171,7 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
   Serial.begin(9600);
-  Wire.begin(i2cAddress);
+  Wire.begin(WIRE_ADDR);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
   setMessage_v2(defaultMessage);
@@ -182,9 +188,11 @@ void loop() {
 
   char message[maxNumberTaps] = {0};
   decodeTaps(message, tapLengths);
+  for (int i = 0; i < maxMessageLength; i++) last_attempt[i] = message[i];
 
   // Decide if taps correct or not
   completed |= compareTaps(message);
+  attempts += 1;
 
   // Write out tap lenghts via serial
   for (int i = 0; i < maxNumberTaps; i++)  {
@@ -213,8 +221,10 @@ void readTaps(int *tapLengths)
     upTime = 0;
     while(!digitalRead(PIN_MORSE)) {
       tapLengths[index]++;
+      toneAC(1000);
       delayMicroseconds(waitTime);
     }
+    toneAC();
 
     // Tap finished
     while (digitalRead(PIN_MORSE)) {
