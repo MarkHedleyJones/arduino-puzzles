@@ -104,7 +104,6 @@ void setup() {
   digitalWrite(PIN_TRIG,1);
   digitalWrite(PIN_LED,0);
   pinMode(13, OUTPUT);
-  Serial.begin(9600);  
   Wire.begin(WIRE_ADDR);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
@@ -125,6 +124,5 @@ unsigned int read_state() {
 
 void loop() {
   read_state();
-//  Serial.println(combination);
   delay(100);
 }

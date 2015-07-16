@@ -70,6 +70,24 @@
       </tr>
     </table>
 
+    <h3>Morse Code Phone</h3>
+    <button onclick="sendMessage(8,'*STAT?')">Status</button>
+    <button onclick="sendMessage(8,'*IDN?')">Identify</button>
+    <button onclick="sendMessage(8,'*RST')">Reset</button>
+    <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
+    <button onclick="sendMessage(8,'*MSG=SOS')">Message = SOS</button>
+    <button onclick="sendMessage(8,'*MSG=CATS')">Message = CATS</button>
+    <table>
+      <tr>
+        <th>Command:</th>
+        <td><form onsubmit="return false;"><input type="text" id="8_cmd"><button type="submit" onclick="sendMessage(8, document.getElementById('8_cmd').value)">Send</button></form></td>
+      </tr>
+      <tr>
+        <th>Response:</th>
+        <td><span id="8_resp"></span></td>
+      </tr>
+    </table>
+
     <h3>Telephone Exchange</h3>
     <button onclick="sendMessage(9,'*STAT?')">Status</button>
     <button onclick="sendMessage(9,'*IDN?')">Identify</button>
