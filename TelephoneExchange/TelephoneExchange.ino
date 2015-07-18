@@ -119,6 +119,10 @@ unsigned int read_state() {
     digitalWrite(PIN_TRIG,0);
     digitalWrite(PIN_LED,1);
   }
+  else {
+    digitalWrite(PIN_TRIG,1);
+    digitalWrite(PIN_LED,0);
+  }
   return state;
 }
 

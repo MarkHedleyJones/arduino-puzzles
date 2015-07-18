@@ -6,8 +6,8 @@
 #define PIN_HOOK 2
 #define PIN_TRIGGER 12
 #define PIN_LED 13
-// #define RING_OSCILLATIE_PERIOD 40
-#define RING_OSCILLATIE_PERIOD 0
+#define RING_OSCILLATIE_PERIOD 40
+//#define RING_OSCILLATIE_PERIOD 0
 #define MORSE_FREQUENCY 800
 #define MORSE_UNIT_PERIOD_MS 200
 #define BUF_LEN 96
@@ -25,7 +25,7 @@ A4990MotorShield motors;
 
 char morse_message[MSG_LEN+1] = "SOS";
 bool ringer_fault = false;
-bool execute_signal_recieved = false;
+bool execute_signal_received = false;
 bool phone_ringing = false;
 int play_count = 0;
 unsigned long seconds_since_reset = 0;
@@ -46,7 +46,8 @@ bool phone_on_hook() {
 }
 
 bool triggered() {
-  return !digitalRead(PIN_TRIGGER);
+  if (execute_signal_received == 0 && digitalRead(PIN_TRIGGER) == 0) execute_signal_received = true;
+  return execute_signal_received;
 }
 
 void setup() {
@@ -79,19 +80,7 @@ void transmitComms() {
 }
 
 void load_status() {
-    strcpy(wire_buffer, "EX=");
-    if (execute_signal_recieved) strcat(wire_buffer, "1");
-    else strcat(wire_buffer, "0");
-    strcat(wire_buffer, ",HOOK=");
-    if (phone_on_hook()) strcat(wire_buffer, "1");
-    else strcat(wire_buffer, "0");
-    strcat(wire_buffer,",RING=");
-    if (phone_ringing) strcat(wire_buffer, "1");
-    else strcat(wire_buffer, "0");
-    strcat(wire_buffer,",FAULT=");
-    if (ringer_fault) strcat(wire_buffer, "1");
-    else strcat(wire_buffer, "0");
-    strcat(wire_buffer, ",TIME=");
+    strcpy(wire_buffer, "TIME=");
     unsigned long seconds = millis();
     seconds = seconds / 1000;
     seconds = seconds - seconds_since_reset;
@@ -110,7 +99,19 @@ void load_status() {
     if (seconds <= 10) strcat(wire_buffer, "0");
     sprintf(tmp, "%d", seconds);
     strcat(wire_buffer, tmp);
-    strcat(wire_buffer, ",PLAY_COUNT=");
+    strcat(wire_buffer, ",RUN=");
+    if (triggered()) strcat(wire_buffer, "1");
+    else strcat(wire_buffer, "0");
+    strcat(wire_buffer, ",TRIG=");
+    if (digitalRead(PIN_TRIGGER) == 0) strcat(wire_buffer, "1");
+    else strcat(wire_buffer, "0");
+    strcat(wire_buffer, ",HOOK=");
+    if (phone_on_hook()) strcat(wire_buffer, "1");
+    else strcat(wire_buffer, "0");
+    strcat(wire_buffer,",RING=");
+    if (phone_ringing) strcat(wire_buffer, "1");
+    else strcat(wire_buffer, "0");
+    strcat(wire_buffer, ",PLAYED=");
     sprintf(tmp, "%d", play_count);
     strcat(wire_buffer, tmp);
     strcat(wire_buffer, ",MSG=");
@@ -131,12 +132,12 @@ void receiveComms(int howMany) {
   else if (strcmp(wire_buffer, "*STAT?") == 0) load_status();
   else if (strcmp(wire_buffer, "*TRIG") == 0) {
     Serial.println("Triggering");
-    execute_signal_recieved = true;
+    execute_signal_received = true;
     load_status();
   }
   else if (strcmp(wire_buffer, "*RST") == 0) {
     seconds_since_reset = millis() / 1000;
-    execute_signal_recieved = false;
+    execute_signal_received = false;
     play_count = 0;
     ringer_fault = 0;
     strcpy(morse_message, "SOS");
@@ -165,244 +166,20 @@ void receiveComms(int howMany) {
   }
 }
 
-// void oscillate() {
-//   delay(RING_OSCILLATIE_PERIOD);
-//   motors.setM1Speed(400);
+ void oscillate() {
+   delay(RING_OSCILLATIE_PERIOD);
+   motors.setM1Speed(400);
 //   stopIfFault();
-//   delay(RING_OSCILLATIE_PERIOD);
-//   motors.setM1Speed(-400);
+   delay(RING_OSCILLATIE_PERIOD);
+   motors.setM1Speed(-400);
 //   stopIfFault();
-// }
+ }
 
-void oscillate() {
-  motors.setM1Speed(0);
-  delay(1);
-  motors.setM1Speed(23);
-  delay(1);
-  motors.setM1Speed(46);
-  delay(1);
-  motors.setM1Speed(68);
-  delay(1);
-  motors.setM1Speed(91);
-  delay(1);
-  motors.setM1Speed(113);
-  delay(1);
-  motors.setM1Speed(134);
-  delay(1);
-  motors.setM1Speed(156);
-  delay(1);
-  motors.setM1Speed(176);
-  delay(1);
-  motors.setM1Speed(197);
-  delay(1);
-  motors.setM1Speed(216);
-  delay(1);
-  motors.setM1Speed(235);
-  delay(1);
-  motors.setM1Speed(253);
-  delay(1);
-  motors.setM1Speed(270);
-  delay(1);
-  motors.setM1Speed(287);
-  delay(1);
-  motors.setM1Speed(302);
-  delay(1);
-  motors.setM1Speed(317);
-  delay(1);
-  motors.setM1Speed(330);
-  delay(1);
-  motors.setM1Speed(343);
-  delay(1);
-  motors.setM1Speed(354);
-  delay(1);
-  motors.setM1Speed(364);
-  delay(1);
-  motors.setM1Speed(373);
-  delay(1);
-  motors.setM1Speed(380);
-  delay(1);
-  motors.setM1Speed(387);
-  delay(1);
-  motors.setM1Speed(392);
-  delay(1);
-  motors.setM1Speed(396);
-  delay(1);
-  motors.setM1Speed(399);
-  delay(1);
-  motors.setM1Speed(400);
-  delay(1);
-  motors.setM1Speed(400);
-  delay(1);
-  motors.setM1Speed(399);
-  delay(1);
-  motors.setM1Speed(396);
-  delay(1);
-  motors.setM1Speed(392);
-  delay(1);
-  motors.setM1Speed(387);
-  delay(1);
-  motors.setM1Speed(380);
-  delay(1);
-  motors.setM1Speed(373);
-  delay(1);
-  motors.setM1Speed(364);
-  delay(1);
-  motors.setM1Speed(354);
-  delay(1);
-  motors.setM1Speed(343);
-  delay(1);
-  motors.setM1Speed(330);
-  delay(1);
-  motors.setM1Speed(317);
-  delay(1);
-  motors.setM1Speed(302);
-  delay(1);
-  motors.setM1Speed(287);
-  delay(1);
-  motors.setM1Speed(270);
-  delay(1);
-  motors.setM1Speed(253);
-  delay(1);
-  motors.setM1Speed(235);
-  delay(1);
-  motors.setM1Speed(216);
-  delay(1);
-  motors.setM1Speed(197);
-  delay(1);
-  motors.setM1Speed(176);
-  delay(1);
-  motors.setM1Speed(156);
-  delay(1);
-  motors.setM1Speed(134);
-  delay(1);
-  motors.setM1Speed(113);
-  delay(1);
-  motors.setM1Speed(91);
-  delay(1);
-  motors.setM1Speed(68);
-  delay(1);
-  motors.setM1Speed(46);
-  delay(1);
-  motors.setM1Speed(23);
-  delay(1);
-  motors.setM1Speed(0);
-  delay(1);
-  motors.setM1Speed(-23);
-  delay(1);
-  motors.setM1Speed(-46);
-  delay(1);
-  motors.setM1Speed(-68);
-  delay(1);
-  motors.setM1Speed(-91);
-  delay(1);
-  motors.setM1Speed(-113);
-  delay(1);
-  motors.setM1Speed(-134);
-  delay(1);
-  motors.setM1Speed(-156);
-  delay(1);
-  motors.setM1Speed(-176);
-  delay(1);
-  motors.setM1Speed(-197);
-  delay(1);
-  motors.setM1Speed(-216);
-  delay(1);
-  motors.setM1Speed(-235);
-  delay(1);
-  motors.setM1Speed(-253);
-  delay(1);
-  motors.setM1Speed(-270);
-  delay(1);
-  motors.setM1Speed(-287);
-  delay(1);
-  motors.setM1Speed(-302);
-  delay(1);
-  motors.setM1Speed(-317);
-  delay(1);
-  motors.setM1Speed(-330);
-  delay(1);
-  motors.setM1Speed(-343);
-  delay(1);
-  motors.setM1Speed(-354);
-  delay(1);
-  motors.setM1Speed(-364);
-  delay(1);
-  motors.setM1Speed(-373);
-  delay(1);
-  motors.setM1Speed(-380);
-  delay(1);
-  motors.setM1Speed(-387);
-  delay(1);
-  motors.setM1Speed(-392);
-  delay(1);
-  motors.setM1Speed(-396);
-  delay(1);
-  motors.setM1Speed(-399);
-  delay(1);
-  motors.setM1Speed(-400);
-  delay(1);
-  motors.setM1Speed(-400);
-  delay(1);
-  motors.setM1Speed(-399);
-  delay(1);
-  motors.setM1Speed(-396);
-  delay(1);
-  motors.setM1Speed(-392);
-  delay(1);
-  motors.setM1Speed(-387);
-  delay(1);
-  motors.setM1Speed(-380);
-  delay(1);
-  motors.setM1Speed(-373);
-  delay(1);
-  motors.setM1Speed(-364);
-  delay(1);
-  motors.setM1Speed(-354);
-  delay(1);
-  motors.setM1Speed(-343);
-  delay(1);
-  motors.setM1Speed(-330);
-  delay(1);
-  motors.setM1Speed(-317);
-  delay(1);
-  motors.setM1Speed(-302);
-  delay(1);
-  motors.setM1Speed(-287);
-  delay(1);
-  motors.setM1Speed(-270);
-  delay(1);
-  motors.setM1Speed(-253);
-  delay(1);
-  motors.setM1Speed(-235);
-  delay(1);
-  motors.setM1Speed(-216);
-  delay(1);
-  motors.setM1Speed(-197);
-  delay(1);
-  motors.setM1Speed(-176);
-  delay(1);
-  motors.setM1Speed(-156);
-  delay(1);
-  motors.setM1Speed(-134);
-  delay(1);
-  motors.setM1Speed(-113);
-  delay(1);
-  motors.setM1Speed(-91);
-  delay(1);
-  motors.setM1Speed(-68);
-  delay(1);
-  motors.setM1Speed(-46);
-  delay(1);
-  motors.setM1Speed(-23);
-  delay(1);
-  motors.setM1Speed(0);
-  delay(1);
-
-}
 
 void ring() {
   unsigned long i;
-  while (phone_on_hook()) {
+  if (digitalRead(PIN_TRIGGER) == 0) execute_signal_received = true;
+  while (phone_on_hook() && execute_signal_received) {
     phone_ringing = true;
     while (phone_on_hook() && i < 10) {
       oscillate();
@@ -441,7 +218,7 @@ void play_morse(String input_message) {
   Serial.println(input_message);
   input_message.toUpperCase();
   for(i=0; i < input_message_length; i++) {
-    if (phone_on_hook() || !execute_signal_recieved) return;
+    if (phone_on_hook() || !execute_signal_received) return;
     else {
       if (input_message[i] == 'A') code = ".-";
       else if (input_message[i] == 'B') code = "-...";
@@ -488,7 +265,7 @@ void play_morse(String input_message) {
       }
       else {
         // Play a letter
-        for(j=0; j<5 && code[j] != '\0'; j++) {
+        for(j=0; j<5 && code[j] != '\0' && execute_signal_received; j++) {
           if(code[j] == '.') {
             tone(PIN_RECEIVER, MORSE_FREQUENCY);
             Serial.print("*");
@@ -523,20 +300,20 @@ void dialTone() {
 }
 
 void loop() {
-  while (!execute_signal_recieved) {
+  while (!execute_signal_received) {
     if (!phone_on_hook()) dialTone();
     else noTone(PIN_RECEIVER);
-    if (digitalRead(PIN_TRIGGER) == 0) execute_signal_recieved = true;
+    if (digitalRead(PIN_TRIGGER) == 0) execute_signal_received = true;
   }
   ring();
   noTone(PIN_RECEIVER);
-  while (execute_signal_recieved) {
+  while (triggered()) {
     noTone(PIN_RECEIVER);
-    while(phone_on_hook()) delay(1); // Loop here if phone hung up
-    for (int i=0; i < 2000 && !phone_on_hook() && execute_signal_recieved; i++) delay(1);
+    while(phone_on_hook() && triggered()) delay(1); // Loop here if phone hung up
+    for (int i=0; i < 2000 && !phone_on_hook() && triggered(); i++) delay(1);
     play_morse(morse_message);
-    for (int i=0; i < 500 && !phone_on_hook() && execute_signal_recieved; i++) delay(1);
+    for (int i=0; i < 500 && !phone_on_hook() && triggered(); i++) delay(1);
     dialTone();
-    for (int i=0; i < 2000 && !phone_on_hook() && execute_signal_recieved; i++) delay(1);
+    for (int i=0; i < 2000 && !phone_on_hook() && triggered(); i++) delay(1);
   }
 }
