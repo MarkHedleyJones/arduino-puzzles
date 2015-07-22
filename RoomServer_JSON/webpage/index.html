@@ -70,6 +70,24 @@
       </tr>
     </table>
 
+    <h3>Wall Switch Controller</h3>
+    <button onclick="sendMessage(6,'*STAT?')">Status</button>
+    <button onclick="sendMessage(6,'*IDN?')">Identify</button>
+    <button onclick="sendMessage(6,'*RST')">Reset</button>
+    <button onclick="sendMessage(6,'*TRIG=1')">Trigger 1</button>
+    <button onclick="sendMessage(6,'*TRIG=2')">Trigger 2</button>
+    <button onclick="sendMessage(6,'*TRIG=3')">Trigger both</button>
+    <table>
+      <tr>
+        <th>Command:</th>
+        <td><form onsubmit="return false;"><input type="text" id="6_cmd"><button type="submit" onclick="sendMessage(6, document.getElementById('6_cmd').value)">Send</button></form></td>
+      </tr>
+      <tr>
+        <th>Response:</th>
+        <td><span id="6_resp"></span></td>
+      </tr>
+    </table>
+
     <h3>Morse Code Phone</h3>
     <button onclick="sendMessage(8,'*STAT?')">Status</button>
     <button onclick="sendMessage(8,'*IDN?')">Identify</button>
