@@ -7,6 +7,7 @@
 #define PIN_LED 13
 #define PIN_MORSE 12
 #define WIRE_ADDR 5
+#define PIN_OUT 2
 
 const int maxNumberTaps = 100;
 const int waitTime = 50;               // Time in us for each tap count
@@ -137,6 +138,7 @@ void receiveComms(int howMany) {
     seconds_since_reset = millis() / 1000;
     totalTaps = 0;
     completed = 0;
+    digitalWrite(PIN_OUT, HIGH);
     for (int i=0; i < maxMessageLength; i++) last_attempt[i] = 0;
     setMessage_v2(defaultMessage);
     attempts = 0;
@@ -169,6 +171,8 @@ void receiveComms(int howMany) {
 void setup() {
   pinMode(PIN_MORSE, INPUT);
   pinMode(13, OUTPUT);
+  pinMode(PIN_OUT, OUTPUT);
+  digitalWrite(PIN_OUT, HIGH);
   digitalWrite(13, LOW);
   Serial.begin(9600);
   Wire.begin(WIRE_ADDR);
@@ -194,21 +198,22 @@ void loop() {
   completed |= compareTaps(message);
   attempts += 1;
 
-  // Write out tap lenghts via serial
-  for (int i = 0; i < maxNumberTaps; i++)  {
-    if (tapLengths[i] != 0) Serial.println(tapLengths[i]);
-    else break;
-  }
+//  // Write out tap lenghts via serial
+//  for (int i = 0; i < maxNumberTaps; i++)  {
+//    if (tapLengths[i] != 0) Serial.println(tapLengths[i]);
+//    else break;
+//  }
 
   // Print what was tapped
-  Serial.println(message);
+//  Serial.println(message);
 
   if (completed) {
     digitalWrite(13, HIGH);
+    digitalWrite(PIN_OUT, LOW);
     Serial.println("Correct message! - Waiting for reset..."); 
     while (completed) {};
   }
-  else Serial.println("Soz G");
+//  else Serial.println("Soz G");
 }
 
 void readTaps(int *tapLengths)

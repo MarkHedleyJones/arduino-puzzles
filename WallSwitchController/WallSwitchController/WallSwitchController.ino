@@ -71,6 +71,7 @@ void load_status() {
 }
 
 void receiveComms(int howMany) {
+  Serial.println("I'm here");
   String message;
   digitalWrite(13,1);
   int i;
