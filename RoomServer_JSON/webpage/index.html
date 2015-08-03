@@ -124,6 +124,38 @@
       </tr>
     </table>
 
+    <h3>Clock</h3>
+    <button onclick="sendMessage(4,'*STAT?')">Get stats</button>
+    <button onclick="sendMessage(4,'*PAUSE=1')">Pause</button>
+    <button onclick="sendMessage(4,'*PAUSE=0')">Resume</button>
+    <button onclick="sendMessage(4,'*RST')">Reset</button>
+    <button onclick="sendMessage(4,'*TIME=21:54')">Time = 21:54</button>
+    <table>
+      <tr>
+        <th>Command:</th>
+        <td><form onsubmit="return false;"><input type="text" id="4_cmd"><button type="submit" onclick="sendMessage(4, document.getElementById('4_cmd').value)">Send</button></form></td>
+      </tr>
+      <tr>
+        <th>Response:</th>
+        <td><span id="4_resp"></span></td>
+      </tr>
+    </table>
+
+    <h3>Secret Message</h3>
+    <button onclick="sendMessage(10,'*STAT?')">Get stats</button>
+    <button onclick="sendMessage(10,'*RST')">Reset</button>
+    <button onclick="sendMessage(10,'*SET')">Set</button>
+    <table>
+      <tr>
+        <th>Command:</th>
+        <td><form onsubmit="return false;"><input type="text" id="10_cmd"><button type="submit" onclick="sendMessage(10, document.getElementById('10_cmd').value)">Send</button></form></td>
+      </tr>
+      <tr>
+        <th>Response:</th>
+        <td><span id="10_resp"></span></td>
+      </tr>
+    </table>
+
     <script type="text/javascript">
     function sendMessage(id, msg) {
       $.ajax({

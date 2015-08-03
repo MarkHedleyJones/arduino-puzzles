@@ -1,14 +1,19 @@
-//#include <SPI.h>
+#include <SPI.h>
 #include <Wire.h>
 #include <Ethernet.h>
 
-#define SCL_PIN 5
-#define SCL_PORT PORTC
-#define SDA_PIN 4
-#define SDA_PORT PORTC
-#define I2C_TIMEOUT 1000
-#define I2C_SLOWMODE 1
-#include <SoftI2CMaster.h>
+//#define SCL_PIN 5
+//#define SCL_PORT PORTC
+//#define SDA_PIN 4
+//#define SDA_PORT PORTC
+//#define I2C_TIMEOUT 1000
+//#define I2C_SLOWMODE 1
+//#include <SoftI2CMaster.h>
+
+
+#define PIN_LED 4
+#define PIN_BUTTON 3
+#define PIN_MORSE 5
 
 #define BUFLEN 96
 
@@ -27,24 +32,28 @@ char http_buffer[BUFLEN] = "";
 char wire_buffer[BUFLEN] = "";
 char http_params[BUFLEN] = "";
 char wire_prevCommand[BUFLEN] = "";
-char temp[BUFLEN] = "";
-//char comms_response[BUFLEN] = "";
 int index = 0;
 int device = 0;
 char success = false;
+char clock_paused = 0;
+unsigned long seconds_since_reset = 0;
+boolean drawDots = true;
+//uint8_t mins = 0;
+//uint8_t secs = 0;
+char update_flag = 1;
+char message_given = 0;
 
 void setup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for Leonardo only
-  }
   Ethernet.begin(mac, ip);
   server.begin();
   Serial.print("server is at ");
   Serial.println(Ethernet.localIP());
   matrix.begin(0x70);
-//  i2c_init();
+  pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_BUTTON, INPUT_PULLUP);
+  pinMode(PIN_MORSE, INPUT_PULLUP);
 }
 
 /**
@@ -122,91 +131,73 @@ void parse_command(char* http_params, char* command, int* device_addr) {
   get_value_with_key(http_params, key_command, command);
   get_value_with_key(http_params, key_device, device_string);
   url_decode(command);
-  Serial.print("Command: ");
-  Serial.println(command);
-  Serial.print("device_string: ");
-  Serial.println(device_string);
-  Serial.print("device_integer: ");
-  Serial.println(atoi(device_string));
   *device_addr = atoi(device_string);
 }
 
 char communicate_with_device(int device, char* command) {
   boolean comms_broke = false;
   boolean ack = false;
-  Serial.println(command);
-  Serial.println("Starting to wait");
-  i2c_start((device << 1) | I2C_WRITE);
-  Serial.println("Waiting over");
+  Wire.beginTransmission(device);
   for (int i=0; i < BUFLEN; i++) {
-    if (!i2c_write(command[i])) {
-      Serial.println("Slave not acknowledging - Aborting");
-      return 0;
-    }
-    if (command[i] == '\0') break;
+    Wire.write(command[i]);
   }
-  i2c_stop();
-  Serial.print("Sent '");
-  Serial.print(command);
-  Serial.print("' to device: ");
-  Serial.println(device);
+  Wire.endTransmission();
   delay(200);
-  i2c_start((device << 1) | I2C_READ);
+  Wire.requestFrom(device, 32);
   for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
   for (int i = 0; i < 32; i++) {
-    command[i] = i2c_read(false);
-    Serial.print(command[i]);
+    command[i] = Wire.read();
     if (command[i] == (char) 0xff || command[i] == '\0') {
       command[i] = '\0';
       comms_broke = true;
-      Serial.println("Device terminated transmission");
       break;
     }
   }
-  i2c_stop();
   delay(50);
-  i2c_start((device << 1) | I2C_READ);
-  Serial.println();
+  Wire.requestFrom(device, 32);
   for (int i = 32; i < 64; i++) {
-    command[i] = i2c_read(false);
-    Serial.print(command[i]);
+    command[i] = Wire.read();
     if (command[i] == (char) 0xff || command[i] == '\0') {
       command[i] = '\0';
       comms_broke = true;
-      Serial.println("Device terminated transmission");
       break;
     }
   }
-  i2c_stop();
   delay(50);
-  i2c_start((device << 1) | I2C_READ);
-  Serial.println();
+  Wire.requestFrom(device, 32);
   for (int i = 64; i < 95; i++) {
-    command[i] = i2c_read(false);
-    Serial.print(command[i]);
+    command[i] = Wire.read();
     if (command[i] == (char) 0xff || command[i] == '\0') {
       command[i] = '\0';
       comms_broke = true;
-      Serial.println("Device terminated transmission");
       break;
     }
   }
-  Serial.println();
-  if (comms_broke == false) command[96] = i2c_read(true);
-  i2c_stop();
-  Serial.print("Device responded: '");
-  Serial.print(command);
-  Serial.println("'");
+  while(Wire.available()) Wire.read();
+
   return 1;
 }
 
+void update_clock() {
+    unsigned long seconds = millis();
+    seconds = seconds / 1000;
+    Serial.println(seconds_since_reset);
+    seconds = seconds - seconds_since_reset;
+    int mins = ((seconds / 60)) % 6000;
+    seconds = seconds - (mins * 60) % 360000;
+    matrix.drawColon(drawDots);
+    matrix.writeDigitNum(0, (mins / 10), drawDots);
+    matrix.writeDigitNum(1, (mins % 10), drawDots);
+    matrix.writeDigitNum(3, (seconds / 10) % 60, drawDots);
+    matrix.writeDigitNum(4, seconds % 10, drawDots);
+    matrix.writeDisplay();
+}
+    
 void loop() {
   // listen for incoming clients
   EthernetClient client = server.available();
   if (client) {
     String line;
-    Serial.println("---------------------------------");
-    Serial.println("new client");
     // an http request ends with a blank line
     boolean server_relay = false;
     boolean currentLineIsBlank = true;
@@ -241,25 +232,85 @@ void loop() {
         
         // Finished receiving data from the client, time to respond
         if (server_relay) {
+          
           int device_addr;
           for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
           parse_command(http_params, wire_buffer, &device_addr);
-          for (int i=0; i<BUFLEN; i++) wire_prevCommand[i] = wire_buffer[i];
-//          for (int i=0; i<BUFLEN; i++) wire_buffer[i] = '\0';
-          Serial.print("The device is: ");
-          Serial.println(device_addr);
-          if (communicate_with_device(device_addr, wire_buffer) == false) {
-            strcpy(wire_buffer,"No response");
-            strcat(wire_buffer,'\0');
-          }
-          Serial.println(device_addr);
-          Serial.println(wire_buffer);
-          Serial.println("Sending page");
+
           client.println("HTTP/1.1 200 OK");
           client.println("Access-Control-Allow-Origin: *");
           client.println("Content-Type: application/json");
           client.println("Connection: close");  // the connection will be closed after completion of the response
           client.println();
+          
+          for (int i=0; i<BUFLEN; i++) wire_prevCommand[i] = wire_buffer[i];
+          if (device_addr == 4) {
+            String message = String(wire_buffer);
+            if (strcmp(wire_buffer,"*RST") == 0) {
+              seconds_since_reset = millis() / 1000;
+              update_clock();
+            }
+            else if (message.indexOf("*PAUSE=") != -1)  {
+              clock_paused = message.substring(7).toInt();
+            }
+            else if (message.indexOf("*TIME=") != -1)  {
+              char mins = message.substring(6,8).toInt();
+              char secs = message.substring(9,11).toInt();
+              seconds_since_reset = (millis() / 1000) - (mins * 60) - secs;
+              update_clock();
+            }
+            char tmp[4] = "";
+            unsigned long seconds = millis();
+            seconds = seconds / 1000;
+            seconds = seconds - seconds_since_reset;
+            int mins = ((seconds / 60)) % 6000;
+            seconds = seconds - (mins * 60) % 360000;
+            strcpy(wire_buffer, "TIME=");
+            sprintf(tmp, "%d", (mins / 10));
+            strcat(wire_buffer, tmp);
+            sprintf(tmp, "%d", (mins % 10));
+            strcat(wire_buffer, tmp);
+            strcat(wire_buffer, ":");
+            sprintf(tmp, "%d", (seconds / 10));
+            strcat(wire_buffer, tmp);
+            sprintf(tmp, "%d", (seconds % 10));
+            strcat(wire_buffer, tmp);
+            strcat(wire_buffer, ",PAUSED=");
+            if (clock_paused) strcat(wire_buffer, "1");
+            else strcat(wire_buffer, "0");
+          }
+          else if (device_addr == 10) {
+            String message = String(wire_buffer);
+            if (strcmp(wire_buffer,"*RST") == 0) {
+              message_given = 0;
+            }
+            else if (strcmp(wire_buffer,"*SET") == 0) {
+              message_given = 1;
+            }
+            char tmp[4] = "";
+            unsigned long seconds = millis();
+            seconds = seconds / 1000;
+            seconds = seconds - seconds_since_reset;
+            int mins = ((seconds / 60)) % 6000;
+            seconds = seconds - (mins * 60) % 360000;
+            strcpy(wire_buffer, "TIME=");
+            sprintf(tmp, "%d", (mins / 10));
+            strcat(wire_buffer, tmp);
+            sprintf(tmp, "%d", (mins % 10));
+            strcat(wire_buffer, tmp);
+            strcat(wire_buffer, ":");
+            sprintf(tmp, "%d", (seconds / 10));
+            strcat(wire_buffer, tmp);
+            sprintf(tmp, "%d", (seconds % 10));
+            strcat(wire_buffer, tmp);
+            strcat(wire_buffer, ",MSG_RECEIVED=");
+            if (message_given) strcat(wire_buffer, "1");
+            else strcat(wire_buffer, "0");
+          }
+          else if (communicate_with_device(device_addr, wire_buffer) == false) {
+            strcpy(wire_buffer,"No response");
+            strcat(wire_buffer,'\0');
+          }
           client.println("{");
           client.print(" \"device\":");
           client.print(device_addr);
@@ -274,15 +325,13 @@ void loop() {
           break;
         }
         else {
-          Serial.println("Sending page");
+//          Serial.println("Sending page");
           client.println("HTTP/1.1 200 OK");
-          client.println("Access-Control-Allow-Origin: *");
           client.println("Content-Type: text/html");
           client.println("Connection: close");  // the connection will be closed after completion of the response
           client.println();
-          client.println("<!DOCTYPE HTML>");
           client.println("<html>");
-          client.println("Blank Page");
+          client.println("Server working, but nothing to see here");
           client.println("</html>");
           break;
         }
@@ -293,23 +342,35 @@ void loop() {
     // close the connection:
     client.stop();
 
-    Serial.println("client disconnected");
-
     // Clean up
     for (int i = 0; i < BUFLEN; i++) http_buffer[i] = '\0';
     index = 0;
   }
+
+  if (digitalRead(PIN_BUTTON) == 0) message_given = 1;
+  
+  if (digitalRead(PIN_MORSE) == 0 && message_given) {
+    digitalWrite(PIN_LED, 1);
+    communicate_with_device(3, "*SET_PROG=300");
+    clock_paused = 1;
+  }
+  else if (message_given || digitalRead(PIN_MORSE) == 0) {
+    digitalWrite(PIN_LED, millis()/500 % 2);
+    if (message_given) Serial.println("Message given");
+    if (digitalRead(PIN_MORSE) == 0) Serial.println("Morse signal");
+  }
   else {
-    boolean drawDots = true;
-    uint8_t mins = 0;
-    uint8_t secs = 0;
-    secs = millis() / 60000;
-    mins = (millis() / 1000) % 60;
-    matrix.writeDigitNum(0, (mins / 10), drawDots);
-    matrix.writeDigitNum(1, (mins % 10), drawDots);
-    matrix.drawColon(drawDots);
-    matrix.writeDigitNum(3, (secs / 10) % 60, drawDots);
-    matrix.writeDigitNum(4, secs % 10, drawDots);
-    matrix.writeDisplay();
+    digitalWrite(PIN_LED, 0);
+  }
+
+  if((millis() % 1000) == 0 && update_flag == 2) update_flag = 3;
+  if((millis() % 1000) != 0 && update_flag == 3) update_flag = 1;
+  
+  if (update_flag == 1) {
+   if(clock_paused == 0) {
+    update_clock();
+   }
+   else seconds_since_reset++;
+   update_flag = 2;
   }
 }

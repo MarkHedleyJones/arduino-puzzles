@@ -198,22 +198,11 @@ void loop() {
   completed |= compareTaps(message);
   attempts += 1;
 
-//  // Write out tap lenghts via serial
-//  for (int i = 0; i < maxNumberTaps; i++)  {
-//    if (tapLengths[i] != 0) Serial.println(tapLengths[i]);
-//    else break;
-//  }
-
-  // Print what was tapped
-//  Serial.println(message);
-
-  if (completed) {
+  while (completed) {
     digitalWrite(13, HIGH);
     digitalWrite(PIN_OUT, LOW);
     Serial.println("Correct message! - Waiting for reset..."); 
-    while (completed) {};
   }
-//  else Serial.println("Soz G");
 }
 
 void readTaps(int *tapLengths)
