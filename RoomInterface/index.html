@@ -17,16 +17,25 @@
     <button onclick="sendMessage(3,'*STAT?')">Status</button>
     <button onclick="sendMessage(3,'*IDN?')">Identify</button>
     <button onclick="sendMessage(3,'*SET_PROG=-1')">Set Off</button>
-    <button onclick="sendMessage(3,'*SET_PROG=0')">Set Start</button>
-    <button onclick="sendMessage(3,'*SET_PROG=75')">Set 25%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=150')">Set 50%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=225')">Set 75%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=300')">Set Complete</button>
+    <button onclick="sendMessage(3,'*SET_PROG=0')">Start</button>
+    <button onclick="sendMessage(3,'*SET_PROG=15')">10%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=30')">20%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=45')">30%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=60')">40%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=75')">50%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=90')">60%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=105')">70%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=120')">80%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=135')">90%</button>
+    <button onclick="sendMessage(3,'*SET_PROG=150')">100%</button>
     <button onclick="sendMessage(3,'*SET_BRIG=10')">Set Low</button>
     <button onclick="sendMessage(3,'*SET_BRIG=64')">Set 25%</button>
     <button onclick="sendMessage(3,'*SET_BRIG=128')">Set 50%</button>
     <button onclick="sendMessage(3,'*SET_BRIG=192')">Set 75%</button>
     <button onclick="sendMessage(3,'*SET_BRIG=255')">Set Bright</button>
+    <button onclick="sendMessage(3,'*SET_TRANS=1')">Enable Transition</button>
+    <button onclick="sendMessage(3,'*SET_TRANS=0')">Disable Transition</button>
+    <button onclick="sendMessage(3,'*BLINK=3')">Blink 3</button>
     <table>
       <tr>
         <th>Command:</th>

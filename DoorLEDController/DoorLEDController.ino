@@ -18,6 +18,10 @@ int leds_red = 0;
 int leds_set = -1;
 int leds_brightness = 64;
 int leds_int = 0;
+char make_pattern = 0;
+char transition = 0;
+int leds_set_prev = -1;
+int brightness;
 
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
@@ -55,12 +59,18 @@ void load_status() {
   strcat(wire_buffer, tmp);
   // END OF TIME TRANSMIT
   
+  leds_grn = 150-leds_set;
+  leds_red = leds_set;
   strcat(wire_buffer, ",LEDS_RED=");
   sprintf(tmp, "%d", leds_grn);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",LEDS_GRN=");
   sprintf(tmp, "%d", leds_red);
   strcat(wire_buffer, tmp);
+  strcat(wire_buffer, ",TRANSITION=");
+  sprintf(tmp, "%d", transition);
+  strcat(wire_buffer, tmp);
+  
   
   // TERMINATE THE WIREBUFFER
   strcat(wire_buffer, 0);
@@ -81,42 +91,28 @@ void receiveComms(int howMany) {
   else if (strcmp(wire_buffer, "*STAT?") == 0) load_status();
   else if (strcmp(wire_buffer, "*RST") == 0) {
     seconds_since_reset = millis() / 1000;
-    leds_grn = 0;
-    leds_red = 0;
     leds_set = -1;
     load_status();
   }
   else if (message.indexOf("*SET_PROG=") != -1) {
-    // Shift the number to the start
-//    for (int i=0; i < I2C_LEN-10; i++) wire_buffer[i] = wire_buffer[i+10];
-//    leds_set=atoi(wire_buffer);
     leds_set = message.substring(10).toInt();
-    if (leds_set == -1) {
-      leds_red = 0;
-      leds_grn = 0;
-    }
-    else if (leds_set < 300 && leds_set > 0) {
-      leds_grn = 300-leds_set;
-      leds_red = leds_set;
-    }
-    else if (leds_set < 300) {
-      leds_grn = 300;
-      leds_red = 0;
-    }
-    else {
-      leds_grn = 0;
-      leds_red = 300;
-    }
+    if (leds_set < -1) leds_set = -1;
+    else if (leds_set > 150) leds_set = 150;
+
     load_status();
   }
   else if (message.indexOf("*SET_BRIG=") != -1) {
-//    // Shift the number to the start
-//    for (int i=0; i < I2C_LEN-10; i++) wire_buffer[i] = wire_buffer[i+10];
-//    // Read the brightness
-//    leds_brightness=atoi(wire_buffer);
     leds_brightness = message.substring(10).toInt();
     if (leds_brightness < 0) leds_brightness = 0;
     if (leds_brightness > 255) leds_brightness = 255;
+    load_status();
+  }
+  else if (message.indexOf("*SET_TRANS=") != -1) {
+    transition = message.substring(11).toInt();
+    load_status();
+  }
+  else if (strcmp(wire_buffer, "*BLINK=") != -1) {
+    make_pattern = message.substring(7).toInt();
     load_status();
   }
   else strcpy(wire_buffer,"Unknown command");
@@ -125,6 +121,27 @@ void receiveComms(int howMany) {
   Serial.println(leds_set);
   Serial.println(leds_brightness);
   Serial.println();
+}
+
+void update_leds(char setleds, int bright) {
+  leds_grn = 150-setleds;
+  leds_red = setleds;
+  if (setleds == -1) {
+    for(int i=0; i < strip.numPixels(); i++) strip.setPixelColor(i, strip.Color(0,0,0));
+  }
+  else {
+    for(int i=0; i < 150; i++) {
+      if(i<leds_red) {
+        strip.setPixelColor(i,strip.Color(0,bright,0));
+        strip.setPixelColor(299-i,strip.Color(0,bright,0));
+      }
+      else {
+        strip.setPixelColor(i, strip.Color(bright,0,0));
+        strip.setPixelColor(299-i, strip.Color(bright,0,0));
+      }
+    }
+  }
+  strip.show();
 }
 
 void setup() {
@@ -138,36 +155,35 @@ void setup() {
 }
 
 void loop() {
-  if (leds_set >= 0) {
-    for(int i=0; i < strip.numPixels(); i++) {
-      if(i<leds_red) strip.setPixelColor(i,strip.Color(0,leds_brightness,0));
-      else strip.setPixelColor(i, strip.Color(leds_brightness,0,0));
+  if (leds_set != leds_set_prev) {
+    if (transition) {
+      brightness = leds_brightness;
+      while (brightness > 0) {
+        update_leds(leds_set_prev, brightness);
+        brightness -= 3;
+      }
+      brightness = 0;
+      while (brightness < leds_brightness) {
+        update_leds(leds_set, brightness);
+        brightness += 3;
+      }
     }
+    else {
+      update_leds(leds_set, leds_brightness);
+    }
+    leds_set_prev = leds_set;
   }
-  else for(int i=0; i < strip.numPixels(); i++) strip.setPixelColor(i, strip.Color(0,0,0));
-  strip.show();
+  else update_leds(leds_set, leds_brightness);
+  if (make_pattern) {
+    while (make_pattern > 0) {
+      update_leds(-1, leds_brightness);
+      delay(100);
+      update_leds(leds_set, leds_brightness);
+      delay(100);
+      make_pattern--;
+    }
+    make_pattern = 0;
+  }
   delay(200);
 }
 
-//int i = 0;
-
-//int progress = 0;
-//unsigned char update = false;
-//
-//void receiveComms(int howMany) {
-//  delay(1);
-//  progress = Wire.parseInt();
-//  delay(1);
-//  while(Wire.available()) Wire.read();
-//  update = true;
-//}
-
-//void loop() {
-//  while(!update) delay(1);
-//  for(i=0; i <strip.numPixels(); i++) {
-//    if(i<progress) strip.setPixelColor(i,strip.Color(0,255,0));
-//    else strip.setPixelColor(i, strip.Color(255,0,0));
-//  }
-//  update = false;
-//  strip.show();
-//}
