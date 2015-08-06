@@ -6,14 +6,17 @@
 #define I2C_LEN 32
 #define WIRE_ADDR 9
 #define DEFAULT_COMBO 2178
+#define TRIGGER_LENGTH 10
 
 unsigned int combination;
 unsigned int state;
 bool triggered;
+bool trigger;
 unsigned long seconds_since_reset = 0;
 int wire_count = 0;
 char wire_buffer[BUF_LEN+1] = {0};
 char tx_buffer[I2C_LEN+1] = {0};
+int trigger_length_count = 0;
 
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
@@ -51,8 +54,11 @@ void load_status() {
   strcat(wire_buffer, tmp);
   // END OF TIME TRANSMIT
   
-  strcat(wire_buffer, ",TRIG=");
+  strcat(wire_buffer, ",TRIGGERED=");
   sprintf(tmp, "%d", triggered);
+  strcat(wire_buffer, tmp);
+  strcat(wire_buffer, ",TRIGGER=");
+  sprintf(tmp, "%d", trigger);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",COMBO=");
   sprintf(tmp, "%u", combination,3);
@@ -82,6 +88,7 @@ void receiveComms(int howMany) {
     combination = DEFAULT_COMBO;
     state = read_state();
     triggered = 0;
+    trigger = 0;
     load_status();
   }
   else if (message.indexOf("*COMBO=") != -1) {
@@ -91,6 +98,8 @@ void receiveComms(int howMany) {
   }
   else if (message.indexOf("*TRIG") != -1) {
     triggered = 1;
+    trigger = 1;
+    trigger_length_count = TRIGGER_LENGTH;
     load_status();
   }
   else strcpy(wire_buffer,"Unknown command");
@@ -114,15 +123,24 @@ void setup() {
 unsigned int read_state() {
   state = 0;
   for (int i = 0; i < 12; i++) if (digitalRead(i) == 0) state |= 1 << i;
-  if (state == combination) triggered = 1;
-  if (triggered) {
+  if (state == combination && trigger == 0) {
+    trigger = 1;
+    triggered = 1;
+    trigger_length_count = TRIGGER_LENGTH;
+  }
+  if (trigger) {
     digitalWrite(PIN_TRIG,0);
     digitalWrite(PIN_LED,1);
+    trigger_length_count--;
   }
   else {
     digitalWrite(PIN_TRIG,1);
     digitalWrite(PIN_LED,0);
   }
+
+  // Remove the trigger after so many cycles.
+  if (trigger && trigger_length_count < 0) trigger = 0;
+  
   return state;
 }
 

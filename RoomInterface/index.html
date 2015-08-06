@@ -2,195 +2,655 @@
 <html>
   <head>
     <script src="jquery-2.1.4.min.js"></script>
+    <title>Locked Room Interface</title>
+    <style type="text/css">
+      body {
+        background-color: #505050;
+        text-align: center;
+      }
+      .main {
+        text-align: left;
+        width: 400px;
+        height: auto;
+        display: inline-block;
+        background-color: #eee;
+        margin: 20px;
+        border-radius: 5px;
+        padding: 10px;
+        vertical-align: middle;
+        border: 2px solid black;
+      }
+      h3 {
+        color: #000;
+        text-align: center
+      }
+      .stats {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      .stats table {
+        margin: 0 auto;
+      }
+      .stats table:nth-child(1) {
+        text-align: right
+      }
+      .stats table td {
+        text-align: left
+      }
+      button {
+        display: inline-block;
+      }
+      .block {
+        text-align: center;
+        margin: 5px;
+      }
+
+    </style>
   </head>
   <body>
-    <form action="/" method="GET">
-      <input type="text" name="device" value="8">
-      <input type="text" name="command" value="">
-      <input type="submit" value="Send">
-    </form>
-    <form id="mainForm" action="/" method="GET" style="display: none">
-      <input id="deviceID" type="hidden" name="device" value="">
-      <input id="deviceMSG" type="hidden" name="command" value="">
-    </form>
-    <h3>Door Controller</h3>
-    <button onclick="sendMessage(3,'*STAT?')">Status</button>
-    <button onclick="sendMessage(3,'*IDN?')">Identify</button>
-    <button onclick="sendMessage(3,'*SET_PROG=-1')">Set Off</button>
-    <button onclick="sendMessage(3,'*SET_PROG=0')">Start</button>
-    <button onclick="sendMessage(3,'*SET_PROG=15')">10%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=30')">20%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=45')">30%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=60')">40%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=75')">50%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=90')">60%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=105')">70%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=120')">80%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=135')">90%</button>
-    <button onclick="sendMessage(3,'*SET_PROG=150')">100%</button>
-    <button onclick="sendMessage(3,'*SET_BRIG=10')">Set Low</button>
-    <button onclick="sendMessage(3,'*SET_BRIG=64')">Set 25%</button>
-    <button onclick="sendMessage(3,'*SET_BRIG=128')">Set 50%</button>
-    <button onclick="sendMessage(3,'*SET_BRIG=192')">Set 75%</button>
-    <button onclick="sendMessage(3,'*SET_BRIG=255')">Set Bright</button>
-    <button onclick="sendMessage(3,'*SET_TRANS=1')">Enable Transition</button>
-    <button onclick="sendMessage(3,'*SET_TRANS=0')">Disable Transition</button>
-    <button onclick="sendMessage(3,'*BLINK=3')">Blink 3</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="3_resp"></span></td>
-      </tr>
-    </table>
 
-    <h3>Geiger Counter</h3>
-    <button onclick="sendMessage(7,'*STAT?')">Status</button>
-    <button onclick="sendMessage(7,'*IDN?')">Identify</button>
-    <button onclick="sendMessage(7,'*RST')">Reset</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="7_cmd"><button type="submit" onclick="sendMessage(7, document.getElementById('7_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="7_resp"></span></td>
-      </tr>
-    </table>
+    <!-- ****************************************************************** -->
+    <!-- *********************** LED Door Controller ********************** -->
+    <!-- ****************************************************************** -->
 
-    <h3>Morse Code Interpreter</h3>
-    <button onclick="sendMessage(5,'*STAT?')">Status</button>
-    <button onclick="sendMessage(5,'*IDN?')">Identify</button>
-    <button onclick="sendMessage(5,'*RST')">Reset</button>
-    <button onclick="sendMessage(5,'*MSG=SOS')">Message = SOS</button>
-    <button onclick="sendMessage(5,'*MSG=CATS')">Message = CATS</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="5_cmd"><button type="submit" onclick="sendMessage(5, document.getElementById('5_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="5_resp"></span></td>
-      </tr>
-    </table>
+    <div class="main" id="LED-Door-Controller">
+      <h3>LED Door Controller</h3>
+      <div class="stats"></div>
+      <hr>
+      <div class="block">
+        <button onclick="sendMessage(3,'*SET_PROG=0')">0%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=15')">10%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=30')">20%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=45')">30%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=60')">40%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=75')">50%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=90')">60%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=105')">70%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=120')">80%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=135')">90%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=150')">100%</button>
+      </div>
+      <hr>
+      <div class="block">
+        <button onclick="sendMessage(3,'*SET_BRIG=5')">Faint</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=30')">Dim</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=100')">Normal</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=150')">Bright</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=255')">High</button>
+      </div>
+      <hr>
+      <div class="block">
+        <button onclick="sendMessage(3,'*BLINK=3')">Blink</button>
+      </div>
+      <hr>
+      <button onclick="sendMessage(3,'*RST')">Reset</button>
+    </div>
 
-    <h3>Wall Switch Controller</h3>
-    <button onclick="sendMessage(6,'*STAT?')">Status</button>
-    <button onclick="sendMessage(6,'*IDN?')">Identify</button>
-    <button onclick="sendMessage(6,'*RST')">Reset</button>
-    <button onclick="sendMessage(6,'*TRIG=1')">Trigger 1</button>
-    <button onclick="sendMessage(6,'*TRIG=2')">Trigger 2</button>
-    <button onclick="sendMessage(6,'*TRIG=3')">Trigger both</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="6_cmd"><button type="submit" onclick="sendMessage(6, document.getElementById('6_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="6_resp"></span></td>
-      </tr>
-    </table>
+    <!-- ****************************************************************** -->
+    <!-- *********************** Telephone Exchange *********************** -->
+    <!-- ****************************************************************** -->
+    <div class="main" id="Telephone-Exchange">
+      <h3>Telephone Exchange</h3>
+      <div class="stats"></div>
+      <div class="block">
+        <button onclick="sendMessage(9,'*TRIG')">Trigger</button>
+      </div>
+      <hr>
+      <div class="block">
+        <table style="margin: 0 auto">
+          <tr>
+            <td>
+              <label for="6">6</label><input type="checkbox" id="6">
+            </td>
+            <td style="text-align: left">
+              <input type="checkbox" id="7"><label for="7">7</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="5">5</label><input type="checkbox" id="5">
+            </td>
+            <td style="text-align: left">
+              <input type="checkbox" id="8"><label for="8">8</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="4">4</label><input type="checkbox" id="4">
+            </td>
+            <td style="text-align: left">
+              <input type="checkbox" id="9"><label for="9">9</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="3">3</label><input type="checkbox" id="3">
+            </td>
+            <td style="text-align: left">
+              <input type="checkbox" id="10"><label for="10">10</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="2">2</label><input type="checkbox" id="2">
+            </td>
+            <td style="text-align: left">
+              <input type="checkbox" id="11"><label for="11">11</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="1">1</label><input type="checkbox" id="1">
+            </td>
+            <td style="text-align: left">
+              <input type="checkbox" id="12"><label for="12">12</label>
+            </td>
+          </tr>
+          </table>
+          <button onclick="setCombo()">Set pattern</button>
+      </div>
 
-    <h3>Morse Code Phone</h3>
-    <button onclick="sendMessage(8,'*STAT?')">Status</button>
-    <button onclick="sendMessage(8,'*IDN?')">Identify</button>
-    <button onclick="sendMessage(8,'*RST')">Reset</button>
-    <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
-    <button onclick="sendMessage(8,'*MSG=SOS')">Message = SOS</button>
-    <button onclick="sendMessage(8,'*MSG=CATS')">Message = CATS</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="8_cmd"><button type="submit" onclick="sendMessage(8, document.getElementById('8_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="8_resp"></span></td>
-      </tr>
-    </table>
+      <hr>
+      <button onclick="sendMessage(9,'*RST')">Reset</button>
+    </div>
 
-    <h3>Telephone Exchange</h3>
-    <button onclick="sendMessage(9,'*STAT?')">Status</button>
-    <button onclick="sendMessage(9,'*IDN?')">Identify</button>
-    <button onclick="sendMessage(9,'*RST')">Reset</button>
-    <button onclick="sendMessage(9,'*TRIG')">Trigger</button>
-    <button onclick="sendMessage(9,'*COMBO=2')">Combination = 2</button>
-    <button onclick="sendMessage(9,'*COMBO=12')">Combination = 4 + 8</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="9_cmd"><button type="submit" onclick="sendMessage(9, document.getElementById('9_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="9_resp"></span></td>
-      </tr>
-    </table>
+    <!-- ****************************************************************** -->
+    <!--************************* Morse Code Phone *************************-->
+    <!-- ****************************************************************** -->
 
-    <h3>Clock</h3>
-    <button onclick="sendMessage(4,'*STAT?')">Get stats</button>
-    <button onclick="sendMessage(4,'*PAUSE=1')">Pause</button>
-    <button onclick="sendMessage(4,'*PAUSE=0')">Resume</button>
-    <button onclick="sendMessage(4,'*RST')">Reset</button>
-    <button onclick="sendMessage(4,'*TIME=21:54')">Time = 21:54</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="4_cmd"><button type="submit" onclick="sendMessage(4, document.getElementById('4_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="4_resp"></span></td>
-      </tr>
-    </table>
+    <div class="main" id="Morse-Code-Phone">
+      <h3>Morse Code Phone</h3>
+      <div class="stats"></div>
+      <div class="block">
+        <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
+      </div>
+      <hr>
+      <div class="block">
+        <span>New message: </span><input maxlength="20" type="text" id="newMessagePhone" value="sos" style="width: 130px">
+        <button onclick="updateMessagePhone()">Set</button>
+      </div>
+      <hr>
+      <button onclick="sendMessage(8,'*RST')">Reset</button>
+    </div>
 
-    <h3>Secret Message</h3>
-    <button onclick="sendMessage(10,'*STAT?')">Get stats</button>
-    <button onclick="sendMessage(10,'*RST')">Reset</button>
-    <button onclick="sendMessage(10,'*SET')">Set</button>
-    <table>
-      <tr>
-        <th>Command:</th>
-        <td><form onsubmit="return false;"><input type="text" id="10_cmd"><button type="submit" onclick="sendMessage(10, document.getElementById('10_cmd').value)">Send</button></form></td>
-      </tr>
-      <tr>
-        <th>Response:</th>
-        <td><span id="10_resp"></span></td>
-      </tr>
-    </table>
+
+    <!-- ****************************************************************** -->
+    <!-- ************************** Geiger Counter ************************ -->
+    <!-- ****************************************************************** -->
+    <div class="main" id="Geiger-Counter">
+      <h3>Geiger Counter</h3>
+      <div class="stats"></div>
+      <hr>
+      <button onclick="sendMessage(7,'*RST')">Reset</button>
+    </div>
+
+
+    <!-- ****************************************************************** -->
+    <!--********************** Wall Switch Controller **********************-->
+    <!-- ****************************************************************** -->
+
+    <div class="main" id="Wall-Switch-Controller">
+      <h3>Wall Switch Controller</h3>
+      <div class="stats"></div>
+      <div class="block">
+        <button onclick="sendMessage(6,'*TRIG=1')">Trigger Left</button>
+        <button onclick="sendMessage(6,'*TRIG=2')">Trigger Right</button>
+      </div>
+      <hr>
+      <button onclick="sendMessage(6,'*RST')">Reset</button>
+    </div>
+
+    <!-- ****************************************************************** -->
+    <!--******************* Morse Code Interpreter *************************-->
+    <!-- ****************************************************************** -->
+    <div class="main" id="Morse-Code-Interpreter">
+      <h3>Morse Code Interpreter</h3>
+      <div class="stats"></div>
+      <hr>
+      <div class="block">
+        <span>New message: </span><input maxlength="20" type="text" id="newMessage" value="sos" style="width: 130px">
+        <button onclick="updateMessage()">Set</button>
+      </div>
+      <hr>
+      <button onclick="sendMessage(5,'*RST')">Reset</button>
+    </div>
+
+    <!-- ****************************************************************** -->
+    <!-- ************************* Secret Message ************************* -->
+    <!-- ****************************************************************** -->
+    <div class="main" id="Secret-Message">
+      <h3>Secret Message</h3>
+      <div class="stats"></div>
+      <hr>
+      <button onclick="sendMessage(10,'*RST')">Reset</button>
+    </div>
+
+    <!-- ****************************************************************** -->
+    <!--******************************* Clock ******************************-->
+    <!-- ****************************************************************** -->
+    <div class="main" id="Clock">
+      <h3>Clock</h3>
+      <div class="stats"></div>
+      <hr>
+      <div class="block">
+        <span>Enter a time: </span><input type="text" id="newTime" value="00:00" style="width: 100px">
+        <button onclick="updateTime()">Set</button>
+      </div>
+      <hr>
+      <button onclick="sendMessage(4,'*RST')">Reset</button>
+    </div>
+
+    <!-- ****************************************************************** -->
+    <!-- ************************* Main Control *************************** -->
+    <!-- ****************************************************************** -->
+    <div class="main" id="Main-Control">
+      <h3>Main Control</h3>
+      <div class="stats"></div>
+      <hr>
+      <div class="block">
+        <button onclick="resetAll()">Reset All</button>
+      </div>
+    </div>
 
     <script type="text/javascript">
-    function sendMessage(id, msg) {
-      $.ajax({
-        url: "http://device.roomserver.io?device="+id+"&command="+msg,
-        complete: processResponse,
-        datatype: 'json',
-        type: 'GET',
-        timeout: 1500
-      });
-    }
-    function processResponse(xhr, status) {
-      if (status == "success") {
-        rsp = xhr.responseJSON;
-        $("#"+rsp.device+"_resp").html(rsp.response);
-        $("#"+rsp.device+"_cmd").val(rsp.command);
+      setTimeout(getStats, 1000);
+
+      var names = {
+        3: "LED Door Controller",
+        4: "Clock",
+        7: "Geiger Counter",
+        5: "Morse Code Interpreter",
+        6: "Wall Switch Controller",
+        8: "Morse Code Phone",
+        9: "Telephone Exchange",
+        10: "Secret Message"
       }
-      else {
-        alert("Failed to communicate with room controller");
+
+      puzzle_data = {}
+
+
+      function getStats() {
+        $.getJSON("http://device.roomserver.io?device="+0+"&command=*STAT?", function(data) {
+          $.each( data, function( key, val ) {
+            puzzle_data[names[key]] = val.split(",");
+          });
+          updateStats();
+          setTimeout(getStats, 5000);
+        });
       }
-    }
+
+      function updateStats() {
+        var html = "";
+        var table = "<table>";
+        $.each(puzzle_data["LED Door Controller"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TRANSITION":
+              if (d[1] == "0") {
+                html += "<button onclick=\"sendMessage(3,'*SET_TRANS=1')\">Enable Transitions</button>";
+                table += "<tr><th>Transitions:</th><td>Disabled</td></tr>";
+              }
+              else {
+                html +="<button onclick=\"sendMessage(3,'*SET_TRANS=0')\">Disable Transitions</button>";
+                table += "<tr><th>Transitions:</th><td>Enabled</td></tr>";
+              }
+              break;
+
+            case "LEDS_GRN":
+              if (d[1] >= 0) {
+                html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
+                table += "<tr><th>State:</th><td>On</td></tr>";
+                table += "<tr><th>Percent:</th><td>"+(d[1]/150)*100+"</td></tr>";
+              }
+              else {
+                html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
+                table += "<tr><th>State:</th><td>Off</td></tr>";
+                table += "<tr><th>Percent:</th><td>0</td></tr>";
+              }
+              break;
+
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+          }
+          // table += "<tr><th>" + d[0] + ":</th><td>" + d[1] + "</td></tr>";
+        });
+        table += "</table>";
+        $("#LED-Door-Controller .stats").html(table+html);
+
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Geiger Counter"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "OPENED":
+              if (d[1] == 0) table += "<tr><th>Cupboard found:</th><td>No</td></tr>";
+              else table += "<tr><th>Cupboard found:</th><td>Yes</td></tr>";
+              break;
+
+            case "OPEN":
+              if (d[1] == 0) table += "<tr><th>Cupboard open:</th><td>No</td></tr>";
+              else table += "<tr><th>Cupboard open:</th><td>Yes</td></tr>";
+              break;
+
+            case "RX_SIGNAL":
+              if (d[1] == 0) table += "<tr><th>Signal:</th><td>No</td></tr>";
+              else table += "<tr><th>Signal:</th><td>Yes</td></tr>";
+              break;
+
+            case "RX_COUNT":
+              if (d[1] == 0) table += "<tr><th>Packets received:</th><td>None</td></tr>";
+              else table += "<tr><th>Packets received:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "BATTVOLT":
+              if (d[1] == -1) table += "<tr><th>Battery voltage:</th><td>Unknown</td></tr>";
+              else table += "<tr><th>Battery voltage:</th><td>"+d[1]+" V</td></tr>";
+              break;
+
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Geiger-Counter .stats").html(table+html);
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Clock"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "PAUSED":
+              if (d[1]==1) {
+                table += "<tr><th>State:</th><td>Paused</td></tr>";
+                html +="<button onclick=\"sendMessage(4,'*PAUSE=0')\">Start</button>";
+              }
+              else {
+                table += "<tr><th>State:</th><td>Running</td></tr>";
+                html +="<button onclick=\"sendMessage(4,'*PAUSE=1')\">Pause</button>";
+              }
+
+              break;
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Clock .stats").html(table+html);
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Morse Code Interpreter"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "DONE":
+              if (d[1]==1) {
+                table += "<tr><th>Completed:</th><td style='color: red'>Yes</td></tr>";
+              }
+              else {
+                table += "<tr><th>Completed:</th><td style='color: green'>No</td></tr>";
+              }
+              break;
+
+            case "ATTEMPTS":
+              table += "<tr><th>Attempts:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "MSG":
+              table += "<tr><th>Target Message:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "TARG":
+              table += "<tr><th>Target Pattern:</th><td style='font-size: 2em'>"+d[1]+"</td></tr>";
+              break;
+
+            case "LAST":
+              if (d[1] != "") table += "<tr><th>Previous Attempt:</th><td style='font-size: 2em'>"+d[1]+"</td></tr>";
+              break;
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Morse-Code-Interpreter .stats").html(table+html);
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Wall Switch Controller"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "LATCH_1":
+              if (d[1] > 0) {
+                table += "<tr><th>Left solenoid:</th><td style='color: red'>Fired " + (d[1] > 1 ? d[1] + ' times' : '') + "</td></tr>";
+              }
+              else table += "<tr><th>Left latch:</th><td style='color: green'>Ready</td></tr>";
+              break;
+
+            case "DOOR_1":
+              if (d[1] == 1) table += "<tr><th>Left door:</th><td style='color: green'>Closed</td></tr>";
+              else table += "<tr><th>Left door:</th><td style='color: red'>Open</td></tr>";
+              break;
+
+            case "LATCH_2":
+              if (d[1] > 0) table += "<tr><th>Right solenoid:</th><td style='color: red'>Fired " + (d[1] > 1 ? d[1] + ' times' : '') + "</td></tr>";
+              else table += "<tr><th>Right latch:</th><td style='color: green'>Ready</td></tr>";
+              break;
+
+            case "DOOR_2":
+              if (d[1] == 1) table += "<tr><th>Right door:</th><td style='color: green'>Closed</td></tr>";
+              else table += "<tr><th>Right door:</th><td style='color: red'>Open</td></tr>";
+              break;
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Wall-Switch-Controller .stats").html(table+html);
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Morse Code Phone"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "RUN":
+              if (d[1] == 1) table += "<tr><th>Executing:</th><td style='color: yes'>Yes</td></tr>";
+              else table += "<tr><th>Executing:</th><td style='color: green'>No</td></tr>";
+              break;
+
+            case "HOOK":
+              if (d[1] == 1) table += "<tr><th>Receiver on hook:</th><td style='color: green'>Yes</td></tr>";
+              else table += "<tr><th>Receiver on hook:</th><td style='color: red'>No</td></tr>";
+              break;
+
+            case "RING":
+              if (d[1] == 1) table += "<tr><th>Ringing:</th><td style='color: red'>Yes</td></tr>";
+              else table += "<tr><th>Ringing:</th><td style='color: green'>No</td></tr>";
+              break;
+
+            case "MSG":
+              table += "<tr><th>Message:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "PLAYED":
+              table += "<tr><th>Message play count:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Morse-Code-Phone .stats").html(table+html);
+
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Telephone Exchange"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "TRIGGERED":
+              if (d[1] == 0) table += "<tr><th>Solved:</th><td style='color: green'>No</td></tr>";
+              else table += "<tr><th>Solved:</th><td style='color: red'>Yes</td></tr>";
+              break;
+
+            case "COMBO":
+              var state = [];
+              if (d[1] & 1) state.push(1);
+              if (d[1] & 2) state.push(2);
+              if (d[1] & 4) state.push(3);
+              if (d[1] & 8) state.push(4);
+              if (d[1] & 16) state.push(5);
+              if (d[1] & 32) state.push(6);
+              if (d[1] & 64) state.push(7);
+              if (d[1] & 128) state.push(8);
+              if (d[1] & 256) state.push(9);
+              if (d[1] & 512) state.push(10);
+              if (d[1] & 1024) state.push(11);
+              if (d[1] & 2048) state.push(12);
+              table += "<tr><th>Combination:</th><td>";
+              $.each(state, function(key, val)  {
+                table += val
+                if (key != state.length - 1) table += "+";
+              })
+              table += "</td></tr>";
+              break;
+
+            case "STATE":
+              var state = [];
+              if (d[1] & 1) state.push(1);
+              if (d[1] & 2) state.push(2);
+              if (d[1] & 4) state.push(3);
+              if (d[1] & 8) state.push(4);
+              if (d[1] & 16) state.push(5);
+              if (d[1] & 32) state.push(6);
+              if (d[1] & 64) state.push(7);
+              if (d[1] & 128) state.push(8);
+              if (d[1] & 256) state.push(9);
+              if (d[1] & 512) state.push(10);
+              if (d[1] & 1024) state.push(11);
+              if (d[1] & 2048) state.push(12);
+              table += "<tr><th>Buttons pressed:</th><td>";
+              $.each(state, function(key, val)  {
+                table += val
+                if (key != state.length - 1) table += "+";
+              })
+              table += "</td></tr>";
+              break;
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Telephone-Exchange .stats").html(table+html);
+
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Secret Message"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "MSG_RECEIVED":
+              if (d[1] == 1) {
+                table += "<tr><th>Message given:</th><td style='color: red'>Yes</td></tr>";
+                html += "<button onclick=\"sendMessage(10,'*RST')\">Reset</button>";
+              }
+              else {
+                table += "<tr><th>Message given:</th><td style='color: green'>No</td></tr>";
+                html += "<button onclick=\"sendMessage(10,'*SET')\">Set</button>";
+
+              }
+
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Secret-Message .stats").html(table+html);
+
+      }
+      function sendMessage(id, msg) {
+        $.ajax({
+          url: "http://device.roomserver.io?device="+id+"&command="+msg,
+          complete: processResponse,
+          datatype: 'json',
+          type: 'GET',
+          timeout: 1000
+        });
+      }
+      function processResponse(xhr, status) {
+        if (status == "success") {
+          rsp = xhr.responseJSON;
+          puzzle_data[names[rsp["device"]]] = rsp["response"].split(",");
+          updateStats();
+        }
+        else {
+          alert("Failed to communicate with room controller");
+        }
+      }
+
+      function updateTime() {
+        val = $("#newTime").val();
+        sendMessage(4,'*TIME='+val);
+      }
+
+      function updateMessage() {
+        val = $("#newMessage").val();
+        sendMessage(5,'*MSG='+val);
+      }
+
+      function updateMessagePhone() {
+        val = $("#newMessagePhone").val();
+        sendMessage(8,'*MSG='+val);
+      }
+
+      function setCombo() {
+        var combo = 0;
+        if ($('#1')[0].checked) combo += 1;
+        if ($('#2')[0].checked) combo += 2;
+        if ($('#3')[0].checked) combo += 4;
+        if ($('#4')[0].checked) combo += 8;
+        if ($('#5')[0].checked) combo += 16;
+        if ($('#6')[0].checked) combo += 32;
+        if ($('#7')[0].checked) combo += 64;
+        if ($('#8')[0].checked) combo += 128;
+        if ($('#9')[0].checked) combo += 256;
+        if ($('#10')[0].checked) combo += 512;
+        if ($('#11')[0].checked) combo += 1024;
+        if ($('#12')[0].checked) combo += 2048;
+        sendMessage(9,'*COMBO='+combo)
+      }
+
+      function resetAll() {
+        $.getJSON("http://device.roomserver.io?device="+0+"&command=*RST", function(data) {
+          $.each( data, function( key, val ) {
+            puzzle_data[names[key]] = val.split(",");
+          });
+          updateStats();
+        });
+      }
     </script>
-    <h2>Command</h2>
-    <pre>
-    </pre>
-    <h2>Response</h2>
-    <pre>
-    </pre>
   </body>
 </html>

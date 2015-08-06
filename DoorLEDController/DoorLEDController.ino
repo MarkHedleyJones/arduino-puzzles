@@ -96,9 +96,8 @@ void receiveComms(int howMany) {
   }
   else if (message.indexOf("*SET_PROG=") != -1) {
     leds_set = message.substring(10).toInt();
-    if (leds_set < -1) leds_set = -1;
+    if (leds_set < 0) leds_set = -1;
     else if (leds_set > 150) leds_set = 150;
-
     load_status();
   }
   else if (message.indexOf("*SET_BRIG=") != -1) {
@@ -116,14 +115,9 @@ void receiveComms(int howMany) {
     load_status();
   }
   else strcpy(wire_buffer,"Unknown command");
-  Serial.println(leds_grn);
-  Serial.println(leds_red);
-  Serial.println(leds_set);
-  Serial.println(leds_brightness);
-  Serial.println();
 }
 
-void update_leds(char setleds, int bright) {
+void update_leds(int setleds, int bright) {
   leds_grn = 150-setleds;
   leds_red = setleds;
   if (setleds == -1) {

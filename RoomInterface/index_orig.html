@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="jquery-2.1.4.min.js"></script>
+    <title>Locked Room Interface</title>
+    <style type="text/css">
+      body {
+        background-color: #222222;
+      }
+      .main {
+        width: 400px;
+        height: auto;
+        display: inline-block;
+        background-color: #eee;
+        margin: 30px;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      h3 {
+        color: #444444;
+        text-align: center
+      }
+      .stats {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      .stats table {
+        margin: 0 auto;
+      }
+      button {
+        display: inline-block;
+      }
+      .block {
+        text-align: center;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main" id="LED-Door-Controller">
+      <h3>LED Door Controller</h3>
+      <div class="stats"></div>
+      <!-- <button onclick="sendMessage(3,'*STAT?')">Status</button> -->
+      <!-- <button onclick="sendMessage(3,'*IDN?')">Identify</button> -->
+      <!-- <button onclick="sendMessage(3,'*SET_PROG=-1')">Set Off</button> -->
+      <hr>
+      <div class="block">
+        <button onclick="sendMessage(3,'*SET_PROG=0')">0%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=15')">10%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=30')">20%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=45')">30%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=60')">40%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=75')">50%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=90')">60%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=105')">70%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=120')">80%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=135')">90%</button>
+        <button onclick="sendMessage(3,'*SET_PROG=150')">100%</button>
+      </div>
+      <hr>
+      <div class="block">
+        <button onclick="sendMessage(3,'*SET_BRIG=5')">Faint</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=30')">Dim</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=100')">Normal</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=150')">Bright</button>
+        <button onclick="sendMessage(3,'*SET_BRIG=255')">High</button>
+      </div>
+      <hr>
+      <div class="block">
+        <button onclick="sendMessage(3,'*BLINK=3')">Blink</button>
+      </div>
+<!--       <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="3_resp"></span></td>
+        </tr>
+      </table> -->
+      <button onclick="sendMessage(3,'*RST')">Reset</button>
+    </div>
+
+    <div class="main">
+      <h3>Geiger Counter</h3>
+      <button onclick="sendMessage(7,'*STAT?')">Status</button>
+      <button onclick="sendMessage(7,'*IDN?')">Identify</button>
+      <button onclick="sendMessage(7,'*RST')">Reset</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="7_cmd"><button type="submit" onclick="sendMessage(7, document.getElementById('7_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="7_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="main" id="Geiger-Counter">
+      <h3>Morse Code Interpreter</h3>
+      <div class="stats"></div>
+      <button onclick="sendMessage(5,'*STAT?')">Status</button>
+      <button onclick="sendMessage(5,'*IDN?')">Identify</button>
+      <button onclick="sendMessage(5,'*RST')">Reset</button>
+      <button onclick="sendMessage(5,'*MSG=SOS')">Message = SOS</button>
+      <button onclick="sendMessage(5,'*MSG=CATS')">Message = CATS</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="5_cmd"><button type="submit" onclick="sendMessage(5, document.getElementById('5_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="5_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="main">
+      <h3>Wall Switch Controller</h3>
+      <button onclick="sendMessage(6,'*STAT?')">Status</button>
+      <button onclick="sendMessage(6,'*IDN?')">Identify</button>
+      <button onclick="sendMessage(6,'*RST')">Reset</button>
+      <button onclick="sendMessage(6,'*TRIG=1')">Trigger 1</button>
+      <button onclick="sendMessage(6,'*TRIG=2')">Trigger 2</button>
+      <button onclick="sendMessage(6,'*TRIG=3')">Trigger both</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="6_cmd"><button type="submit" onclick="sendMessage(6, document.getElementById('6_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="6_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="main">
+      <h3>Morse Code Phone</h3>
+      <button onclick="sendMessage(8,'*STAT?')">Status</button>
+      <button onclick="sendMessage(8,'*IDN?')">Identify</button>
+      <button onclick="sendMessage(8,'*RST')">Reset</button>
+      <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
+      <button onclick="sendMessage(8,'*MSG=SOS')">Message = SOS</button>
+      <button onclick="sendMessage(8,'*MSG=CATS')">Message = CATS</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="8_cmd"><button type="submit" onclick="sendMessage(8, document.getElementById('8_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="8_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="main">
+      <h3>Telephone Exchange</h3>
+      <button onclick="sendMessage(9,'*STAT?')">Status</button>
+      <button onclick="sendMessage(9,'*IDN?')">Identify</button>
+      <button onclick="sendMessage(9,'*RST')">Reset</button>
+      <button onclick="sendMessage(9,'*TRIG')">Trigger</button>
+      <button onclick="sendMessage(9,'*COMBO=2')">Combination = 2</button>
+      <button onclick="sendMessage(9,'*COMBO=12')">Combination = 4 + 8</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="9_cmd"><button type="submit" onclick="sendMessage(9, document.getElementById('9_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="9_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="main">
+      <h3>Clock</h3>
+      <button onclick="sendMessage(4,'*STAT?')">Get stats</button>
+      <button onclick="sendMessage(4,'*PAUSE=1')">Pause</button>
+      <button onclick="sendMessage(4,'*PAUSE=0')">Resume</button>
+      <button onclick="sendMessage(4,'*RST')">Reset</button>
+      <button onclick="sendMessage(4,'*TIME=21:54')">Time = 21:54</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="4_cmd"><button type="submit" onclick="sendMessage(4, document.getElementById('4_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="4_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="main">
+      <h3>Secret Message</h3>
+      <button onclick="sendMessage(10,'*STAT?')">Get stats</button>
+      <button onclick="sendMessage(10,'*RST')">Reset</button>
+      <button onclick="sendMessage(10,'*SET')">Set</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="10_cmd"><button type="submit" onclick="sendMessage(10, document.getElementById('10_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="10_resp"></span></td>
+        </tr>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+    setTimeout(getStats, 1000);
+
+    var names = {
+      3: "LED Door Controller",
+      4: "Wall Clock",
+      7: "Geiger Counter",
+      5: "Morse Code Interpreter",
+      6: "Wall Switch Controller",
+      8: "Morse Coded Telephone",
+      9: "Telex",
+      10: "Remote Control"
+    }
+
+    puzzle_data = {}
+
+
+    function getStats() {
+      $.getJSON("http://device.roomserver.io?device="+0+"&command=*STAT?", function(data) {
+        $.each( data, function( key, val ) {
+          puzzle_data[names[key]] = val.split(",");
+        });
+        updateStats();
+        setTimeout(getStats, 5000);
+      });
+    }
+
+    function updateStats() {
+      var html = "";
+      var table = "<table>";
+      $.each(puzzle_data["LED Door Controller"], function (key, val) {
+        d = val.split("=");
+        switch (d[0]) {
+          case "TRANSITION":
+            if (d[1] == "0") {
+              html += "<button onclick=\"sendMessage(3,'*SET_TRANS=1')\">Enable Transitions</button>";
+              table += "<tr><th>Transitions:</th><td>Disabled</td></tr>";
+            }
+            else {
+              html +="<button onclick=\"sendMessage(3,'*SET_TRANS=0')\">Disable Transitions</button>";
+              table += "<tr><th>Transitions:</th><td>Enabled</td></tr>";
+            }
+            break;
+
+          case "LEDS_GRN":
+            if (d[1] >= 0) {
+              html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
+              table += "<tr><th>State:</th><td>On</td></tr>";
+              table += "<tr><th>Percent:</th><td>"+(d[1]/150)*100+"</td></tr>";
+            }
+            else {
+              html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
+              table += "<tr><th>State:</th><td>Off</td></tr>";
+              table += "<tr><th>Percent:</th><td>0</td></tr>";
+            }
+            break;
+
+        }
+        // table += "<tr><th>" + d[0] + ":</th><td>" + d[1] + "</td></tr>";
+      });
+      table += "</table>";
+      $("#LED-Door-Controller .stats").html(table+html);
+
+      html = "<table>";
+      $.each(puzzle_data["Geiger Counter"], function (key, val) {
+        datas = val.split("=");
+        html += "<tr><th>" + datas[0] + ":</th><td>" + datas[1] + "</td></tr>";
+      });
+      html += "</table>";
+      $("#Geiger-Counter .stats").html(html);
+    }
+    function sendMessage(id, msg) {
+      $.ajax({
+        url: "http://device.roomserver.io?device="+id+"&command="+msg,
+        complete: processResponse,
+        datatype: 'json',
+        type: 'GET',
+        timeout: 1000
+      });
+    }
+    function processResponse(xhr, status) {
+      if (status == "success") {
+        rsp = xhr.responseJSON;
+        puzzle_data[names[rsp["device"]]] = rsp["response"].split(",");
+        updateStats();
+      }
+      else {
+        alert("Failed to communicate with room controller");
+      }
+    }
+    </script>
+  </body>
+</html>
