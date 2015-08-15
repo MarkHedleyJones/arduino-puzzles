@@ -7,7 +7,7 @@
 #define I2C_LEN 32
 #define WIRE_ADDR 3
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(300, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(290, PIN, NEO_GRB + NEO_KHZ800);
 
 unsigned long seconds_since_reset = 0;
 int wire_count = 0;
@@ -59,7 +59,7 @@ void load_status() {
   strcat(wire_buffer, tmp);
   // END OF TIME TRANSMIT
   
-  leds_grn = 150-leds_set;
+  leds_grn = 145-leds_set;
   leds_red = leds_set;
   strcat(wire_buffer, ",LEDS_RED=");
   sprintf(tmp, "%d", leds_grn);
@@ -97,7 +97,7 @@ void receiveComms(int howMany) {
   else if (message.indexOf("*SET_PROG=") != -1) {
     leds_set = message.substring(10).toInt();
     if (leds_set < 0) leds_set = -1;
-    else if (leds_set > 150) leds_set = 150;
+    else if (leds_set > 145) leds_set = 145;
     load_status();
   }
   else if (message.indexOf("*SET_BRIG=") != -1) {
@@ -118,20 +118,20 @@ void receiveComms(int howMany) {
 }
 
 void update_leds(int setleds, int bright) {
-  leds_grn = 150-setleds;
+  leds_grn = 155-setleds;
   leds_red = setleds;
   if (setleds == -1) {
     for(int i=0; i < strip.numPixels(); i++) strip.setPixelColor(i, strip.Color(0,0,0));
   }
   else {
-    for(int i=0; i < 150; i++) {
+    for(int i=0; i < 145; i++) {
       if(i<leds_red) {
         strip.setPixelColor(i,strip.Color(0,bright,0));
-        strip.setPixelColor(299-i,strip.Color(0,bright,0));
+        strip.setPixelColor(289-i,strip.Color(0,bright,0));
       }
       else {
         strip.setPixelColor(i, strip.Color(bright,0,0));
-        strip.setPixelColor(299-i, strip.Color(bright,0,0));
+        strip.setPixelColor(289-i, strip.Color(bright,0,0));
       }
     }
   }

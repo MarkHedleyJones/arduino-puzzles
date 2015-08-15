@@ -9,7 +9,7 @@
 #define PIN_METER     6
 #define PIN_LED       13
 #define PIN_BATT      A5
-#define AVGS          24
+#define AVGS          1
 
 unsigned int strength[AVGS] = {0};
 unsigned char index = 0;
@@ -111,6 +111,7 @@ void loop() {
   multiplier = get_multiplier_setting();
 
   output = sig_strength * multiplier;
+  Serial.println(sig_strength);
   output /= 20;
   output += offset;
   if (output > 190) output = 190;
@@ -118,6 +119,6 @@ void loop() {
 
   analogWrite(PIN_METER, output);
   battvolt = get_battery_voltage();    
-  Serial.println(battvolt);
-  delay(200);
+//  Serial.println(battvolt);
+  delay(100);
 }

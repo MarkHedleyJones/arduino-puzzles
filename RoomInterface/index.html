@@ -84,6 +84,16 @@
       </div>
       <hr>
       <button onclick="sendMessage(3,'*RST')">Reset</button>
+      <table>
+        <tr>
+          <th>Command:</th>
+          <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
+        </tr>
+        <tr>
+          <th>Response:</th>
+          <td><span id="3_resp"></span></td>
+        </tr>
+      </table>
     </div>
 
     <!-- ****************************************************************** -->
@@ -193,8 +203,8 @@
       <h3>Wall Switch Controller</h3>
       <div class="stats"></div>
       <div class="block">
-        <button onclick="sendMessage(6,'*TRIG=1')">Trigger Left</button>
-        <button onclick="sendMessage(6,'*TRIG=2')">Trigger Right</button>
+        <button onclick="sendMessage(6,'*TRIG=2')">Trigger Left</button>
+        <button onclick="sendMessage(6,'*TRIG=1')">Trigger Right</button>
       </div>
       <hr>
       <button onclick="sendMessage(6,'*RST')">Reset</button>
@@ -270,12 +280,12 @@
 
 
       function getStats() {
-        $.getJSON("http://device.roomserver.io?device="+0+"&command=*STAT?", function(data) {
+        $.getJSON("http://192.168.2.177?device="+0+"&command=*STAT?", function(data) {
           $.each( data, function( key, val ) {
             puzzle_data[names[key]] = val.split(",");
           });
           updateStats();
-          setTimeout(getStats, 5000);
+          setTimeout(getStats, 1000);
         });
       }
 
@@ -593,7 +603,7 @@
       }
       function sendMessage(id, msg) {
         $.ajax({
-          url: "http://device.roomserver.io?device="+id+"&command="+msg,
+          url: "http://192.168.2.177?device="+id+"&command="+msg,
           complete: processResponse,
           datatype: 'json',
           type: 'GET',
@@ -644,7 +654,7 @@
       }
 
       function resetAll() {
-        $.getJSON("http://device.roomserver.io?device="+0+"&command=*RST", function(data) {
+        $.getJSON("http://192.168.2.177?device="+0+"&command=*RST", function(data) {
           $.each( data, function( key, val ) {
             puzzle_data[names[key]] = val.split(",");
           });
