@@ -5,18 +5,22 @@
 #define BUF_LEN 96
 #define I2C_LEN 32
 #define WIRE_ADDR 6
-#define PIN_LATCH_1 2
-#define PIN_DOOR_1  3
-#define PIN_LATCH_2 4
-#define PIN_DOOR_2  5
+#define PIN_SOLENOID_1 2
+#define PIN_LIMIT_SWITCH_1  8
+#define PIN_WALL_SWITCH_1 3
+
+#define PIN_SOLENOID_2 4
+#define PIN_LIMIT_SWITCH_2  9
+#define PIN_WALL_SWITCH_2 5
 
 unsigned long seconds_since_reset = 0;
 int wire_count = 0;
 char wire_buffer[BUF_LEN+1] = {0};
 char tx_buffer[I2C_LEN+1] = {0};
-char latch_trigger[2] = {0,0};
-char latch_triggered[2] = {0,0};
+char solenoid_trigger[2] = {0,0};
+char solenoid_triggered[2] = {0,0};
 char doors = 0;
+char switches = 0;
 
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
@@ -53,25 +57,31 @@ void load_status() {
   sprintf(tmp, "%d", seconds);
   strcat(wire_buffer, tmp);
   // END OF TIME TRANSMIT
-  strcat(wire_buffer, ",LATCH_1=");
-  sprintf(tmp, "%d", latch_triggered[0]);
+  strcat(wire_buffer, ",SOLENOID_1=");
+  sprintf(tmp, "%d", solenoid_triggered[0]);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",DOOR_1=");
   if (doors & 1) strcat(wire_buffer, "1");
   else strcat(wire_buffer, "0");
-  strcat(wire_buffer, ",LATCH_2=");
-  sprintf(tmp, "%d", latch_triggered[1]);
+  strcat(wire_buffer, ",SWITCH_1=");
+  if (switches & 1) strcat(wire_buffer, "1");
+  else strcat(wire_buffer, "0");
+  strcat(wire_buffer, ",SOLENOID_2=");
+  sprintf(tmp, "%d", solenoid_triggered[1]);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",DOOR_2=");
   if (doors & 2) strcat(wire_buffer, "1");
   else strcat(wire_buffer, "0");
+  strcat(wire_buffer, ",SWITCH_2=");
+  if (switches & 2) strcat(wire_buffer, "1");
+  else strcat(wire_buffer, "0");
+
   
   // TERMINATE THE WIREBUFFER
   strcat(wire_buffer, 0);
 }
 
 void receiveComms(int howMany) {
-  Serial.println("I'm here");
   String message;
   digitalWrite(13,1);
   int i;
@@ -86,52 +96,84 @@ void receiveComms(int howMany) {
   else if (strcmp(wire_buffer, "*STAT?") == 0) load_status();
   else if (strcmp(wire_buffer, "*RST") == 0) {
     seconds_since_reset = millis() / 1000;
-    latch_trigger[0] = 0;
-    latch_trigger[1] = 0;
-    latch_triggered[0] = 0;
-    latch_triggered[1] = 0;
+    solenoid_trigger[0] = 0;
+    solenoid_trigger[1] = 0;
+    solenoid_triggered[0] = 0;
+    solenoid_triggered[1] = 0;
     load_status();
   }
   else if (message.indexOf("*TRIG=") != -1) {
     char state;
     state = message.substring(6).toInt();
-    if (state & 1) latch_trigger[0]++;
-    if (state & 2) latch_trigger[1]++;
+    if (state & 1) {
+      solenoid_trigger[0]++;
+//      Serial.println("SW1 triggerd by remote");
+    }
+    if (state & 2) {
+      solenoid_trigger[1]++;
+//      Serial.println("SW2 triggerd by remote");
+    }
     load_status();
   }
   else strcpy(wire_buffer,"Unknown command");
 }
 
 void setup() {
-  Serial.begin(9600);
+//  Serial.begin(9600);
   Wire.begin(WIRE_ADDR);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
-  pinMode(PIN_LATCH_1, OUTPUT);
-  pinMode(PIN_DOOR_1, INPUT_PULLUP);
-  pinMode(PIN_LATCH_2, OUTPUT);
-  pinMode(PIN_DOOR_2, INPUT_PULLUP);
+  pinMode(PIN_SOLENOID_1, OUTPUT);
+  pinMode(PIN_LIMIT_SWITCH_1, INPUT_PULLUP);
+  pinMode(PIN_WALL_SWITCH_1, INPUT_PULLUP);
+  pinMode(PIN_SOLENOID_2, OUTPUT);
+  pinMode(PIN_LIMIT_SWITCH_2, INPUT_PULLUP);
+  pinMode(PIN_WALL_SWITCH_2, INPUT_PULLUP);
 }
 
-void trigger_latch() {
-  if (latch_trigger[0] > latch_triggered[0]) {
-    digitalWrite(PIN_LATCH_1, 1);
-    latch_triggered[0]++;
+void trigger_solenoid() {
+  if (solenoid_trigger[0] > solenoid_triggered[0]) {
+    digitalWrite(PIN_SOLENOID_1, 1);
+    solenoid_triggered[0]++;
   }
-  if (latch_trigger[1] > latch_triggered[1]) {
-    digitalWrite(PIN_LATCH_2, 1);
-    latch_triggered[1]++;
+  if (solenoid_trigger[1] > solenoid_triggered[1]) {
+    digitalWrite(PIN_SOLENOID_2, 1);
+    solenoid_triggered[1]++;
   }
-  delay(1800);
-  digitalWrite(PIN_LATCH_1, 0);
-  digitalWrite(PIN_LATCH_2, 0);
+  delay(2000);
+  digitalWrite(PIN_SOLENOID_1, 0);
+  digitalWrite(PIN_SOLENOID_2, 0);
+  delay(100);
 }
 
 void loop() {
-  if (digitalRead(PIN_DOOR_1)) doors &= 1;
-  else doors |= ~1;
-  if (digitalRead(PIN_DOOR_2)) doors &= 2;
-  else doors |= ~2;
-  if (latch_trigger[0] > latch_triggered[0] || latch_trigger[1] > latch_triggered[1]) trigger_latch();
+  // Read Door-state
+  if (digitalRead(PIN_LIMIT_SWITCH_1)) doors |= 1;
+  else doors &= ~1;
+  if (digitalRead(PIN_LIMIT_SWITCH_2)) doors |= 2;
+  else doors &= ~2;
+
+  // Read wall switch-state
+  if (!digitalRead(PIN_WALL_SWITCH_1)) {
+//    Serial.println("WS1 triggered");
+    if (!(switches & 1)) {
+//      Serial.println("SW1 triggerd by watching");
+      solenoid_trigger[0]++;
+      switches |= 1;
+    }
+  }
+  else switches &= ~1;
+
+  if (!digitalRead(PIN_WALL_SWITCH_2)) {
+//    Serial.println("WS2 triggered");
+    if (!(switches & 2)) {
+//      Serial.println("SW2 triggerd by watching");
+      solenoid_trigger[1]++;
+      switches |= 2;
+    }
+  }
+  else switches &= ~2;
+
+  if (solenoid_trigger[0] > solenoid_triggered[0] || solenoid_trigger[1] > solenoid_triggered[1]) trigger_solenoid();
 }
 

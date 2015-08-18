@@ -19,9 +19,10 @@ int leds_set = -1;
 int leds_brightness = 64;
 int leds_int = 0;
 char make_pattern = 0;
-char transition = 0;
+char transition = 1;
 int leds_set_prev = -1;
 int brightness;
+int transition_blinks = 3;
 
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
@@ -70,7 +71,9 @@ void load_status() {
   strcat(wire_buffer, ",TRANSITION=");
   sprintf(tmp, "%d", transition);
   strcat(wire_buffer, tmp);
-  
+  strcat(wire_buffer, ",TRANSITION_BLINKS=");
+  sprintf(tmp, "%d", transition_blinks);
+  strcat(wire_buffer, tmp);
   
   // TERMINATE THE WIREBUFFER
   strcat(wire_buffer, 0);
@@ -110,6 +113,10 @@ void receiveComms(int howMany) {
     transition = message.substring(11).toInt();
     load_status();
   }
+  else if (message.indexOf("*SET_TRANS_BLINKS=") != -1) {
+    transition_blinks = message.substring(11).toInt();
+    load_status();
+  }
   else if (strcmp(wire_buffer, "*BLINK=") != -1) {
     make_pattern = message.substring(7).toInt();
     load_status();
@@ -138,6 +145,14 @@ void update_leds(int setleds, int bright) {
   strip.show();
 }
 
+void blink_leds(int leds_set, int leds_brightness) {
+  update_leds(-1, leds_brightness);
+  delay(100);
+  update_leds(leds_set, leds_brightness);
+  delay(100);
+}
+
+
 void setup() {
   Serial.begin(9600);
   strip.begin();
@@ -157,6 +172,7 @@ void loop() {
         brightness -= 3;
       }
       brightness = 0;
+      for (int i=0; i<4; i++) blink_leds(leds_set_prev, leds_brightness);
       while (brightness < leds_brightness) {
         update_leds(leds_set, brightness);
         brightness += 3;
@@ -170,10 +186,7 @@ void loop() {
   else update_leds(leds_set, leds_brightness);
   if (make_pattern) {
     while (make_pattern > 0) {
-      update_leds(-1, leds_brightness);
-      delay(100);
-      update_leds(leds_set, leds_brightness);
-      delay(100);
+      blink_leds(leds_set, leds_brightness);
       make_pattern--;
     }
     make_pattern = 0;

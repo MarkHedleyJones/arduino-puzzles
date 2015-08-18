@@ -9,7 +9,7 @@
 #define WIRE_ADDR 5
 #define PIN_OUT 2
 #define PRESSED !digitalRead(PIN_MORSE)
-#define BOUNDARY_PADDING 0.05            // Percent 
+#define BOUNDARY_PADDING 30            // Percent 
 #define true 1
 #define false 0
 #define DURATION_MIN 10
@@ -22,9 +22,7 @@
 #define BULB_6 4
 #define BULB_7 5
 #define BULB_8 6
-//#define BULB_9 7
-//#define BULB_10 8
-
+#define FINISH_FLASHES 20
 #define DEBUG 0
 
 char defaultMessage[6] = {'B', 'R', 'A', 'V', 'O', 0};
@@ -38,7 +36,7 @@ bool key_pressed = false;
 int completed = false;                      // 1 for puzzle done
 int totalTaps = 0;                      // Tap counter
 int attempts = 0;
-char last_attempt[MSG_LEN] = {0};      // Prevous attempt
+char last_attempt[MAX_TAPS] = {0};      // Prevous attempt
 bool checked = false;
 
 unsigned long seconds_since_reset = 0;
@@ -68,6 +66,7 @@ void setup() {
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
   set_message(defaultMessage);
+  illuminate_bulbs(0);
 }
 
 void transmitComms() {
@@ -125,32 +124,33 @@ void load_status() {
 void receiveComms(int howMany) {
   int i;
   digitalWrite(PIN_LED, 1);
-  if (DEBUG) Serial.println("Receiving message:");
+//  if (DEBUG) Serial.println("Receiving message:");
   for (i = 0; i < BUF_LEN; i++) wire_buffer[i] = '\0';
   i = 0;
   while (Wire.available() > 0) {
     wire_buffer[i] = Wire.read();
     i++;
   }
-  if (DEBUG) Serial.println(wire_buffer);
+//  if (DEBUG) Serial.println(wire_buffer);
   if (strcmp(wire_buffer, "*IDN?") == 0) strcpy(wire_buffer, "Morse code interpreter v1.0");
   else if (strcmp(wire_buffer, "*STAT?") == 0) load_status();
   else if (strcmp(wire_buffer, "*TRIG") == 0) {
-    if (DEBUG) Serial.println("Triggering");
+//    if (DEBUG) Serial.println("Triggering");
     completed = 1;
     load_status();
   }
   else if (strcmp(wire_buffer, "*RST") == 0) {
-    seconds_since_reset = millis() / 1000;
     totalTaps = 0;
     completed = 0;
-    digitalWrite(PIN_OUT, HIGH);
-    for (int i = 0; i < MSG_LEN; i++) last_attempt[i] = 0;
-    set_message(defaultMessage);
-    clear_durations();
     attempts = 0;
+    set_message(defaultMessage);
     key_pressed = false;
+    seconds_since_reset = millis() / 1000;
     load_status();
+    digitalWrite(PIN_OUT, HIGH);
+    for (int i = 0; i < MAX_TAPS; i++) last_attempt[i] = 0;
+    clear_durations();
+    
   }
   else if (wire_buffer[0] == '*' &&
            wire_buffer[1] == 'M' &&
@@ -176,7 +176,6 @@ void receiveComms(int howMany) {
   else strcpy(wire_buffer, "Unknown command");
 }
 
-
 void add_duration(int duration) {
   // Shifts all durations in the tap_durations array left one
   for (int i = 1; i < MAX_TAPS; i++) tap_durations[i - 1] = tap_durations[i];
@@ -185,7 +184,8 @@ void add_duration(int duration) {
 
 void clear_durations() {
   for (int i = 0; i < MAX_TAPS; i++) tap_durations[i] = 0;
-  print_durations();
+  for (int i = 0; i < MAX_TAPS; i++) last_attempt[i] = 0;
+//  print_durations();
   illuminate_bulbs(0);
 }
 
@@ -203,18 +203,32 @@ bool durations_empty() {
 
 void get_boundaries(int* minimum, int* maximum) {
   int longest = 0;
-  int shortest = 65000;
+  int shortest = 32000;
   for (int i = 0; i < MAX_TAPS; i++) {
     if (tap_durations[i] > DURATION_MIN) {
-      if (tap_durations[i] > shortest) shortest = tap_durations[i];
-      if (tap_durations[i] < longest) longest = tap_durations[i];
+      if (tap_durations[i] < shortest) shortest = tap_durations[i];
+      if (tap_durations[i] > longest) longest = tap_durations[i];
     }
   }
   int boundary = 0;
   int range = (longest - shortest);
   boundary = (range / 2) + shortest;
-  *minimum = boundary - (int)(BOUNDARY_PADDING * range);
-  *maximum = boundary + (int)(BOUNDARY_PADDING * range);
+  *minimum = boundary - (int)(BOUNDARY_PADDING);
+  *maximum = boundary + (int)(BOUNDARY_PADDING);
+  if (DEBUG) {
+    Serial.print("Longest press = ");
+    Serial.print(longest);
+    Serial.println(" ms");
+    Serial.print("Shortest press = ");
+    Serial.print(shortest);
+    Serial.println(" ms");
+    Serial.print("Range = ");
+    Serial.print(range);
+    Serial.println(" ms");
+    Serial.print("Boundary = ");
+    Serial.print(boundary);
+    Serial.println(" ms");
+  }
 }
 
 int convert_taps_to_bulbs(int num_taps) {
@@ -245,6 +259,9 @@ void check_tap_durations() {
   int boundary_min = 0;
   int boundary_max = 0;
   int count_correct = 0;
+  char tap = ' ';
+  char unknown_char = 'x';
+  int start_count = 0;
   get_boundaries(&boundary_min, &boundary_max);
   if (DEBUG) Serial.print("Boundary min = ");
   if (DEBUG) Serial.println(boundary_min);
@@ -254,23 +271,29 @@ void check_tap_durations() {
   if (DEBUG) Serial.println(expected_taps);
   if (DEBUG) Serial.print("Message length = ");
   if (DEBUG) Serial.println(expected_msg_length);
-  if (DEBUG) Serial.print("Got: ");
-
-  if (DEBUG) Serial.print("Correct: ");
+  if (DEBUG) Serial.print("Got:\n");
   count_correct = 0;
   for (int i = 0; i < MAX_TAPS; i++) {
-    if (tap_durations[i] < DURATION_MIN) continue;
+    if (tap_durations[i] < DURATION_MIN) {
+      start_count = i;
+      continue;
+    }
     else if (tap_durations[i] < boundary_min) {
       // short
-      if (DEBUG) Serial.print("Is ");
+      tap = '.';
+      
+      if (DEBUG) Serial.print("Tap ");
+      if (DEBUG) Serial.print(tap);
+      if (DEBUG) Serial.print(" == ");
       if (DEBUG) Serial.print(expected_taps[count_correct]);
-      if (DEBUG) Serial.print(" (expected) = . (tapped)? ");
-      if (expected_taps[count_correct] == '.') {
-        if (DEBUG) Serial.print("Y");
+      if (DEBUG) Serial.print(" ? ");
+      
+      if (expected_taps[count_correct] == tap) {
+        if (DEBUG) Serial.print("Yes");
         count_correct++;
       }
       else {
-        if (DEBUG) Serial.print("N");
+        if (DEBUG) Serial.print("No");
         count_correct = 0;
       }
       if (DEBUG) Serial.print("; count = ");
@@ -278,27 +301,58 @@ void check_tap_durations() {
 
     }
     else if (tap_durations[i] > boundary_max) {
-
+      tap = '-';
       // long
-      if (DEBUG) Serial.print("Is ");
+      
+      if (DEBUG) Serial.print("Tap ");
+      if (DEBUG) Serial.print(tap);
+      if (DEBUG) Serial.print(" == ");
       if (DEBUG) Serial.print(expected_taps[count_correct]);
-      if (DEBUG) Serial.print(" (expected) = - (tapped) ? ");
-      if (expected_taps[count_correct] == '-') {
-        if (DEBUG) Serial.print("Y");
+      if (DEBUG) Serial.print(" ? ");
+      
+      if (expected_taps[count_correct] == tap) {
+        if (DEBUG) Serial.print("Yes");
         count_correct++;
       }
       else {
-        if (DEBUG) Serial.print("N");
+        if (DEBUG) Serial.print("No");
         count_correct = 0;
       }
       if (DEBUG) Serial.print("; count = ");
       if (DEBUG) Serial.println(count_correct);
     }
     else {
-      if (DEBUG) Serial.print("x");
+      tap = 'x';
+      if (DEBUG) Serial.print("Tap ");
+      if (DEBUG) Serial.print(tap);
+      if (DEBUG) Serial.print(" == ");
+      if (DEBUG) Serial.print(expected_taps[count_correct]);
+      if (DEBUG) Serial.print(" ? ");
+      if (DEBUG) Serial.println("Yes");
+      
+      if (unknown_char == 'x') {
+        // Give the user the benefit of the doubt on that tap
+        // but make a note of which length it would have been
+        // intended to represent.
+        unknown_char = expected_taps[count_correct];
+        count_correct++;
+        if (DEBUG) Serial.print("Unknown now set as ");
+        if (DEBUG) Serial.println(unknown_char);
+      }
+      else {
+        if (expected_taps[count_correct] == unknown_char) {
+          count_correct++;
+          if (DEBUG) Serial.println("Consistant use of unknown char");
+        }
+        else {
+          unknown_char = 'x';
+          count_correct = 0;
+          if (DEBUG) Serial.println("Inconsistant use of unknown char");
+        }
+      }
     }
+    last_attempt[i-start_count-1] = tap;
   }
-  if (DEBUG) Serial.println("");
   if (DEBUG) Serial.print("Correct = ");
   if (DEBUG) Serial.println(count_correct);
   if (count_correct == expected_msg_length) {
@@ -309,13 +363,11 @@ void check_tap_durations() {
   checked = true;
 }
 
-void flash_bulbs(int flashes) {
-  for (int i=0; i< flashes; i++) {
-    illuminate_bulbs(0);
-    delay(FLASH_PERIOD);
-    illuminate_bulbs(10);
-    delay(FLASH_PERIOD);
-  }
+void flash_bulbs() {
+  illuminate_bulbs(0);
+  delay(FLASH_PERIOD);
+  illuminate_bulbs(10);
+  delay(FLASH_PERIOD);
 }
 
 void loop() {
@@ -323,7 +375,7 @@ void loop() {
   unsigned long millis_start = 0;
   // Wait for the first press
   while (!PRESSED && !completed) {
-    if ((millis() - millis_end > 600) && !checked) check_tap_durations();
+    if ((millis() - millis_end > 200) && !checked) check_tap_durations();
     if ((millis() - millis_end > 3000) && !durations_empty()) {
       attempts++;
       clear_durations();
@@ -339,8 +391,12 @@ void loop() {
   print_durations();
 
   if (completed) {
-    flash_bulbs(30);
-    illuminate_bulbs(10);
+    for (int i=0; i < FINISH_FLASHES && completed; i++) flash_bulbs();
+    illuminate_bulbs(8);
+    for (int i=0; completed && i < 5; i++) {
+      delay(1000);
+    }
+    illuminate_bulbs(0);
     digitalWrite(13, HIGH);
     digitalWrite(PIN_OUT, LOW);
     if (DEBUG) Serial.println("Correct message! - Waiting for reset...");
@@ -395,8 +451,8 @@ String convert_char_taps(char character) {
 void set_message(char *message) {
   int i;
   expected_msg_length = 0;
-  if (DEBUG) Serial.print("Setting message to: ");
-  if (DEBUG) Serial.println(message);
+//  if (DEBUG) Serial.print("Setting message to: ");
+//  if (DEBUG) Serial.println(message);
   // Clear the expected message string
   for (i = 0; i < MSG_LEN; i++) expected_taps[i] = 0;
   for (i = 0; i < MSG_LEN; i++) expected_msg_decoded[i] = 0;
@@ -414,6 +470,6 @@ void set_message(char *message) {
     if (code != " ") expected_msg_length += code.length();
   }
   expected_taps[index] = '\0';
-  if (DEBUG) Serial.println("Expected message pattern: ");
-  if (DEBUG) Serial.println(expected_taps);
+//  if (DEBUG) Serial.println("Expected message pattern: ");
+//  if (DEBUG) Serial.println(expected_taps);
 }

@@ -7,6 +7,7 @@
       body {
         background-color: #505050;
         text-align: center;
+        margin: 0;
       }
       .main {
         text-align: left;
@@ -37,6 +38,17 @@
       .stats table td {
         text-align: left
       }
+      #banner table:nth-child(2) {
+        text-align: right;
+      }
+      #banner table td {
+        text-align: left;
+        padding-left: 10px;
+      }
+      #banner {
+        padding: 10px;
+        margin: 20px;
+      }
       button {
         display: inline-block;
       }
@@ -44,11 +56,73 @@
         text-align: center;
         margin: 5px;
       }
+      .led table tr td button {
+        width: 60px;
+        padding: 5px;
+      }
 
+      #banner {
+        width: 100%;
+        background-color: white;
+        position: relative;
+        top: 0;
+        margin: 0;
+      }
     </style>
   </head>
-  <body>
-
+  <body><div id="banner"><h2 style="margin: 0">Room Status</h2>
+    <table style="margin: 30px auto;">
+      <tr>
+        <th>Secret Cupboard:</th>
+        <td><span id="stat_Secret-Cupboard"></span></td>
+      </tr>
+      <tr>
+        <th>Telephone Exchange Found:</th>
+        <td><span id="stat_Telephone-Exchange-Found"></span></td>
+      </tr>
+      <tr>
+        <th>Telephone Exchange Completed:</th>
+        <td><span id="stat_Telephone-Exchange-Completed"></span></td>
+      </tr>
+      <tr>
+        <th>Wall Switch 1:</th>
+        <td><span id="stat_Wall-Switch-1"></span></td>
+      </tr>
+      <tr>
+        <th>Wall Switch 2:</th>
+        <td><span id="stat_Wall-Switch-2"></span></td>
+      </tr>
+      <tr>
+        <th>Morse Code Machine Found:</th>
+        <td><span id="stat_Morse-Code-Machine-Found"></span></td>
+      </tr>
+      <tr>
+        <th>Morse Code Message Sent:</th>
+        <td><span id="stat_Morse-Code-Message-Sent"></span></td>
+      </tr>
+      <tr>
+        <th>Secret Message Received:</th>
+        <td><span id="stat_Secret-Message-Given"></span></td>
+      </tr>
+      <tr>
+        <th>Locker 1:</th>
+        <td><span id="stat_Locker-1-Opened"></span></td>
+      </tr>
+      <tr>
+        <th>Locker 2:</th>
+        <td><span id="stat_Locker-2-Opened"></span></td>
+      </tr>
+      <tr>
+        <th>Locker 3:</th>
+        <td><span id="stat_Locker-3-Opened"></span></td>
+      </tr>
+      <tr>
+        <th>Locker 4:</th>
+        <td><span id="stat_Locker-4-Opened"></span></td>
+      </tr>
+    </table>
+    <button onclick="resetAll()">Reset All</button>
+  </div>
     <!-- ****************************************************************** -->
     <!-- *********************** LED Door Controller ********************** -->
     <!-- ****************************************************************** -->
@@ -57,18 +131,30 @@
       <h3>LED Door Controller</h3>
       <div class="stats"></div>
       <hr>
-      <div class="block">
-        <button onclick="sendMessage(3,'*SET_PROG=0')">0%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=15')">10%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=30')">20%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=45')">30%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=60')">40%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=75')">50%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=90')">60%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=105')">70%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=120')">80%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=135')">90%</button>
-        <button onclick="sendMessage(3,'*SET_PROG=150')">100%</button>
+      <div class="block led">
+        <table style="margin: 0 auto">
+        <tr>
+          <td><button onclick="sendMessage(3,'*SET_PROG=0')">0%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=48')">33%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=96')">66%</button></td>
+        </tr>
+        <tr>
+          <td><button onclick="sendMessage(3,'*SET_PROG=12')">8%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=60')">41%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=108')">74%</button></td>
+        </tr>
+        <tr>
+          <td><button onclick="sendMessage(3,'*SET_PROG=24')">17%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=72')">50%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=120')">83%</button></td>
+        </tr>
+        <tr>
+          <td><button onclick="sendMessage(3,'*SET_PROG=36')">25%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=84')">58%</button></td>
+          <td><button onclick="sendMessage(3,'*SET_PROG=132')">91%</button></td>
+        </tr>
+        </table>
+        <button style="width: 190px" onclick="sendMessage(3,'*SET_PROG=145')">100%</button>
       </div>
       <hr>
       <div class="block">
@@ -80,11 +166,11 @@
       </div>
       <hr>
       <div class="block">
-        <button onclick="sendMessage(3,'*BLINK=3')">Blink</button>
+        <tr><button onclick="sendMessage(3,'*BLINK=3')">Blink</button></tr>
       </div>
       <hr>
-      <button onclick="sendMessage(3,'*RST')">Reset</button>
-      <table>
+      <tr><button onclick="sendMessage(3,'*RST')">Reset</button></tr>
+      <!-- <table>
         <tr>
           <th>Command:</th>
           <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
@@ -93,7 +179,7 @@
           <th>Response:</th>
           <td><span id="3_resp"></span></td>
         </tr>
-      </table>
+      </table> -->
     </div>
 
     <!-- ****************************************************************** -->
@@ -183,16 +269,22 @@
       <button onclick="sendMessage(8,'*RST')">Reset</button>
     </div>
 
+    <div class="main" id="Locker-Door-Sensors">
+      <h3>Locker Door Sensors</h3>
+      <div class="stats"></div>
+      <hr>
+      <button onclick="sendMessage(2,'*RST')">Reset</button>
+    </div>
 
     <!-- ****************************************************************** -->
     <!-- ************************** Geiger Counter ************************ -->
     <!-- ****************************************************************** -->
-    <div class="main" id="Geiger-Counter">
+<!--     <div class="main" id="Geiger-Counter">
       <h3>Geiger Counter</h3>
       <div class="stats"></div>
       <hr>
       <button onclick="sendMessage(7,'*RST')">Reset</button>
-    </div>
+    </div> -->
 
 
     <!-- ****************************************************************** -->
@@ -253,19 +345,37 @@
     <!-- ****************************************************************** -->
     <!-- ************************* Main Control *************************** -->
     <!-- ****************************************************************** -->
-    <div class="main" id="Main-Control">
+<!--     <div class="main" id="Main-Control">
       <h3>Main Control</h3>
       <div class="stats"></div>
       <hr>
       <div class="block">
-        <button onclick="resetAll()">Reset All</button>
+
       </div>
-    </div>
+    </div> -->
 
     <script type="text/javascript">
       setTimeout(getStats, 1000);
 
+      var locker_thresholds = [500, 500, 500, 500];
+
+      var triggers = {
+        "Secret Cupboard": 0,
+        "Telephone Exchange Found": 0,
+        "Telephone Exchange Completed": 0,
+        "Wall Switch 1": 0,
+        "Wall Switch 2": 0,
+        "Morse Code Machine Found": 0,
+        "Morse Code Message Sent": 0,
+        "Secret Message Given": 0,
+        "Locker 1 Opened": 0,
+        "Locker 2 Opened": 0,
+        "Locker 3 Opened": 0,
+        "Locker 4 Opened": 0
+      }
+
       var names = {
+        2: "Locker Door Sensors",
         3: "LED Door Controller",
         4: "Clock",
         7: "Geiger Counter",
@@ -285,7 +395,7 @@
             puzzle_data[names[key]] = val.split(",");
           });
           updateStats();
-          setTimeout(getStats, 1000);
+          getStats();
         });
       }
 
@@ -310,18 +420,21 @@
               if (d[1] >= 0) {
                 html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
                 table += "<tr><th>State:</th><td>On</td></tr>";
-                table += "<tr><th>Percent:</th><td>"+(d[1]/150)*100+"</td></tr>";
+                table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.round((d[1]/145)*100)+"%)</td></tr>";
               }
               else {
                 html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
                 table += "<tr><th>State:</th><td>Off</td></tr>";
-                table += "<tr><th>Percent:</th><td>0</td></tr>";
+                table += "<tr><th>Progress:</th><td>0</td></tr>";
               }
               break;
 
             case "TIME":
               table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
               break;
+
+            case "TRANSITION_BLINKS":
+              table += "<tr><th>Transition Blinks<:/th><td>"+d[1]+"</td></th>";
 
           }
           // table += "<tr><th>" + d[0] + ":</th><td>" + d[1] + "</td></tr>";
@@ -330,45 +443,119 @@
         $("#LED-Door-Controller .stats").html(table+html);
 
 
+        // html = "";
+        // table = "<table>";
+        // $.each(puzzle_data["Geiger Counter"], function (key, val) {
+        //   d = val.split("=");
+        //   switch (d[0]) {
+        //     case "TIME":
+        //       table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+        //       break;
+
+        //     case "OPENED":
+        //       if (d[1] == 0) table += "<tr><th>Cupboard found:</th><td>No</td></tr>";
+        //       else table += "<tr><th>Cupboard found:</th><td>Yes</td></tr>";
+        //       break;
+
+        //     case "OPEN":
+        //       if (d[1] == 0) table += "<tr><th>Cupboard open:</th><td>No</td></tr>";
+        //       else table += "<tr><th>Cupboard open:</th><td>Yes</td></tr>";
+        //       break;
+
+        //     case "RX_SIGNAL":
+        //       if (d[1] == 0) table += "<tr><th>Signal:</th><td>No</td></tr>";
+        //       else table += "<tr><th>Signal:</th><td>Yes</td></tr>";
+        //       break;
+
+        //     case "RX_COUNT":
+        //       if (d[1] == 0) table += "<tr><th>Packets received:</th><td>None</td></tr>";
+        //       else table += "<tr><th>Packets received:</th><td>"+d[1]+"</td></tr>";
+        //       break;
+
+        //     case "BATTVOLT":
+        //       if (d[1] == -1) table += "<tr><th>Battery voltage:</th><td>Unknown</td></tr>";
+        //       else table += "<tr><th>Battery voltage:</th><td>"+d[1]+" V</td></tr>";
+        //       break;
+
+        //   }
+        //   // html += d[0] + d[1] + "<br>";
+        // });
+        // table += "</table>";
+        // $("#Geiger-Counter .stats").html(table+html);
+
         html = "";
         table = "<table>";
-        $.each(puzzle_data["Geiger Counter"], function (key, val) {
+        $.each(puzzle_data["Locker Door Sensors"], function (key, val) {
           d = val.split("=");
           switch (d[0]) {
             case "TIME":
-              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              table += "<tr><th>Time:</th><td>"+d[1]+"</td></tr>";
               break;
 
-            case "OPENED":
-              if (d[1] == 0) table += "<tr><th>Cupboard found:</th><td>No</td></tr>";
-              else table += "<tr><th>Cupboard found:</th><td>Yes</td></tr>";
+            case "D_1":
+              table += "<tr><th>Locker 1 level:</th><td>"+d[1]+"</td></tr>";
               break;
 
-            case "OPEN":
-              if (d[1] == 0) table += "<tr><th>Cupboard open:</th><td>No</td></tr>";
-              else table += "<tr><th>Cupboard open:</th><td>Yes</td></tr>";
+            case "1_MAX":
+              if (d[1] > locker_thresholds[0]) {
+                triggers["Locker 1 Opened"] = 1;
+                table += "<tr><th>Locker 1 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+                triggers["Locker 1 Opened"] = 0;
+                table += "<tr><th>Locker 1 opened:</th><td style=\"color: green\">No</td></tr>";
+              }
               break;
 
-            case "RX_SIGNAL":
-              if (d[1] == 0) table += "<tr><th>Signal:</th><td>No</td></tr>";
-              else table += "<tr><th>Signal:</th><td>Yes</td></tr>";
+            case "D_2":
+              table += "<tr><th>Locker 2 level:</th><td>"+d[1]+"</td></tr>";
               break;
 
-            case "RX_COUNT":
-              if (d[1] == 0) table += "<tr><th>Packets received:</th><td>None</td></tr>";
-              else table += "<tr><th>Packets received:</th><td>"+d[1]+"</td></tr>";
+            case "2_MAX":
+              if (d[1] > locker_thresholds[1]) {
+                triggers["Locker 2 Opened"] = 1;
+                table += "<tr><th>Locker 2 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+                triggers["Locker 2 Opened"] = 0;
+                table += "<tr><th>Locker 2 opened:</th><td style=\"color: green\">No</td></tr>";
+              }
               break;
 
-            case "BATTVOLT":
-              if (d[1] == -1) table += "<tr><th>Battery voltage:</th><td>Unknown</td></tr>";
-              else table += "<tr><th>Battery voltage:</th><td>"+d[1]+" V</td></tr>";
+            case "D_3":
+              table += "<tr><th>Locker 3 level:</th><td>"+d[1]+"</td></tr>";
               break;
 
+            case "3_MAX":
+              if (d[1] > locker_thresholds[2]) {
+                triggers["Locker 3 Opened"] = 1;
+                table += "<tr><th>Locker 3 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+                table += "<tr><th>Locker 3 opened:</th><td style=\"color: green\">No</td></tr>";
+                triggers["Locker 3 Opened"] = 0;
+              }
+              break;
+
+            case "D_4":
+              table += "<tr><th>Locker 4 level:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "4_MAX":
+              if (d[1] > locker_thresholds[3]) {
+                triggers["Locker 4 Opened"] = 1;
+                table += "<tr><th>Locker 4 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+                triggers["Locker 4 Opened"] = 0;
+                table += "<tr><th>Locker 4 opened:</th><td style=\"color: green\">No</td></tr>";
+              }
+              break;
           }
           // html += d[0] + d[1] + "<br>";
         });
         table += "</table>";
-        $("#Geiger-Counter .stats").html(table+html);
+        $("#Locker-Door-Sensors .stats").html(table+html);
 
         html = "";
         table = "<table>";
@@ -408,9 +595,22 @@
             case "DONE":
               if (d[1]==1) {
                 table += "<tr><th>Completed:</th><td style='color: red'>Yes</td></tr>";
+                triggers["Morse Code Message Sent"] = 1;
               }
               else {
                 table += "<tr><th>Completed:</th><td style='color: green'>No</td></tr>";
+                triggers["Morse Code Message Sent"] = 0;
+              }
+              break;
+
+            case "PRESSED":
+              if (d[1] == 1) {
+                table += "<tr><th>Pressed:</th><td style='color: red'>Yes</td></tr>";
+                triggers["Morse Code Machine Found"] = 1;
+              }
+              else {
+                table += "<tr><th>Pressed:</th><td style='color: green'>No</td></tr>";
+                triggers["Morse Code Machine Found"] = 0;
               }
               break;
 
@@ -444,26 +644,48 @@
               table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
               break;
 
-            case "LATCH_1":
+            case "SOLENOID_1":
               if (d[1] > 0) {
                 table += "<tr><th>Left solenoid:</th><td style='color: red'>Fired " + (d[1] > 1 ? d[1] + ' times' : '') + "</td></tr>";
               }
-              else table += "<tr><th>Left latch:</th><td style='color: green'>Ready</td></tr>";
+              else table += "<tr><th>Left solenoid:</th><td style='color: green'>Ready</td></tr>";
               break;
 
             case "DOOR_1":
-              if (d[1] == 1) table += "<tr><th>Left door:</th><td style='color: green'>Closed</td></tr>";
-              else table += "<tr><th>Left door:</th><td style='color: red'>Open</td></tr>";
+              if (d[1] == 1) {
+                table += "<tr><th>Left door:</th><td style='color: green'>Closed</td></tr>";
+                triggers["Wall Switch 1"] = 1;
+              }
+              else {
+                table += "<tr><th>Left door:</th><td style='color: red'>Open</td></tr>";
+                triggers["Wall Switch 1"] = 0;
+              }
               break;
 
-            case "LATCH_2":
+            case "SWITCH_1":
+              if (d[1] == 1) table += "<tr><th>Left wall switch:</th><td style='color: red'>Enabled</td></tr>";
+              else table += "<tr><th>Left wall switch:</th><td style='color: green'>Ready</td></tr>";
+              break;
+
+            case "SOLENOID_2":
               if (d[1] > 0) table += "<tr><th>Right solenoid:</th><td style='color: red'>Fired " + (d[1] > 1 ? d[1] + ' times' : '') + "</td></tr>";
-              else table += "<tr><th>Right latch:</th><td style='color: green'>Ready</td></tr>";
+              else table += "<tr><th>Right solenoid:</th><td style='color: green'>Ready</td></tr>";
               break;
 
             case "DOOR_2":
-              if (d[1] == 1) table += "<tr><th>Right door:</th><td style='color: green'>Closed</td></tr>";
-              else table += "<tr><th>Right door:</th><td style='color: red'>Open</td></tr>";
+              if (d[1] == 1) {
+                table += "<tr><th>Right door:</th><td style='color: green'>Closed</td></tr>";
+                triggers["Wall Switch 2"] = 1;
+              }
+              else {
+                table += "<tr><th>Right door:</th><td style='color: red'>Open</td></tr>";
+                triggers["Wall Switch 2"] = 1;
+              }
+              break;
+
+            case "SWITCH_2":
+              if (d[1] == 1) table += "<tr><th>Right wall switch:</th><td style='color: red'>Enabled</td></tr>";
+              else table += "<tr><th>Right wall switch:</th><td style='color: green'>Ready</td></tr>";
               break;
           }
           // html += d[0] + d[1] + "<br>";
@@ -520,8 +742,14 @@
               break;
 
             case "TRIGGERED":
-              if (d[1] == 0) table += "<tr><th>Solved:</th><td style='color: green'>No</td></tr>";
-              else table += "<tr><th>Solved:</th><td style='color: red'>Yes</td></tr>";
+              if (d[1] == 0) {
+                table += "<tr><th>Solved:</th><td style='color: green'>No</td></tr>";
+                triggers["Telephone Exchange Completed"] = 1;
+              }
+              else {
+                table += "<tr><th>Solved:</th><td style='color: red'>Yes</td></tr>";
+                triggers["Telephone Exchange Completed"] = 0;
+              }
               break;
 
             case "COMBO":
@@ -560,6 +788,7 @@
               if (d[1] & 512) state.push(10);
               if (d[1] & 1024) state.push(11);
               if (d[1] & 2048) state.push(12);
+              if (state != []) triggers["Telephone Exchange Completed"] = 1;
               table += "<tr><th>Buttons pressed:</th><td>";
               $.each(state, function(key, val)  {
                 table += val
@@ -587,6 +816,7 @@
               if (d[1] == 1) {
                 table += "<tr><th>Message given:</th><td style='color: red'>Yes</td></tr>";
                 html += "<button onclick=\"sendMessage(10,'*RST')\">Reset</button>";
+                triggers["Secret Message Given"] = 1;
               }
               else {
                 table += "<tr><th>Message given:</th><td style='color: green'>No</td></tr>";
@@ -600,7 +830,116 @@
         table += "</table>";
         $("#Secret-Message .stats").html(table+html);
 
+
+        if (triggers["Secret Cupboard"]) {
+          $("#stat_Secret-Cupboard").html("Found");
+          $("#stat_Secret-Cupboard").css("color", "red");
+        }
+        else {
+          $("#stat_Secret-Cupboard").html("Ready");
+          $("#stat_Secret-Cupboard").css("color", "green");
+        }
+
+        if (triggers["Telephone Exchange Found"]) {
+          $("#stat_Telephone-Exchange-Found").html("Found");
+          $("#stat_Telephone-Exchange-Found").css("color", "red");
+        }
+        else {
+          $("#stat_Telephone-Exchange-Found").html("Ready");
+          $("#stat_Telephone-Exchange-Found").css("color", "green");
+        }
+
+        if (triggers["Telephone Exchange Completed"]) {
+          $("#stat_Telephone-Exchange-Completed").html("Completed");
+          $("#stat_Telephone-Exchange-Completed").css("color", "red");
+        }
+        else {
+          $("#stat_Telephone-Exchange-Completed").html("Ready");
+          $("#stat_Telephone-Exchange-Completed").css("color", "green");
+        }
+
+        if (triggers["Wall Switch 1"]) {
+          $("#stat_Wall-Switch-1").html("Triggered");
+          $("#stat_Wall-Switch-1").css("color", "red");
+        }
+        else {
+          $("#stat_Wall-Switch-1").html("Ready");
+          $("#stat_Wall-Switch-1").css("color", "green");
+        }
+
+        if (triggers["Wall Switch 2"]) {
+          $("#stat_Wall-Switch-2").html("Triggered");
+          $("#stat_Wall-Switch-2").css("color", "red");
+        }
+        else {
+          $("#stat_Wall-Switch-2").html("Ready");
+          $("#stat_Wall-Switch-2").css("color", "green");
+        }
+
+        if (triggers["Morse Code Machine Found"]) {
+          $("#stat_Morse-Code-Machine-Found").html("Found");
+          $("#stat_Morse-Code-Machine-Found").css("color", "red");
+        }
+        else {
+          $("#stat_Morse-Code-Machine-Found").html("Ready");
+          $("#stat_Morse-Code-Machine-Found").css("color", "green");
+        }
+
+        if (triggers["Morse Code Message Sent"]) {
+          $("#stat_Morse-Code-Message-Sent").html("Yes");
+          $("#stat_Morse-Code-Message-Sent").css("color", "red");
+        }
+        else {
+          $("#stat_Morse-Code-Message-Sent").html("Ready");
+          $("#stat_Morse-Code-Message-Sent").css("color", "green");
+        }
+
+        if (triggers["Secret Message Given"]) {
+          $("#stat_Secret-Message-Given").html("Yes");
+          $("#stat_Secret-Message-Given").css("color", "red");
+        }
+        else {
+          $("#stat_Secret-Message-Given").html("Ready");
+          $("#stat_Secret-Message-Given").css("color", "green");
+        }
+
+        if (triggers["Locker 1 Opened"]) {
+          $("#stat_Locker-1-Opened").html("Open");
+          $("#stat_Locker-1-Opened").css("color", "red");
+        }
+        else {
+          $("#stat_Locker-1-Opened").html("Ready");
+          $("#stat_Locker-1-Opened").css("color", "green");
+        }
+
+        if (triggers["Locker 2 Opened"]) {
+          $("#stat_Locker-2-Opened").html("Open");
+          $("#stat_Locker-2-Opened").css("color", "red");
+        }
+        else {
+          $("#stat_Locker-2-Opened").html("Ready");
+          $("#stat_Locker-2-Opened").css("color", "green");
+        }
+
+        if (triggers["Locker 3 Opened"]) {
+          $("#stat_Locker-3-Opened").html("Open");
+          $("#stat_Locker-3-Opened").css("color", "red");
+        }
+        else {
+          $("#stat_Locker-3-Opened").html("Ready");
+          $("#stat_Locker-3-Opened").css("color", "green");
+        }
+
+        if (triggers["Locker 4 Opened"]) {
+          $("#stat_Locker-4-Opened").html("Open");
+          $("#stat_Locker-4-Opened").css("color", "red");
+        }
+        else {
+          $("#stat_Locker-4-Opened").html("Ready");
+          $("#stat_Locker-4-Opened").css("color", "green");
+        }
       }
+
       function sendMessage(id, msg) {
         $.ajax({
           url: "http://192.168.2.177?device="+id+"&command="+msg,
@@ -610,6 +949,7 @@
           timeout: 1000
         });
       }
+
       function processResponse(xhr, status) {
         if (status == "success") {
           rsp = xhr.responseJSON;

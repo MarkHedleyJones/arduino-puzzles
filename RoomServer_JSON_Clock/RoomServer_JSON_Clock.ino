@@ -30,7 +30,7 @@ Adafruit_7segment matrix = Adafruit_7segment();
 byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 };
-IPAddress ip(192, 168, 1, 177);
+IPAddress ip(192, 168, 2, 177);
 EthernetServer server(80);
 
 void reset_room(void);
@@ -152,7 +152,7 @@ char communicate_with_device(int device, char* command) {
     Wire.write(command[i]);
   }
   Wire.endTransmission();
-  delay(50);
+  delay(100);
   Wire.requestFrom(device, 32);
   for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
   for (int i = 0; i < 32; i++) {
@@ -163,7 +163,7 @@ char communicate_with_device(int device, char* command) {
       break;
     }
   }
-  delay(10);
+//  delay(10);
   Wire.requestFrom(device, 32);
   for (int i = 32; i < 64; i++) {
     command[i] = Wire.read();
@@ -173,7 +173,7 @@ char communicate_with_device(int device, char* command) {
       break;
     }
   }
-  delay(10);
+//  delay(10);
   Wire.requestFrom(device, 32);
   for (int i = 64; i < 95; i++) {
     command[i] = Wire.read();
@@ -316,11 +316,12 @@ void handle_http_client(EthernetClient client) {
           strcpy(tmp, wire_buffer);
           String message = String(wire_buffer);
           client.println("{");
-          for (int i=3; i<11; i++) {
+          for (int i=2; i<11; i++) {
             if (i == 4) {
               set_status_clock();
               strcpy(i2c_msg, wire_buffer);
             }
+            else if (i == 7) continue;
             else if (i == 10) {
               set_status_secret_message();
               strcpy(i2c_msg, wire_buffer);
