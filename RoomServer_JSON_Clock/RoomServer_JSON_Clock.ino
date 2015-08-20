@@ -321,7 +321,6 @@ void handle_http_client(EthernetClient client) {
               set_status_clock();
               strcpy(i2c_msg, wire_buffer);
             }
-            else if (i == 7) continue;
             else if (i == 10) {
               set_status_secret_message();
               strcpy(i2c_msg, wire_buffer);
@@ -462,6 +461,10 @@ void loop() {
         seconds_since_reset = millis() / 1000;
         strcpy(i2c_msg, "*SET_PROG=0");
         communicate_with_device(3, i2c_msg);
+
+        // Do this because we want it to keep the time even under reset
+        strcpy(i2c_msg, "*RST");
+        communicate_with_device(7, i2c_msg);
       }
       
       // Debounce the button press and check for hard reset
@@ -516,7 +519,7 @@ void loop() {
     case STATE_ENDED:
       if (first_entry) {
         Serial.println("STATE_ENDED");
-        strcpy(i2c_msg, "*SET_PROG=150");
+        strcpy(i2c_msg, "*SET_PROG=145");
         communicate_with_device(3, i2c_msg);
         clock_paused = 1;
       }
@@ -541,11 +544,11 @@ void loop() {
         strcpy(i2c_msg, "*RST");
         communicate_with_device(3, i2c_msg);
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(7, i2c_msg);
-        strcpy(i2c_msg, "*RST");
         communicate_with_device(5, i2c_msg);
         strcpy(i2c_msg, "*RST");
         communicate_with_device(6, i2c_msg);
+        strcpy(i2c_msg, "*RST");
+        communicate_with_device(7, i2c_msg);
         strcpy(i2c_msg, "*RST");
         communicate_with_device(8, i2c_msg);
         strcpy(i2c_msg, "*RST");

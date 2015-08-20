@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="jquery-2.1.4.min.js"></script>
+    <script src="masonry.pkgd.min.js"></script>
     <title>Locked Room Interface</title>
     <style type="text/css">
       body {
@@ -9,17 +10,23 @@
         text-align: center;
         margin: 0;
       }
-      .main {
-        text-align: left;
+      .grid {
+        width: 1600px;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .grid-item {
+        /*text-align: left;*/
         width: 400px;
         height: auto;
-        display: inline-block;
+        margin: 20px 0;
+        /*display: inline-block;*/
         background-color: #eee;
-        margin: 20px;
+        margin-bottom: 10px;
         border-radius: 5px;
         padding: 10px;
-        vertical-align: middle;
-        border: 2px solid black;
+        /*vertical-align: middle;*/
+        /*border: 2px solid black;*/
       }
       h3 {
         color: #000;
@@ -68,279 +75,321 @@
         top: 0;
         margin: 0;
       }
+
+      .shrinkToFit {
+        border: 1px solid grey;
+        padding: 3px;
+      }
     </style>
   </head>
-  <body><div id="banner"><h2 style="margin: 0">Room Status</h2>
-    <table style="margin: 30px auto;">
-      <tr>
-        <th>Secret Cupboard:</th>
-        <td><span id="stat_Secret-Cupboard"></span></td>
-      </tr>
-      <tr>
-        <th>Telephone Exchange Found:</th>
-        <td><span id="stat_Telephone-Exchange-Found"></span></td>
-      </tr>
-      <tr>
-        <th>Telephone Exchange Completed:</th>
-        <td><span id="stat_Telephone-Exchange-Completed"></span></td>
-      </tr>
-      <tr>
-        <th>Wall Switch 1:</th>
-        <td><span id="stat_Wall-Switch-1"></span></td>
-      </tr>
-      <tr>
-        <th>Wall Switch 2:</th>
-        <td><span id="stat_Wall-Switch-2"></span></td>
-      </tr>
-      <tr>
-        <th>Morse Code Machine Found:</th>
-        <td><span id="stat_Morse-Code-Machine-Found"></span></td>
-      </tr>
-      <tr>
-        <th>Morse Code Message Sent:</th>
-        <td><span id="stat_Morse-Code-Message-Sent"></span></td>
-      </tr>
-      <tr>
-        <th>Secret Message Received:</th>
-        <td><span id="stat_Secret-Message-Given"></span></td>
-      </tr>
-      <tr>
-        <th>Locker 1:</th>
-        <td><span id="stat_Locker-1-Opened"></span></td>
-      </tr>
-      <tr>
-        <th>Locker 2:</th>
-        <td><span id="stat_Locker-2-Opened"></span></td>
-      </tr>
-      <tr>
-        <th>Locker 3:</th>
-        <td><span id="stat_Locker-3-Opened"></span></td>
-      </tr>
-      <tr>
-        <th>Locker 4:</th>
-        <td><span id="stat_Locker-4-Opened"></span></td>
-      </tr>
-    </table>
-    <button onclick="resetAll()">Reset All</button>
-  </div>
-    <!-- ****************************************************************** -->
-    <!-- *********************** LED Door Controller ********************** -->
-    <!-- ****************************************************************** -->
-
-    <div class="main" id="LED-Door-Controller">
-      <h3>LED Door Controller</h3>
-      <div class="stats"></div>
-      <hr>
-      <div class="block led">
-        <table style="margin: 0 auto">
+  <body>
+    <div id="banner"><h2 style="margin: 0">Room Status</h2>
+      <table style="margin: 30px auto;">
         <tr>
-          <td><button onclick="sendMessage(3,'*SET_PROG=0')">0%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=48')">33%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=96')">66%</button></td>
+          <th>Secret Cupboard:</th>
+          <td><span id="stat_Secret-Cupboard"></span></td>
         </tr>
         <tr>
-          <td><button onclick="sendMessage(3,'*SET_PROG=12')">8%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=60')">41%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=108')">74%</button></td>
+          <th>Telephone Exchange Found:</th>
+          <td><span id="stat_Telephone-Exchange-Found"></span></td>
         </tr>
         <tr>
-          <td><button onclick="sendMessage(3,'*SET_PROG=24')">17%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=72')">50%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=120')">83%</button></td>
+          <th>Telephone Exchange Completed:</th>
+          <td><span id="stat_Telephone-Exchange-Completed"></span></td>
         </tr>
         <tr>
-          <td><button onclick="sendMessage(3,'*SET_PROG=36')">25%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=84')">58%</button></td>
-          <td><button onclick="sendMessage(3,'*SET_PROG=132')">91%</button></td>
-        </tr>
-        </table>
-        <button style="width: 190px" onclick="sendMessage(3,'*SET_PROG=145')">100%</button>
-      </div>
-      <hr>
-      <div class="block">
-        <button onclick="sendMessage(3,'*SET_BRIG=5')">Faint</button>
-        <button onclick="sendMessage(3,'*SET_BRIG=30')">Dim</button>
-        <button onclick="sendMessage(3,'*SET_BRIG=100')">Normal</button>
-        <button onclick="sendMessage(3,'*SET_BRIG=150')">Bright</button>
-        <button onclick="sendMessage(3,'*SET_BRIG=255')">High</button>
-      </div>
-      <hr>
-      <div class="block">
-        <tr><button onclick="sendMessage(3,'*BLINK=3')">Blink</button></tr>
-      </div>
-      <hr>
-      <tr><button onclick="sendMessage(3,'*RST')">Reset</button></tr>
-      <!-- <table>
-        <tr>
-          <th>Command:</th>
-          <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
+          <th>Wall Switch 1:</th>
+          <td><span id="stat_Wall-Switch-1"></span></td>
         </tr>
         <tr>
-          <th>Response:</th>
-          <td><span id="3_resp"></span></td>
+          <th>Wall Switch 2:</th>
+          <td><span id="stat_Wall-Switch-2"></span></td>
         </tr>
-      </table> -->
+        <tr>
+          <th>Morse Code Machine Found:</th>
+          <td><span id="stat_Morse-Code-Machine-Found"></span></td>
+        </tr>
+        <tr>
+          <th>Morse Code Message Sent:</th>
+          <td><span id="stat_Morse-Code-Message-Sent"></span></td>
+        </tr>
+        <tr>
+          <th>Secret Message Received:</th>
+          <td><span id="stat_Secret-Message-Given"></span></td>
+        </tr>
+        <tr>
+          <th>Locker 1:</th>
+          <td><span id="stat_Locker-1-Opened"></span></td>
+        </tr>
+        <tr>
+          <th>Locker 2:</th>
+          <td><span id="stat_Locker-2-Opened"></span></td>
+        </tr>
+        <tr>
+          <th>Locker 3:</th>
+          <td><span id="stat_Locker-3-Opened"></span></td>
+        </tr>
+        <tr>
+          <th>Locker 4:</th>
+          <td><span id="stat_Locker-4-Opened"></span></td>
+        </tr>
+      </table>
+      <button onclick="resetAll()">Reset All</button>
+      <span>Last update from room server: </span><span id="lastUpdate"><b>Never</b></span>
     </div>
 
-    <!-- ****************************************************************** -->
-    <!-- *********************** Telephone Exchange *********************** -->
-    <!-- ****************************************************************** -->
-    <div class="main" id="Telephone-Exchange">
-      <h3>Telephone Exchange</h3>
-      <div class="stats"></div>
-      <div class="block">
-        <button onclick="sendMessage(9,'*TRIG')">Trigger</button>
-      </div>
-      <hr>
-      <div class="block">
-        <table style="margin: 0 auto">
+  <div class="grid">
+
+    <div class="grid-item">
+      <h3>Camera 1</h3>
+      <a href="http://192.168.2.51/video/mjpg.cgi"><img width="292" height="219" src="http://192.168.2.51/video/mjpg.cgi" alt="http://192.168.2.51/video/mjpg.cgi" class="shrinkToFit"></a>
+    </div>
+    <div class="grid-item">
+      <h3>Camera 2</h3>
+      <a href="http://192.168.2.52/video/mjpg.cgi">
+      <img width="292" height="219" src="http://192.168.2.52/video/mjpg.cgi" alt="http://192.168.2.52/video/mjpg.cgi" class="shrinkToFit">
+      </a>
+    </div>
+      <!-- ****************************************************************** -->
+      <!-- *********************** LED Door Controller ********************** -->
+      <!-- ****************************************************************** -->
+
+      <div class="grid-item" id="LED-Door-Controller">
+        <h3>LED Door Controller</h3>
+        <div class="stats"></div>
+        <hr>
+        <div class="block led">
+          <table style="margin: 0 auto">
           <tr>
-            <td>
-              <label for="6">6</label><input type="checkbox" id="6">
-            </td>
-            <td style="text-align: left">
-              <input type="checkbox" id="7"><label for="7">7</label>
-            </td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=0')">0%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=48')">33%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=96')">66%</button></td>
           </tr>
           <tr>
-            <td>
-              <label for="5">5</label><input type="checkbox" id="5">
-            </td>
-            <td style="text-align: left">
-              <input type="checkbox" id="8"><label for="8">8</label>
-            </td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=12')">8%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=60')">41%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=108')">74%</button></td>
           </tr>
           <tr>
-            <td>
-              <label for="4">4</label><input type="checkbox" id="4">
-            </td>
-            <td style="text-align: left">
-              <input type="checkbox" id="9"><label for="9">9</label>
-            </td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=24')">17%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=72')">50%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=120')">83%</button></td>
           </tr>
           <tr>
-            <td>
-              <label for="3">3</label><input type="checkbox" id="3">
-            </td>
-            <td style="text-align: left">
-              <input type="checkbox" id="10"><label for="10">10</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="2">2</label><input type="checkbox" id="2">
-            </td>
-            <td style="text-align: left">
-              <input type="checkbox" id="11"><label for="11">11</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="1">1</label><input type="checkbox" id="1">
-            </td>
-            <td style="text-align: left">
-              <input type="checkbox" id="12"><label for="12">12</label>
-            </td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=36')">25%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=84')">58%</button></td>
+            <td><button onclick="sendMessage(3,'*SET_PROG=132')">91%</button></td>
           </tr>
           </table>
-          <button onclick="setCombo()">Set pattern</button>
+          <button style="width: 190px" onclick="sendMessage(3,'*SET_PROG=145')">100%</button>
+        </div>
+        <hr>
+        <div class="block">
+          <button onclick="sendMessage(3,'*SET_BRIG=5')">Faint</button>
+          <button onclick="sendMessage(3,'*SET_BRIG=30')">Dim</button>
+          <button onclick="sendMessage(3,'*SET_BRIG=100')">Normal</button>
+          <button onclick="sendMessage(3,'*SET_BRIG=150')">Bright</button>
+          <button onclick="sendMessage(3,'*SET_BRIG=255')">High</button>
+        </div>
+        <hr>
+        <div class="block">
+          <tr><button onclick="sendMessage(3,'*BLINK=3')">Blink</button></tr>
+        </div>
+        <hr>
+        <tr><button onclick="sendMessage(3,'*RST')">Reset</button></tr>
+        <!-- <table>
+          <tr>
+            <th>Command:</th>
+            <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
+          </tr>
+          <tr>
+            <th>Response:</th>
+            <td><span id="3_resp"></span></td>
+          </tr>
+        </table> -->
       </div>
 
-      <hr>
-      <button onclick="sendMessage(9,'*RST')">Reset</button>
-    </div>
-
-    <!-- ****************************************************************** -->
-    <!--************************* Morse Code Phone *************************-->
-    <!-- ****************************************************************** -->
-
-    <div class="main" id="Morse-Code-Phone">
-      <h3>Morse Code Phone</h3>
-      <div class="stats"></div>
-      <div class="block">
-        <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
+      <!-- ****************************************************************** -->
+      <!--******************************* Clock ******************************-->
+      <!-- ****************************************************************** -->
+      <div class="grid-item" id="Clock">
+        <h3>Clock</h3>
+        <div class="stats"></div>
+        <hr>
+        <div class="block">
+          <span>Enter a time: </span><input type="text" id="newTime" value="00:00" style="width: 100px">
+          <button onclick="updateTime()">Set</button>
+        </div>
+        <hr>
+        <div class="block">
+          <span>Remote Timekeeper: </span><input type="text" id="remoteTime" value="00:00" style="width: 100px">
+          <button onclick="syncTime()">Sync</button>
+        </div>
+        <hr>
+        <button onclick="sendMessage(4,'*RST')">Reset</button>
       </div>
-      <hr>
-      <div class="block">
-        <span>New message: </span><input maxlength="20" type="text" id="newMessagePhone" value="sos" style="width: 130px">
-        <button onclick="updateMessagePhone()">Set</button>
+
+      <!-- ****************************************************************** -->
+      <!-- *********************** Telephone Exchange *********************** -->
+      <!-- ****************************************************************** -->
+      <div class="grid-item" id="Telephone-Exchange">
+        <h3>Telephone Exchange</h3>
+        <div class="stats"></div>
+        <div class="block">
+          <button onclick="sendMessage(9,'*TRIG')">Trigger</button>
+        </div>
+        <hr>
+        <div class="block">
+          <table style="margin: 0 auto">
+            <tr>
+              <td>
+                <label for="6">6</label><input type="checkbox" id="6">
+              </td>
+              <td style="text-align: left">
+                <input type="checkbox" id="7"><label for="7">7</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="5">5</label><input type="checkbox" id="5">
+              </td>
+              <td style="text-align: left">
+                <input type="checkbox" id="8"><label for="8">8</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="4">4</label><input type="checkbox" id="4">
+              </td>
+              <td style="text-align: left">
+                <input type="checkbox" id="9"><label for="9">9</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="3">3</label><input type="checkbox" id="3">
+              </td>
+              <td style="text-align: left">
+                <input type="checkbox" id="10"><label for="10">10</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="2">2</label><input type="checkbox" id="2">
+              </td>
+              <td style="text-align: left">
+                <input type="checkbox" id="11"><label for="11">11</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="1">1</label><input type="checkbox" id="1">
+              </td>
+              <td style="text-align: left">
+                <input type="checkbox" id="12"><label for="12">12</label>
+              </td>
+            </tr>
+            </table>
+            <button onclick="setCombo()">Set pattern</button>
+        </div>
+
+        <hr>
+        <button onclick="sendMessage(9,'*RST')">Reset</button>
       </div>
-      <hr>
-      <button onclick="sendMessage(8,'*RST')">Reset</button>
-    </div>
 
-    <div class="main" id="Locker-Door-Sensors">
-      <h3>Locker Door Sensors</h3>
-      <div class="stats"></div>
-      <hr>
-      <button onclick="sendMessage(2,'*RST')">Reset</button>
-    </div>
+      <!-- ****************************************************************** -->
+      <!--************************* Morse Code Phone *************************-->
+      <!-- ****************************************************************** -->
 
-    <!-- ****************************************************************** -->
-    <!-- ************************** Geiger Counter ************************ -->
-    <!-- ****************************************************************** -->
-<!--     <div class="main" id="Geiger-Counter">
-      <h3>Geiger Counter</h3>
-      <div class="stats"></div>
-      <hr>
-      <button onclick="sendMessage(7,'*RST')">Reset</button>
-    </div> -->
-
-
-    <!-- ****************************************************************** -->
-    <!--********************** Wall Switch Controller **********************-->
-    <!-- ****************************************************************** -->
-
-    <div class="main" id="Wall-Switch-Controller">
-      <h3>Wall Switch Controller</h3>
-      <div class="stats"></div>
-      <div class="block">
-        <button onclick="sendMessage(6,'*TRIG=2')">Trigger Left</button>
-        <button onclick="sendMessage(6,'*TRIG=1')">Trigger Right</button>
+      <div class="grid-item" id="Morse-Code-Phone">
+        <h3>Morse Code Phone</h3>
+        <div class="stats"></div>
+        <div class="block">
+          <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
+        </div>
+        <hr>
+        <div class="block">
+          <span>New message: </span><input maxlength="20" type="text" id="newMessagePhone" value="sos" style="width: 130px">
+          <button onclick="updateMessagePhone()">Set</button>
+        </div>
+        <hr>
+        <button onclick="sendMessage(8,'*RST')">Reset</button>
       </div>
-      <hr>
-      <button onclick="sendMessage(6,'*RST')">Reset</button>
-    </div>
 
-    <!-- ****************************************************************** -->
-    <!--******************* Morse Code Interpreter *************************-->
-    <!-- ****************************************************************** -->
-    <div class="main" id="Morse-Code-Interpreter">
-      <h3>Morse Code Interpreter</h3>
-      <div class="stats"></div>
-      <hr>
-      <div class="block">
-        <span>New message: </span><input maxlength="20" type="text" id="newMessage" value="sos" style="width: 130px">
-        <button onclick="updateMessage()">Set</button>
+      <!-- ****************************************************************** -->
+      <!--************************ Locker Door Sensors ***********************-->
+      <!-- ****************************************************************** -->
+
+      <div class="grid-item" id="Locker-Door-Sensors">
+        <h3>Locker Door Sensors</h3>
+        <div class="stats"></div>
+        <hr>
+        <button onclick="sendMessage(2,'*RST')">Reset</button>
       </div>
-      <hr>
-      <button onclick="sendMessage(5,'*RST')">Reset</button>
-    </div>
 
-    <!-- ****************************************************************** -->
-    <!-- ************************* Secret Message ************************* -->
-    <!-- ****************************************************************** -->
-    <div class="main" id="Secret-Message">
-      <h3>Secret Message</h3>
-      <div class="stats"></div>
-      <hr>
-      <button onclick="sendMessage(10,'*RST')">Reset</button>
-    </div>
+      <!-- ****************************************************************** -->
+      <!-- ************************** Secret Cupboard *********************** -->
+      <!-- ****************************************************************** -->
 
-    <!-- ****************************************************************** -->
-    <!--******************************* Clock ******************************-->
-    <!-- ****************************************************************** -->
-    <div class="main" id="Clock">
-      <h3>Clock</h3>
-      <div class="stats"></div>
-      <hr>
-      <div class="block">
-        <span>Enter a time: </span><input type="text" id="newTime" value="00:00" style="width: 100px">
-        <button onclick="updateTime()">Set</button>
+      <div class="grid-item" id="Secret-Cupboard">
+        <h3>Secret Cupboard</h3>
+        <div class="stats"></div>
+        <hr>
+        <button onclick="sendMessage(7,'*RST')">Reset</button>
       </div>
-      <hr>
-      <button onclick="sendMessage(4,'*RST')">Reset</button>
+
+      <!-- ****************************************************************** -->
+      <!-- ************************** Geiger Counter ************************ -->
+      <!-- ****************************************************************** -->
+  <!--     <div class="grid-item" id="Geiger-Counter">
+        <h3>Geiger Counter</h3>
+        <div class="stats"></div>
+        <hr>
+        <button onclick="sendMessage(7,'*RST')">Reset</button>
+      </div> -->
+
+
+      <!-- ****************************************************************** -->
+      <!--********************** Wall Switch Controller **********************-->
+      <!-- ****************************************************************** -->
+
+      <div class="grid-item" id="Wall-Switch-Controller">
+        <h3>Wall Switch Controller</h3>
+        <div class="stats"></div>
+        <div class="block">
+          <button onclick="sendMessage(6,'*TRIG=2')">Trigger Left</button>
+          <button onclick="sendMessage(6,'*TRIG=1')">Trigger Right</button>
+        </div>
+        <hr>
+        <button onclick="sendMessage(6,'*RST')">Reset</button>
+      </div>
+
+      <!-- ****************************************************************** -->
+      <!--******************* Morse Code Interpreter *************************-->
+      <!-- ****************************************************************** -->
+      <div class="grid-item" id="Morse-Code-Interpreter">
+        <h3>Morse Code Interpreter</h3>
+        <div class="stats"></div>
+        <hr>
+        <div class="block">
+          <span>New message: </span><input maxlength="20" type="text" id="newMessage" value="sos" style="width: 130px">
+          <button onclick="updateMessage()">Set</button>
+        </div>
+        <hr>
+        <button onclick="sendMessage(5,'*RST')">Reset</button>
+      </div>
+
+      <!-- ****************************************************************** -->
+      <!-- ************************* Secret Message ************************* -->
+      <!-- ****************************************************************** -->
+      <div class="grid-item" id="Secret-Message">
+        <h3>Secret Message</h3>
+        <div class="stats"></div>
+        <hr>
+        <button onclick="sendMessage(10,'*RST')">Reset</button>
+      </div>
     </div>
+
 
     <!-- ****************************************************************** -->
     <!-- ************************* Main Control *************************** -->
@@ -355,6 +404,10 @@
     </div> -->
 
     <script type="text/javascript">
+      var $grid = $('.grid').masonry({
+        itemSelector: '.grid-item',
+        columnWidth: 50,
+      });
       setTimeout(getStats, 1000);
 
       var locker_thresholds = [500, 500, 500, 500];
@@ -378,7 +431,7 @@
         2: "Locker Door Sensors",
         3: "LED Door Controller",
         4: "Clock",
-        7: "Geiger Counter",
+        7: "Secret Cupboard",
         5: "Morse Code Interpreter",
         6: "Wall Switch Controller",
         8: "Morse Code Phone",
@@ -395,6 +448,7 @@
             puzzle_data[names[key]] = val.split(",");
           });
           updateStats();
+          $("#lastUpdate").html("Updated");
           getStats();
         });
       }
@@ -443,45 +497,46 @@
         $("#LED-Door-Controller .stats").html(table+html);
 
 
-        // html = "";
-        // table = "<table>";
-        // $.each(puzzle_data["Geiger Counter"], function (key, val) {
-        //   d = val.split("=");
-        //   switch (d[0]) {
-        //     case "TIME":
-        //       table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
-        //       break;
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Secret Cupboard"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Time:</th><td>"+d[1]+"</td></tr>";
+              var timestring = d[1];
+              var parts = timestring.split(":");
+              var mins = parseInt(parts[1]);
+              var hours = parseInt(parts[0]);
+              var secs = parseInt(parts[2]);
+              mins += hours * 60;
+              $("#remoteTime").val(mins + ":" + secs);
+              break;
 
-        //     case "OPENED":
-        //       if (d[1] == 0) table += "<tr><th>Cupboard found:</th><td>No</td></tr>";
-        //       else table += "<tr><th>Cupboard found:</th><td>Yes</td></tr>";
-        //       break;
+            case "DOOR_OPEN":
+              if (d[1] == 1) {
+                table += "<tr><th>Secret cupboard:</th><td style=\"color: red\">Open</td></tr>";
+              }
+              else {
+                table += "<tr><th>Secret cupboard:</th><td style=\"color: green\">Closed</td></tr>";
+              }
+              break;
 
-        //     case "OPEN":
-        //       if (d[1] == 0) table += "<tr><th>Cupboard open:</th><td>No</td></tr>";
-        //       else table += "<tr><th>Cupboard open:</th><td>Yes</td></tr>";
-        //       break;
-
-        //     case "RX_SIGNAL":
-        //       if (d[1] == 0) table += "<tr><th>Signal:</th><td>No</td></tr>";
-        //       else table += "<tr><th>Signal:</th><td>Yes</td></tr>";
-        //       break;
-
-        //     case "RX_COUNT":
-        //       if (d[1] == 0) table += "<tr><th>Packets received:</th><td>None</td></tr>";
-        //       else table += "<tr><th>Packets received:</th><td>"+d[1]+"</td></tr>";
-        //       break;
-
-        //     case "BATTVOLT":
-        //       if (d[1] == -1) table += "<tr><th>Battery voltage:</th><td>Unknown</td></tr>";
-        //       else table += "<tr><th>Battery voltage:</th><td>"+d[1]+" V</td></tr>";
-        //       break;
-
-        //   }
-        //   // html += d[0] + d[1] + "<br>";
-        // });
-        // table += "</table>";
-        // $("#Geiger-Counter .stats").html(table+html);
+            case "DOOR_OPENED":
+              if (d[1] == 1) {
+                triggers["Secret Cupboard"] = 1;
+                table += "<tr><th>Secret cupboard found:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+                triggers["Secret Cupboard"] = 0;
+                table += "<tr><th>Secret cupboard found:</th><td style=\"color: green\">No</td></tr>";
+              }
+              break;
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Secret-Cupboard .stats").html(table+html);
 
         html = "";
         table = "<table>";
@@ -938,6 +993,8 @@
           $("#stat_Locker-4-Opened").html("Ready");
           $("#stat_Locker-4-Opened").css("color", "green");
         }
+
+        $grid.masonry('layout');
       }
 
       function sendMessage(id, msg) {
@@ -963,6 +1020,11 @@
 
       function updateTime() {
         val = $("#newTime").val();
+        sendMessage(4,'*TIME='+val);
+      }
+
+      function syncTime() {
+        val = $("#remoteTime").val();
         sendMessage(4,'*TIME='+val);
       }
 
@@ -1000,6 +1062,7 @@
           });
           updateStats();
         });
+
       }
     </script>
   </body>
