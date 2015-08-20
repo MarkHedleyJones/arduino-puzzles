@@ -11,15 +11,15 @@
         margin: 0;
       }
       .grid {
-        width: 1600px;
+        width: 1200px;
         margin: 0 auto;
         padding: 0;
       }
       .grid-item {
         /*text-align: left;*/
-        width: 400px;
+        width: 330px;
         height: auto;
-        margin: 20px 0;
+        margin: 30px 0 0 30px;
         /*display: inline-block;*/
         background-color: #eee;
         margin-bottom: 10px;
@@ -142,12 +142,12 @@
 
     <div class="grid-item">
       <h3>Camera 1</h3>
-      <a href="http://192.168.2.51/video/mjpg.cgi"><img width="292" height="219" src="http://192.168.2.51/video/mjpg.cgi" alt="http://192.168.2.51/video/mjpg.cgi" class="shrinkToFit"></a>
+      <a href="http://admin:@192.168.2.51/video/mjpg.cgi"><img width="292" height="219" src="http://admin:@192.168.2.51/video/mjpg.cgi" alt="http://192.168.2.51/video/mjpg.cgi" class="shrinkToFit"></a>
     </div>
     <div class="grid-item">
       <h3>Camera 2</h3>
-      <a href="http://192.168.2.52/video/mjpg.cgi">
-      <img width="292" height="219" src="http://192.168.2.52/video/mjpg.cgi" alt="http://192.168.2.52/video/mjpg.cgi" class="shrinkToFit">
+      <a href="http://admin:@192.168.2.52/video/mjpg.cgi">
+      <img width="292" height="219" src="http://admin:@192.168.2.52/video/mjpg.cgi" alt="http://192.168.2.52/video/mjpg.cgi" class="shrinkToFit">
       </a>
     </div>
       <!-- ****************************************************************** -->
@@ -406,7 +406,7 @@
     <script type="text/javascript">
       var $grid = $('.grid').masonry({
         itemSelector: '.grid-item',
-        columnWidth: 50,
+        columnWidth: 30,
       });
       setTimeout(getStats, 1000);
 
