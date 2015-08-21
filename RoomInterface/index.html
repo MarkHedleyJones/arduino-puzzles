@@ -22,7 +22,7 @@
         padding: 0;
       }
       .grid-item {
-        /*text-align: left;*/
+        text-align: left;
         width: 330px;
         height: auto;
         margin: 30px 0 0 30px;
@@ -89,13 +89,20 @@
     </style>
   </head>
   <body>
-    <div id="banner"><h2 style="margin: 0">Room Status</h2>
-    <a style="float:left; margin: 20px" href="http://admin:@192.168.2.51/video/mjpg.cgi">
-      <img width="292" height="219" src="http://admin:@192.168.2.51/video/mjpg.cgi" alt="http://192.168.2.51/video/mjpg.cgi" class="shrinkToFit">
-    </a>
-    <a style="float:right; margin: 20px" href="http://admin:@192.168.2.52/video/mjpg.cgi">
-      <img width="292" height="219" src="http://admin:@192.168.2.52/video/mjpg.cgi" alt="http://192.168.2.52/video/mjpg.cgi" class="shrinkToFit">
-    </a>
+    <div id="banner">
+      <h2 style="margin: 0 0 10px 0">Room Interface</h2>
+      <div>
+        <span style="font-size: 1.2em">Status:</span><span style="font-size: 1.2em; color: grey" id="serverState">Waiting for server...</span>
+        <br>
+        <span id="serverTip" style="font-size: 0.9em">If the server doesn't respond after a few seconds, try resetting it.</span>
+      </div>
+      <hr>
+      <a style="float:left; margin: 20px" href="http://admin:@192.168.2.51/video/mjpg.cgi">
+        <img width="292" height="219" src="http://admin:@192.168.2.51/video/mjpg.cgi" alt="Camera 1 is unavailable" class="shrinkToFit" style="width: 292px; height: 219px; display: block">
+      </a>
+      <a style="float:right; margin: 20px;" href="http://admin:@192.168.2.52/video/mjpg.cgi">
+        <img width="292" height="219" src="http://admin:@192.168.2.52/video/mjpg.cgi" alt="Camera 2 is unavailable" class="shrinkToFit" style="width: 292px; height: 219px; display: block">
+      </a>
       <table style="margin: 10px auto;">
         <tr>
           <th>Secret Cupboard:</th>
@@ -146,8 +153,10 @@
           <td><span id="stat_Locker-4-Opened"></span></td>
         </tr>
       </table>
+      <span>Room is <span id="percentComplete">not</span> complete</span>
       <button onclick="resetAll()">Reset All</button>
-      <span>Last update from room server: </span><span id="lastUpdate"><b>Never</b></span>
+      <hr>
+      <span>Last server update: </span><span id="lastUpdate"><b>Never</b></span>
     </div>
 
   <div class="grid">
@@ -388,6 +397,10 @@
           <button onclick="updateMessage()">Set</button>
         </div>
         <hr>
+        <div class="block">
+          <button onclick="sendMessage(5, '*TRIG')">Set as done</button>
+        </div>
+        <hr>
         <button onclick="sendMessage(5,'*RST')">Reset</button>
       </div>
 
@@ -402,18 +415,6 @@
       </div>
     </div>
 
-
-    <!-- ****************************************************************** -->
-    <!-- ************************* Main Control *************************** -->
-    <!-- ****************************************************************** -->
-<!--     <div class="main" id="Main-Control">
-      <h3>Main Control</h3>
-      <div class="stats"></div>
-      <hr>
-      <div class="block">
-
-      </div>
-    </div> -->
 
     <script type="text/javascript">
       var $grid = $('.grid').masonry({
@@ -440,6 +441,7 @@
       }
 
       var names = {
+        1: "Server",
         2: "Locker Door Sensors",
         3: "LED Door Controller",
         4: "Clock",
@@ -452,20 +454,170 @@
       }
 
       puzzle_data = {}
-
+      var lastUpdate = 0;
+      var warned = false;
+      var counter = 0;
+      var last_sum = 0;
 
       function getStats() {
-        $.getJSON("http://192.168.2.177?device="+0+"&command=*STAT?", function(data) {
-          $.each( data, function( key, val ) {
-            puzzle_data[names[key]] = val.split(",");
-          });
-          updateStats();
-          $("#lastUpdate").html("Updated");
-          getStats();
+        counter++;
+        $.ajax({
+          url: "http://192.168.2.177?device="+0+"&command=*STAT?",
+          datatype: 'json',
+          error: function (jqXHR, status) {
+            $("#serverState").html("CAN&rsquo;T COMMUNICATE WITH SERVER!");
+            $("#serverState").css("font-weight", 700);
+            $("#serverState").css("color", 'red');
+            $("#serverTip").html("You may need to reset it using the key.");
+            if (lastUpdate == 0) {
+              $("#lastUpdate").html("<b>Never</b>");
+            }
+            else {
+              var now = new Date();
+              $("#lastUpdate").html("<b>"+Math.round((now.getTime() - lastUpdate.getTime())/1000)+" seconds ago</b>");
+            }
+            setTimeout(getStats, 1000);
+          },
+          timeout: 2000,
+          success: function (data, status) {
+            lastUpdate = new Date();
+            $("#lastUpdate").html("Within the last second");
+            $("#serverState").css("font-weight", "normal");
+            $.each( data, function( key, val ) {
+              puzzle_data[names[key]] = val.split(",");
+            });
+            updateStats();
+
+            var sum = 0;
+            for(var key in triggers) {
+              sum += triggers[key];
+            }
+            if (sum != last_sum) {
+              switch (sum) {
+                case 0:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=0");
+                  break;
+
+                case 1:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=12");
+                  break;
+
+                case 2:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=24");
+                  break;
+
+                case 3:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=36");
+                  break;
+
+                case 4:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=48");
+                  break;
+
+                case 5:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=60");
+                  break;
+
+                case 6:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=72");
+                  break;
+
+                case 7:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=84");
+                  break;
+
+                case 8:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=96");
+                  break;
+
+                case 9:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=108");
+                  break;
+
+                case 10:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=120");
+                  break;
+
+                case 11:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=132");
+                  break;
+
+                case 12:
+                  sendMessage_ignoreResponse(3, "*SET_PROG=145");
+                  break;
+              }
+              last_sum = sum;
+            }
+
+            $("#percentComplete").html(sum + "/12 (" + Math.round((sum/12) * 100) + " %)");
+
+            getStats();
+          }
         });
+
+        // $.getJSON("http://192.168.2.177?device="+0+"&command=*STAT?", function(data) {
+        //   $.each( data, function( key, val ) {
+        //     puzzle_data[names[key]] = val.split(",");
+        //   });
+        //   updateStats();
+        //   $("#lastUpdate").html("Updated");
+        //   getStats();
+        // });
       }
 
       function updateStats() {
+
+        $.each(puzzle_data["Server"], function (key, val) {
+          d = val.split(":");
+          var g = $("#serverState");
+          var e = $("#serverTip");
+
+          switch (d[1]) {
+            case "0":
+              // STATE_PRE_RUN
+              g.html("Ready");
+              g.css("color", "blue");
+              e.html("Click the button to start the room");
+              break;
+
+            case "1":
+              // STATE_RUNNING
+              g.html("In progress");
+              g.css("color", "green");
+              e.html("The puzzles are doing their thing...");
+              break;
+
+            case "2":
+              // STATE_ENDCONDITION
+              g.html("Waiting for last trigger");
+              g.css("color", "purple");
+              if (triggers["Secret Message Given"]) {
+                e.html("Just waiting for the correct morse code message");
+              }
+              else e.html("Just waiting for the message via telephone (press button when done).");
+              break;
+
+            case "3":
+              // STATE_ENDED
+              g.html("Finished");
+              g.css("color", "black");
+              e.html("The players have completed the room (hold the button for 3 secs to reset)");
+              if (warned == false) {
+                alert("The players have finished the room!");
+                warned = true;
+              }
+              break;
+
+            case "4":
+              //STATE_RESET
+              g.html("Resetting");
+              g.css("color", "grey");
+              e.html("The puzzles are resetting...");
+              warned = false;
+              break;
+          }
+        });
+
         var html = "";
         var table = "<table>";
         $.each(puzzle_data["LED Door Controller"], function (key, val) {
@@ -484,7 +636,7 @@
 
             case "LEDS_GRN":
               if (d[1] >= 0) {
-                html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
+                html += "<button onclick=\"sendMessage(3'*SET_PROG=-1')\">Turn off</button>";
                 table += "<tr><th>State:</th><td>On</td></tr>";
                 table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.round((d[1]/145)*100)+"%)</td></tr>";
               }
@@ -500,7 +652,7 @@
               break;
 
             case "TRANSITION_BLINKS":
-              table += "<tr><th>Transition Blinks<:/th><td>"+d[1]+"</td></th>";
+              table += "<tr><th>Transition Blinks:</th><td>"+d[1]+"</td></th>";
 
           }
           // table += "<tr><th>" + d[0] + ":</th><td>" + d[1] + "</td></tr>";
@@ -522,7 +674,8 @@
               var hours = parseInt(parts[0]);
               var secs = parseInt(parts[2]);
               mins += hours * 60;
-              $("#remoteTime").val(mins + ":" + secs);
+              if (secs < 10) $("#remoteTime").val(mins + ":0" + secs);
+              else $("#remoteTime").val(mins + ":" + secs);
               break;
 
             case "DOOR_OPEN":
@@ -882,12 +1035,12 @@
             case "MSG_RECEIVED":
               if (d[1] == 1) {
                 table += "<tr><th>Message given:</th><td style='color: red'>Yes</td></tr>";
-                html += "<button onclick=\"sendMessage(10,'*RST')\">Reset</button>";
+                html += "<hr><button onclick=\"sendMessage(10,'*RST')\">Reset</button>";
                 triggers["Secret Message Given"] = 1;
               }
               else {
                 table += "<tr><th>Message given:</th><td style='color: green'>No</td></tr>";
-                html += "<button onclick=\"sendMessage(10,'*SET')\">Set</button>";
+                html += "<hr><button onclick=\"sendMessage(10,'*SET')\">Set</button>";
 
               }
 
@@ -1007,6 +1160,15 @@
         }
 
         $grid.masonry('layout');
+      }
+
+      function sendMessage_ignoreResponse(id, msg) {
+        $.ajax({
+          url: "http://192.168.2.177?device="+id+"&command="+msg,
+          datatype: 'json',
+          type: 'GET',
+          timeout: 1000
+        });
       }
 
       function sendMessage(id, msg) {

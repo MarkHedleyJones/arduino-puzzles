@@ -10,9 +10,8 @@
 //#define I2C_SLOWMODE 1
 //#include <SoftI2CMaster.h>
 
-
-#define PIN_LED 4
-#define PIN_BUTTON 3
+#define PIN_LED 3
+#define PIN_BUTTON 7
 #define PIN_MORSE 5
 
 #define BUFLEN 96
@@ -42,7 +41,8 @@ char success = false;
 char clock_paused = 0;
 unsigned long seconds_since_reset = 0;
 char update_flag = 1;
-char message_given = 0;
+bool message_given = 0;
+bool morse_correct = 0;
 char i2c_msg[BUFLEN] = {0};
 
 int counter = 0;
@@ -144,15 +144,17 @@ void parse_command(char* params, char* command, int* device_addr) {
   *device_addr = atoi(device_string);
 }
 
-char communicate_with_device(int device, char* command) {
-  boolean comms_broke = false;
-  boolean ack = false;
+char i2c_send(int device, char* command) {
   Wire.beginTransmission(device);
   for (int i=0; i < BUFLEN; i++) {
     Wire.write(command[i]);
   }
   Wire.endTransmission();
-  delay(100);
+  return 1;
+}
+
+char i2c_receieve(int device, char* command) {
+  boolean comms_broke = false;
   Wire.requestFrom(device, 32);
   for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
   for (int i = 0; i < 32; i++) {
@@ -163,7 +165,6 @@ char communicate_with_device(int device, char* command) {
       break;
     }
   }
-//  delay(10);
   Wire.requestFrom(device, 32);
   for (int i = 32; i < 64; i++) {
     command[i] = Wire.read();
@@ -173,7 +174,6 @@ char communicate_with_device(int device, char* command) {
       break;
     }
   }
-//  delay(10);
   Wire.requestFrom(device, 32);
   for (int i = 64; i < 95; i++) {
     command[i] = Wire.read();
@@ -184,9 +184,55 @@ char communicate_with_device(int device, char* command) {
     }
   }
   while(Wire.available()) Wire.read();
-
-  return 1;
 }
+
+char i2c_ask(int device, char* command) {
+  i2c_send(device, command);
+  delay(50);
+  return i2c_receieve(device, command);
+}
+//
+//char communicate_with_device(int device, char* command) {
+//  boolean comms_broke = false;
+//  boolean ack = false;
+//  Wire.beginTransmission(device);
+//  for (int i=0; i < BUFLEN; i++) {
+//    Wire.write(command[i]);
+//  }
+//  Wire.endTransmission();
+//  delay(40); // Make this longer if puzzles are sending back rubbish
+//  Wire.requestFrom(device, 32);
+//  for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
+//  for (int i = 0; i < 32; i++) {
+//    command[i] = Wire.read();
+//    if (command[i] == (char) 0xff || command[i] == '\0') {
+//      command[i] = '\0';
+//      comms_broke = true;
+//      break;
+//    }
+//  }
+//  Wire.requestFrom(device, 32);
+//  for (int i = 32; i < 64; i++) {
+//    command[i] = Wire.read();
+//    if (command[i] == (char) 0xff || command[i] == '\0') {
+//      command[i] = '\0';
+//      comms_broke = true;
+//      break;
+//    }
+//  }
+//  Wire.requestFrom(device, 32);
+//  for (int i = 64; i < 95; i++) {
+//    command[i] = Wire.read();
+//    if (command[i] == (char) 0xff || command[i] == '\0') {
+//      command[i] = '\0';
+//      comms_broke = true;
+//      break;
+//    }
+//  }
+//  while(Wire.available()) Wire.read();
+//
+//  return 1;
+//}
 
 void clock_routine() {
   second = millis() / 1000;
@@ -237,23 +283,23 @@ void set_status_clock() {
 }
 
 void set_status_secret_message() {
-    char tmp[4] = "";
-    unsigned long seconds = millis();
-    seconds = seconds / 1000;
-    seconds = seconds - seconds_since_reset;
-    int mins = ((seconds / 60)) % 6000;
-    seconds = seconds - (mins * 60) % 360000;
-    strcpy(wire_buffer, "TIME=");
-    sprintf(tmp, "%d", (mins / 10));
-    strcat(wire_buffer, tmp);
-    sprintf(tmp, "%d", (mins % 10));
-    strcat(wire_buffer, tmp);
-    strcat(wire_buffer, ":");
-    sprintf(tmp, "%d", (seconds / 10));
-    strcat(wire_buffer, tmp);
-    sprintf(tmp, "%d", (seconds % 10));
-    strcat(wire_buffer, tmp);
-    strcat(wire_buffer, ",MSG_RECEIVED=");
+//    char tmp[4] = "";
+//    unsigned long seconds = millis();
+//    seconds = seconds / 1000;
+//    seconds = seconds - seconds_since_reset;
+//    int mins = ((seconds / 60)) % 6000;
+//    seconds = seconds - (mins * 60) % 360000;
+//    strcpy(wire_buffer, "TIME=");
+//    sprintf(tmp, "%d", (mins / 10));
+//    strcat(wire_buffer, tmp);
+//    sprintf(tmp, "%d", (mins % 10));
+//    strcat(wire_buffer, tmp);
+//    strcat(wire_buffer, ":");
+//    sprintf(tmp, "%d", (seconds / 10));
+//    strcat(wire_buffer, tmp);
+//    sprintf(tmp, "%d", (seconds % 10));
+//    strcat(wire_buffer, tmp);
+    strcpy(wire_buffer, "MSG_RECEIVED=");
     if (message_given) strcat(wire_buffer, "1");
     else strcat(wire_buffer, "0");
 }
@@ -295,6 +341,8 @@ void handle_http_client(EthernetClient client) {
           http_buffer[index] = c;
           index++;
         }
+        system_tasks();
+        button_read();
       }
       
       // Finished receiving data from the client, time to respond
@@ -316,8 +364,13 @@ void handle_http_client(EthernetClient client) {
           strcpy(tmp, wire_buffer);
           String message = String(wire_buffer);
           client.println("{");
-          for (int i=2; i<11; i++) {
-            if (i == 4) {
+          for (int i=1; i<11; i++) {
+            if (i == 1) {
+              strcpy(i2c_msg, "STATE:");
+              sprintf(tmp, "%d", state);
+              strcat(i2c_msg, tmp);
+            }
+            else if (i == 4) {
               set_status_clock();
               strcpy(i2c_msg, wire_buffer);
             }
@@ -326,11 +379,20 @@ void handle_http_client(EthernetClient client) {
               strcpy(i2c_msg, wire_buffer);
             }
             else {
-              clock_routine();
-              Serial.println(tmp);
-              if (strcmp(tmp,"*RST") == 0) strcpy(i2c_msg, "*RST");
-              else strcpy(i2c_msg, "*STAT?");
-              communicate_with_device(i, i2c_msg);
+              if (strcmp(tmp,"*RST") == 0) {
+                strcpy(i2c_msg, "*RST");
+                i2c_send(i, i2c_msg);
+              }
+              else {
+                strcpy(i2c_msg, "*STAT?");
+                i2c_ask(i, i2c_msg);
+                if (i == 5) {
+                  // Check to see if the morse code has been triggerd as a failsafe
+                  if (i2c_msg[19] == '1') morse_correct = 1; //equates to checking if DONE=1 in the message
+                  else morse_correct = 0;
+                  
+                }
+              }
             }
             client.print("\"");
             client.print(i);
@@ -339,7 +401,7 @@ void handle_http_client(EthernetClient client) {
             client.print("\"");
             if (i < 10) client.print(",\n");
             else client.print("\n");
-            delay(1);
+            if (i % 2 == 0) system_tasks();
           }
           client.println("}");
           if (strcmp(tmp, "*RST") == 0) {
@@ -364,7 +426,7 @@ void handle_http_client(EthernetClient client) {
             seconds_since_reset = (millis() / 1000) - (mins * 60) - secs;
             update_clock();
           }
-            set_status_clock();
+          set_status_clock();
         }
         else if (device_addr == 10) {
           String message = String(wire_buffer);
@@ -376,7 +438,7 @@ void handle_http_client(EthernetClient client) {
           }
           set_status_secret_message();
         }
-        else if (communicate_with_device(device_addr, wire_buffer) == false) {
+        else if (i2c_send(device_addr, wire_buffer) == false) {
           strcpy(wire_buffer,"No response");
           strcat(wire_buffer,'\0');
         }
@@ -416,37 +478,61 @@ void handle_http_client(EthernetClient client) {
   index = 0;
 }
 
+long timer = 0;
+
+bool button_state = 0;
+long button_last_up = 0;
+long button_duration = 0;
+char led_state = 0;
+
+void button_read() {
+  if (digitalRead(PIN_BUTTON)) {
+    //button is up (not pressed)
+    button_last_up = millis();
+    button_state = 0; // 0 is up
+  }
+  else {
+    button_duration = millis() - button_last_up;
+    button_state = 1;
+  }
+}
+
+void button_reset() {
+  button_duration = 0;
+}
+
+void system_tasks() {
+  button_read();
+  clock_routine();
+  if (led_state == 2) digitalWrite(PIN_LED, millis()/500 % 2);
+  else if (led_state == 1) digitalWrite(PIN_LED, 1);
+  else digitalWrite(PIN_LED, 0);
+//  Serial.println(button_duration);
+}
+
 void loop() {
-  
+  system_tasks();
   EthernetClient client = server.available();
+  
   if (client) handle_http_client(client);
-
+  
+  system_tasks();
+  
   switch (state) {
-
     case STATE_PRE_RUN:
       if (first_entry) {
         Serial.println("STATE_PRE_RUN");
         clock_paused = 1;
         seconds_since_reset = millis() / 1000;
-        update_clock();
-        btn_state = 0;
+        button_reset();
         for (int i=0; i<10; i++) {
           digitalWrite(PIN_LED, i % 2);
           delay(75);
         }
       }
-      digitalWrite(PIN_LED, 0);
+      led_state = 0;
 
-      // Debounce the button press
-      if (digitalRead(PIN_BUTTON) == btn_state) counter++;
-      else counter = 0;
-
-      // On press: transition to state_running
-      if (counter > 300 && btn_state == 0) {
-        btn_state = 1;
-        counter = 0;
-      }
-      if (counter > 300 && btn_state == 1) {
+      if (button_duration > 10 && button_state == 0) {
         state = STATE_RUNNING;
         first_entry = 1;
       }
@@ -456,32 +542,27 @@ void loop() {
     case STATE_RUNNING:
       if (first_entry) {
         Serial.println("STATE_RUNNING");
-        counter = 0;
+        button_reset();
         clock_paused = 0;
         seconds_since_reset = millis() / 1000;
         strcpy(i2c_msg, "*SET_PROG=0");
-        communicate_with_device(3, i2c_msg);
+        i2c_send(3, i2c_msg);
 
         // Do this because we want it to keep the time even under reset
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(7, i2c_msg);
+        i2c_send(7, i2c_msg);
       }
-      
-      // Debounce the button press and check for hard reset
-      if (digitalRead(PIN_BUTTON) == 0) {
-        counter++;
-        delay(10);
 
-        // This is a reset (button held for 3s)
-        if (counter > 300) {
-          first_entry = 1;
-          state = STATE_RESET;
-          break;
-        }
+      if (button_duration > 10 && button_state == 0) {
+        message_given = 1;
       }
-      else if (counter > 0) message_given = 1;
-      
-      if (message_given || digitalRead(PIN_MORSE) == 0) {
+      else if (button_duration > 2000) {
+        first_entry = 1;
+        state = STATE_RESET;
+        break;
+      }
+//    if (message_given || digitalRead(PIN_MORSE) == 0) {
+      if (message_given || morse_correct) {
         state = STATE_ENDCONDITION;
         first_entry = 1;
       }
@@ -492,79 +573,81 @@ void loop() {
       if (first_entry) {
         counter = 0;
         Serial.println("STATE_ENDCONDITION");
-      }
-
-      // Debounce the button press and check for hard reset
-      if (digitalRead(PIN_BUTTON) == 0) {
-        counter++;
-        delay(10);
-
-        // This is a reset (button held for 3s)
-        if (counter > 300) {
-          first_entry = 1;
-          state = STATE_RESET;
-          break;
-        }
+        button_reset();
       }
       
-      digitalWrite(PIN_LED, millis()/500 % 2);
-      if (digitalRead(PIN_BUTTON) == 0) message_given = 1;
-      if (message_given && digitalRead(PIN_MORSE) == 0) {
+      // blink the LED
+      led_state = 2; //blink
+
+      // Check for a button press
+      if (button_duration > 10 && button_state == 0) {
+        message_given = 1;
+      }
+      else if (button_duration > 2000) {
+        first_entry = 1;
+        state = STATE_RESET;
+        break;
+      }
+
+      if (message_given && morse_correct) {
         state = STATE_ENDED;
         first_entry = 1;
       }
       else first_entry = 0;
       break;
+      
     
     case STATE_ENDED:
       if (first_entry) {
         Serial.println("STATE_ENDED");
         strcpy(i2c_msg, "*SET_PROG=145");
-        communicate_with_device(3, i2c_msg);
+        i2c_send(3, i2c_msg);
         clock_paused = 1;
-      }
-      digitalWrite(PIN_LED, 1);
-      if (digitalRead(PIN_BUTTON) == 0) {
-        counter++;
-        delay(10);
-      }
-      else counter = 0;
-      if (counter > 300) {
+        button_reset();
+        led_state = 1;
+      }     
+
+      if (button_duration > 2000) {
         state = STATE_RESET;
         counter = 0;
         first_entry = 1;
       }
       else first_entry = 0;
+      
       break;
 
     case STATE_RESET:
       if (first_entry) {
         Serial.println("STATE_RESET");
-        counter = 0;
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(3, i2c_msg);
+        i2c_send(2, i2c_msg);
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(5, i2c_msg);
+        i2c_send(3, i2c_msg);
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(6, i2c_msg);
+        i2c_send(5, i2c_msg);
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(7, i2c_msg);
+        i2c_send(6, i2c_msg);
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(8, i2c_msg);
+        i2c_send(7, i2c_msg);
         strcpy(i2c_msg, "*RST");
-        communicate_with_device(9, i2c_msg);
+        i2c_send(8, i2c_msg);
+        strcpy(i2c_msg, "*RST");
+        i2c_send(9, i2c_msg);
       }
+
       message_given = 0;
-      digitalWrite(PIN_LED, 0);
-      if (digitalRead(PIN_BUTTON) == 1) counter++;
-      else counter = 0;
-      if (counter > 100) {
+      led_state = 0;
+      morse_correct = 0;
+
+      if (button_state == 0) {
         state = STATE_PRE_RUN;
         first_entry = 1;
       }
       else first_entry = 0;
+      
       break;
   }
   
-  clock_routine();
+  system_tasks();
+ 
 }
