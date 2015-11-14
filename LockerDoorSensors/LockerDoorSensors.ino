@@ -11,6 +11,8 @@
 #define PIN_L2 A2
 #define PIN_L3 A3
 
+#define THRESHOLD 300
+
 const char device_name[] = "Locker Door Sensors";
 unsigned long seconds_since_reset = 0;
 int wire_count = 0;
@@ -54,30 +56,34 @@ void load_status() {
   sprintf(tmp, "%d", seconds);
   strcat(wire_buffer, tmp);
   // END OF TIME TRANSMIT
-  strcat(wire_buffer, ",D_1=");
-  sprintf(tmp, "%d", light[0]);
+  uint8_t calc = 0;
+  strcat(wire_buffer, ",L1=");
+  calc |= (light[0] > THRESHOLD);
+  calc |= (light_max[0] > THRESHOLD) << 1;
+  sprintf(tmp, "%d", calc);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",1_MAX=");
-  sprintf(tmp, "%d", light_max[0]);
+
+  calc = 0;
+  strcat(wire_buffer, ",L2=");
+  calc |= (light[1] > THRESHOLD);
+  calc |= (light_max[1] > THRESHOLD) << 1;
+  sprintf(tmp, "%d", calc);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",D_2=");
-  sprintf(tmp, "%d", light[1]);
+  
+  calc = 0;
+  strcat(wire_buffer, ",L3=");
+  calc |= (light[2] > THRESHOLD);
+  calc |= (light_max[2] > THRESHOLD) << 1;
+  sprintf(tmp, "%d", calc);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",2_MAX=");
-  sprintf(tmp, "%d", light_max[1]);
+  
+  calc = 0;
+  strcat(wire_buffer, ",L4=");
+  calc |= (light[3] > THRESHOLD);
+  calc |= (light_max[3] > THRESHOLD) << 1;
+  sprintf(tmp, "%d", calc);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",D_3=");
-  sprintf(tmp, "%d", light[2]);
-  strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",3_MAX=");
-  sprintf(tmp, "%d", light_max[2]);
-  strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",D_4=");
-  sprintf(tmp, "%d", light[3]);
-  strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",4_MAX=");
-  sprintf(tmp, "%d", light_max[3]);
-  strcat(wire_buffer, tmp);
+  
   // TERMINATE THE WIREBUFFER
   strcat(wire_buffer, 0);
 }
@@ -108,7 +114,7 @@ void receiveComms(int howMany) {
 }
 
 void setup() {
-//  Serial.begin(9600);
+  Serial.begin(9600);
   Wire.begin(WIRE_ADDR);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
@@ -127,13 +133,28 @@ void setup() {
 }
 
 void loop() {
+  delay(500);
   light[0] = analogRead(PIN_L0);
   light[1] = analogRead(PIN_L1);
   light[2] = analogRead(PIN_L2);
   light[3] = analogRead(PIN_L3);
+//  Serial.println(light[0]);
+//  Serial.println(light[1]);
+//  Serial.println(light[2]);
+//  Serial.println(light[3]);
+//  Serial.println("");
   if (light[0] > light_max[0]) light_max[0] = light[0];
   if (light[1] > light_max[1]) light_max[1] = light[1];
   if (light[2] > light_max[2]) light_max[2] = light[2];
   if (light[3] > light_max[3]) light_max[3] = light[3];
+//  if (light[0] > THRESHOLD) Serial.println("Locker 1 Open");
+//  else Serial.println("Locker 1 Closed");
+//  if (light[1] > THRESHOLD) Serial.println("Locker 2 Open");
+//  else Serial.println("Locker 2 Closed");
+//  if (light[2] > THRESHOLD) Serial.println("Locker 3 Open");
+//  else Serial.println("Locker 3 Closed");
+//  if (light[3] > THRESHOLD) Serial.println("Locker 4 Open");
+//  else Serial.println("Locker 4 Closed");
+//  Serial.println("");
 }
 

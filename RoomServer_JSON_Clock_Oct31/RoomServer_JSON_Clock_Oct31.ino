@@ -2,14 +2,6 @@
 #include <Wire.h>
 #include <Ethernet.h>
 
-//#define SCL_PIN 5
-//#define SCL_PORT PORTC
-//#define SDA_PIN 4
-//#define SDA_PORT PORTC
-//#define I2C_TIMEOUT 1000
-//#define I2C_SLOWMODE 1
-//#include <SoftI2CMaster.h>
-
 #define PIN_LED 3
 #define PIN_BUTTON 7
 #define PIN_MORSE 5
@@ -20,12 +12,6 @@
 #define STATE_ENDCONDITION    2
 #define STATE_ENDED           3
 #define STATE_RESET           4
-
-#define LOCKER_THRESHOLD      150
-#define PIN_L1                A0
-#define PIN_L2                A1
-#define PIN_L3                A2
-#define PIN_L4                A3
 
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
@@ -41,9 +27,6 @@ EthernetServer server(80);
 void reset_room(void);
 
 char state = 0;
-
-bool lockers_open[4] = {0};
-bool lockers_opened[4] = {0};
 
 char success = false;
 char clock_paused = 0;
@@ -199,48 +182,6 @@ char i2c_ask(int device, char* command) {
   delay(50);
   return i2c_receieve(device, command);
 }
-//
-//char communicate_with_device(int device, char* command) {
-//  boolean comms_broke = false;
-//  boolean ack = false;
-//  Wire.beginTransmission(device);
-//  for (int i=0; i < BUFLEN; i++) {
-//    Wire.write(command[i]);
-//  }
-//  Wire.endTransmission();
-//  delay(40); // Make this longer if puzzles are sending back rubbish
-//  Wire.requestFrom(device, 32);
-//  for (int i = 0; i < BUFLEN; i++) command[i] = '\0';
-//  for (int i = 0; i < 32; i++) {
-//    command[i] = Wire.read();
-//    if (command[i] == (char) 0xff || command[i] == '\0') {
-//      command[i] = '\0';
-//      comms_broke = true;
-//      break;
-//    }
-//  }
-//  Wire.requestFrom(device, 32);
-//  for (int i = 32; i < 64; i++) {
-//    command[i] = Wire.read();
-//    if (command[i] == (char) 0xff || command[i] == '\0') {
-//      command[i] = '\0';
-//      comms_broke = true;
-//      break;
-//    }
-//  }
-//  Wire.requestFrom(device, 32);
-//  for (int i = 64; i < 95; i++) {
-//    command[i] = Wire.read();
-//    if (command[i] == (char) 0xff || command[i] == '\0') {
-//      command[i] = '\0';
-//      comms_broke = true;
-//      break;
-//    }
-//  }
-//  while(Wire.available()) Wire.read();
-//
-//  return 1;
-//}
 
 void clock_routine() {
   second = millis() / 1000;
@@ -290,36 +231,6 @@ void set_status_clock() {
     else strcat(wire_buffer, "0");
 }
 
-void set_status_lockers() {
-  char tmp[4] = "";
-  strcpy(wire_buffer, "L1_OPEN=");
-  sprintf(tmp, "%d", lockers_open[0]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L1_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[0]);
-  strcat(wire_buffer, tmp);
-  
-  strcat(wire_buffer, "L2_OPEN=");
-  sprintf(tmp, "%d", lockers_open[1]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L2_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[1]);
-  strcat(wire_buffer, tmp);
-
-  strcat(wire_buffer, "L3_OPEN=");
-  sprintf(tmp, "%d", lockers_open[2]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L3_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[2]);
-  strcat(wire_buffer, tmp);
-
-  strcat(wire_buffer, "L4_OPEN=");
-  sprintf(tmp, "%d", lockers_open[3]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L4_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[3]);
-  strcat(wire_buffer, tmp);
-}
 
 void set_status_secret_message() {
     strcpy(wire_buffer, "MSG_RECEIVED=");
@@ -393,19 +304,18 @@ void handle_http_client(EthernetClient client) {
               sprintf(tmp, "%d", state);
               strcat(i2c_msg, tmp);
             }
-            else if (i == 2) {
-              set_status_lockers();
-              strcpy(i2c_msg, wire_buffer);
-            }
             else if (i == 4) {
+              // Override for clock
               set_status_clock();
               strcpy(i2c_msg, wire_buffer);
             }
             else if (i == 10) {
+              // Override for secret message
               set_status_secret_message();
               strcpy(i2c_msg, wire_buffer);
             }
             else {
+              // Fallback request to remote device for info
               if (strcmp(tmp,"*RST") == 0) {
                 strcpy(i2c_msg, "*RST");
                 i2c_send(i, i2c_msg);
@@ -437,16 +347,6 @@ void handle_http_client(EthernetClient client) {
             first_entry = 1;
           }
           break;
-        }
-        else if (device_addr == 2) {
-          // Locker door sensors
-          if (strcmp(wire_buffer,"*RST") == 0) {
-            lockers_opened[0] = 0;
-            lockers_opened[1] = 0;            
-            lockers_opened[2] = 0;            
-            lockers_opened[3] = 0;
-          }
-          strcpy(i2c_msg, wire_buffer);
         }
         else if (device_addr == 4) {
           String message = String(wire_buffer);
@@ -544,15 +444,6 @@ void system_tasks() {
   if (led_state == 2) digitalWrite(PIN_LED, millis()/500 % 2);
   else if (led_state == 1) digitalWrite(PIN_LED, 1);
   else digitalWrite(PIN_LED, 0);
-  lockers_open[0] = (analogRead(PIN_L1) < LOCKER_THRESHOLD);
-  lockers_open[1] = (analogRead(PIN_L2) < LOCKER_THRESHOLD);
-  lockers_open[2] = (analogRead(PIN_L3) < LOCKER_THRESHOLD);
-  lockers_open[3] = (analogRead(PIN_L4) < LOCKER_THRESHOLD);
-  if (lockers_open[0] == 1) lockers_opened[0] = 1;
-  if (lockers_open[1] == 1) lockers_opened[1] = 1;
-  if (lockers_open[2] == 1) lockers_opened[2] = 1;
-  if (lockers_open[3] == 1) lockers_opened[3] = 1;
-//  Serial.println(button_duration);
 }
 
 void loop() {
@@ -607,7 +498,6 @@ void loop() {
         state = STATE_RESET;
         break;
       }
-//    if (message_given || digitalRead(PIN_MORSE) == 0) {
       if (message_given || morse_correct) {
         state = STATE_ENDCONDITION;
         first_entry = 1;

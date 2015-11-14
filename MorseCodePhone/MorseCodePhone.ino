@@ -32,6 +32,7 @@ unsigned long seconds_since_reset = 0;
 char wire_buffer[BUF_LEN + 1] = "";
 int wire_count = 0;
 char tx_buffer[I2C_LEN + 1] = "";
+bool pin_trigger = 0;
 
 void stopIfFault() {
   if (motors.getFault()) {
@@ -46,46 +47,42 @@ bool phone_on_hook() {
 }
 
 bool check_trigger() {
+  pin_trigger = digitalRead(PIN_TRIGGER);
   if (execute_signal_received == 0 && digitalRead(PIN_TRIGGER) == 0) {
     delay(100);
-    if (digitalRead(PIN_TRIGGER) == 0) {
+    if (pin_trigger == 0) {
       delay(100);
-      if (digitalRead(PIN_TRIGGER) == 0) execute_signal_received = 1;
+      if (pin_trigger == 0) execute_signal_received = 1;
     }
   }
   return execute_signal_received;
 }
 
 void setup() {
-  Serial.begin(9600);
+//  Serial.begin(9600);
   pinMode(PIN_HOOK, INPUT_PULLUP);
   pinMode(PIN_TRIGGER, INPUT_PULLUP);
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_RECEIVER, OUTPUT);
-  Serial.println("I'm awake...");
+//  Serial.println("I'm awake...");
   Wire.begin(8);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
 }
 
 void transmitComms() {
-  digitalWrite(PIN_LED, HIGH);
   int offset = wire_count * I2C_LEN;
   for (int i = 0; i < I2C_LEN; i++) tx_buffer[i] = '\0';
   for (int i = 0; i < I2C_LEN; i++) {
     tx_buffer[i] = wire_buffer[i + offset];
   }
   Wire.write(tx_buffer);
-  Serial.print("Sending part ");
-  Serial.print(wire_count);
-  Serial.print(": ");
-  Serial.println(tx_buffer);
   if (wire_count == 2) wire_count = 0;
   else wire_count++;
-  digitalWrite(PIN_LED, 0);
 }
 
 void load_status() {
+  char tmp[4] = "";
   strcpy(wire_buffer, "TIME=");
   unsigned long seconds = millis();
   seconds = seconds / 1000;
@@ -93,7 +90,6 @@ void load_status() {
   int hours = seconds / 3600;
   int mins = ((seconds / 60) - (hours * 60)) % 3600;
   seconds = seconds - (hours * 3600) - (mins * 60);
-  char tmp[4] = "";
   sprintf(tmp, "%d", hours);
   if (hours <= 10) strcat(wire_buffer, "0");
   strcat(wire_buffer, tmp);
@@ -106,10 +102,10 @@ void load_status() {
   sprintf(tmp, "%d", seconds);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",RUN=");
-  if (check_trigger()) strcat(wire_buffer, "1");
+  if (execute_signal_received) strcat(wire_buffer, "1");
   else strcat(wire_buffer, "0");
   strcat(wire_buffer, ",TRIG=");
-  if (digitalRead(PIN_TRIGGER) == 0) strcat(wire_buffer, "1");
+  if (pin_trigger == 0) strcat(wire_buffer, "1");
   else strcat(wire_buffer, "0");
   strcat(wire_buffer, ",HOOK=");
   if (phone_on_hook()) strcat(wire_buffer, "1");
@@ -122,12 +118,14 @@ void load_status() {
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",MSG=");
   strcat(wire_buffer, morse_message);
+
+  // TERMINATE THE WIREBUFFER
+  strcat(wire_buffer, 0);
 }
 
 void receiveComms(int howMany) {
   int i;
-  digitalWrite(PIN_LED, 1);
-  Serial.println("Receiving message:");
+//  digitalWrite(PIN_LED, 1);
   for (i = 0; i < BUF_LEN; i++) wire_buffer[i] = '\0';
   i = 0;
   while (Wire.available() > 0) {
@@ -137,7 +135,6 @@ void receiveComms(int howMany) {
   if (strcmp(wire_buffer, "*IDN?") == 0) strcpy(wire_buffer, "Morse code telephone");
   else if (strcmp(wire_buffer, "*STAT?") == 0) load_status();
   else if (strcmp(wire_buffer, "*TRIG") == 0) {
-    Serial.println("Triggering");
     execute_signal_received = true;
     load_status();
   }
@@ -183,7 +180,7 @@ void oscillate() {
 
 void ring() {
   unsigned long i;
-  //  if (digitalRead(PIN_TRIGGER) == 0) execute_signal_received = true;
+  //  if (pin_trigger == 0) execute_signal_received = true;
   check_trigger();
   while (phone_on_hook() && execute_signal_received) {
     phone_ringing = true;
@@ -220,8 +217,6 @@ void play_morse(String input_message) {
   int input_message_length = input_message.length();
   int delay_millis = 0;
   String code;
-  Serial.print("Send message: ");
-  Serial.println(input_message);
   input_message.toUpperCase();
   for (i = 0; i < input_message_length; i++) {
     if (phone_on_hook() || !execute_signal_received) return;
@@ -274,20 +269,20 @@ void play_morse(String input_message) {
         for (j = 0; j < 5 && code[j] != '\0' && execute_signal_received; j++) {
           if (code[j] == '.') {
             tone(PIN_RECEIVER, MORSE_FREQUENCY);
-            Serial.print("*");
+//            Serial.print("*");
             hook_delay(MORSE_UNIT_PERIOD_MS);
           }
           else {
             tone(PIN_RECEIVER, MORSE_FREQUENCY);
-            Serial.print("***");
+//            Serial.print("***");
             hook_delay(MORSE_UNIT_PERIOD_MS * 3);
           }
           noTone(PIN_RECEIVER);
-          Serial.print("_");
+//          Serial.print("_");
           hook_delay(MORSE_UNIT_PERIOD_MS);
         }
         noTone(PIN_RECEIVER);
-        Serial.print("__");
+//        Serial.print("__");
         hook_delay(MORSE_UNIT_PERIOD_MS * 5);
       }
     }
@@ -310,7 +305,7 @@ void loop() {
     if (!phone_on_hook()) dialTone();
     else noTone(PIN_RECEIVER);
     check_trigger();
-//    if (digitalRead(PIN_TRIGGER) == 0) execute_signal_received = true;
+//    if (pin_trigger == 0) execute_signal_received = true;
   }
   ring();
   noTone(PIN_RECEIVER);

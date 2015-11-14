@@ -21,7 +21,7 @@
 #define STATE_ENDED           3
 #define STATE_RESET           4
 
-#define LOCKER_THRESHOLD      150
+#define LOCKER_THRESHOLD      200
 #define PIN_L1                A0
 #define PIN_L2                A1
 #define PIN_L3                A2
@@ -42,8 +42,7 @@ void reset_room(void);
 
 char state = 0;
 
-bool lockers_open[4] = {0};
-bool lockers_opened[4] = {0};
+unsigned char lockers_state = 0;
 
 char success = false;
 char clock_paused = 0;
@@ -72,6 +71,10 @@ void setup() {
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_BUTTON, INPUT_PULLUP);
   pinMode(PIN_MORSE, INPUT_PULLUP);
+  pinMode(PIN_L1, INPUT);
+  pinMode(PIN_L2, INPUT);
+  pinMode(PIN_L3, INPUT);
+  pinMode(PIN_L4, INPUT);
 }
 
 /**
@@ -292,36 +295,52 @@ void set_status_clock() {
 
 void set_status_lockers() {
   char tmp[4] = "";
-  strcpy(wire_buffer, "L1_OPEN=");
-  sprintf(tmp, "%d", lockers_open[0]);
+  strcpy(wire_buffer, "STATE=");
+  sprintf(tmp, "%d", lockers_state);
   strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L1_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[0]);
-  strcat(wire_buffer, tmp);
-  
-  strcat(wire_buffer, "L2_OPEN=");
-  sprintf(tmp, "%d", lockers_open[1]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L2_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[1]);
-  strcat(wire_buffer, tmp);
-
-  strcat(wire_buffer, "L3_OPEN=");
-  sprintf(tmp, "%d", lockers_open[2]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L3_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[2]);
-  strcat(wire_buffer, tmp);
-
-  strcat(wire_buffer, "L4_OPEN=");
-  sprintf(tmp, "%d", lockers_open[3]);
-  strcat(wire_buffer, tmp);
-  strcpy(wire_buffer, "L4_OPENED=");
-  sprintf(tmp, "%d", lockers_opened[3]);
-  strcat(wire_buffer, tmp);
+//  sprintf(tmp, "%d", lockers_opened[0]);
+//  strcat(wire_buffer, tmp);
+//  
+//  strcat(wire_buffer, ",L2N=");
+//  sprintf(tmp, "%d", lockers_open[1]);
+//  strcat(wire_buffer, tmp);
+//  strcat(wire_buffer, ",L2E=");
+//  sprintf(tmp, "%d", lockers_opened[1]);
+//  strcat(wire_buffer, tmp);
+//
+//  strcat(wire_buffer, ",L3N=");
+//  sprintf(tmp, "%d", lockers_open[2]);
+//  strcat(wire_buffer, tmp);
+//  strcat(wire_buffer, ",L3E=");
+//  sprintf(tmp, "%d", lockers_opened[2]);
+//  strcat(wire_buffer, tmp);
+//
+//  strcat(wire_buffer, ",L4N=");
+//  sprintf(tmp, "%d", lockers_open[3]);
+//  strcat(wire_buffer, tmp);
+//  strcat(wire_buffer, ",L4E=");
+//  sprintf(tmp, "%d", lockers_opened[3]);
+//  strcat(wire_buffer, tmp);
+//  strcat(wire_buffer, 0);
 }
 
 void set_status_secret_message() {
+//    char tmp[4] = "";
+//    unsigned long seconds = millis();
+//    seconds = seconds / 1000;
+//    seconds = seconds - seconds_since_reset;
+//    int mins = ((seconds / 60)) % 6000;
+//    seconds = seconds - (mins * 60) % 360000;
+//    strcpy(wire_buffer, "TIME=");
+//    sprintf(tmp, "%d", (mins / 10));
+//    strcat(wire_buffer, tmp);
+//    sprintf(tmp, "%d", (mins % 10));
+//    strcat(wire_buffer, tmp);
+//    strcat(wire_buffer, ":");
+//    sprintf(tmp, "%d", (seconds / 10));
+//    strcat(wire_buffer, tmp);
+//    sprintf(tmp, "%d", (seconds % 10));
+//    strcat(wire_buffer, tmp);
     strcpy(wire_buffer, "MSG_RECEIVED=");
     if (message_given) strcat(wire_buffer, "1");
     else strcat(wire_buffer, "0");
@@ -441,12 +460,10 @@ void handle_http_client(EthernetClient client) {
         else if (device_addr == 2) {
           // Locker door sensors
           if (strcmp(wire_buffer,"*RST") == 0) {
-            lockers_opened[0] = 0;
-            lockers_opened[1] = 0;            
-            lockers_opened[2] = 0;            
-            lockers_opened[3] = 0;
+            lockers_state = 0;
           }
-          strcpy(i2c_msg, wire_buffer);
+          set_status_lockers();
+//          strcpy(i2c_msg, wire_buffer);
         }
         else if (device_addr == 4) {
           String message = String(wire_buffer);
@@ -544,14 +561,6 @@ void system_tasks() {
   if (led_state == 2) digitalWrite(PIN_LED, millis()/500 % 2);
   else if (led_state == 1) digitalWrite(PIN_LED, 1);
   else digitalWrite(PIN_LED, 0);
-  lockers_open[0] = (analogRead(PIN_L1) < LOCKER_THRESHOLD);
-  lockers_open[1] = (analogRead(PIN_L2) < LOCKER_THRESHOLD);
-  lockers_open[2] = (analogRead(PIN_L3) < LOCKER_THRESHOLD);
-  lockers_open[3] = (analogRead(PIN_L4) < LOCKER_THRESHOLD);
-  if (lockers_open[0] == 1) lockers_opened[0] = 1;
-  if (lockers_open[1] == 1) lockers_opened[1] = 1;
-  if (lockers_open[2] == 1) lockers_opened[2] = 1;
-  if (lockers_open[3] == 1) lockers_opened[3] = 1;
 //  Serial.println(button_duration);
 }
 
@@ -562,6 +571,12 @@ void loop() {
   if (client) handle_http_client(client);
   
   system_tasks();
+
+  lockers_state = 0;
+  if (analogRead(PIN_L1) > LOCKER_THRESHOLD) lockers_state += 1;
+  if (analogRead(PIN_L2) > LOCKER_THRESHOLD) lockers_state += 2;
+  if (analogRead(PIN_L3) > LOCKER_THRESHOLD) lockers_state += 4;
+  if (analogRead(PIN_L4) > LOCKER_THRESHOLD) lockers_state += 8;
   
   switch (state) {
     case STATE_PRE_RUN:

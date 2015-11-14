@@ -9,7 +9,7 @@
 #define WIRE_ADDR 5
 #define PIN_OUT 2
 #define PRESSED !digitalRead(PIN_MORSE)
-#define BOUNDARY_PADDING 30            // Percent 
+#define BOUNDARY_PADDING 40            // Percent 
 #define true 1
 #define false 0
 #define DURATION_MIN 10
@@ -22,10 +22,11 @@
 #define BULB_6 4
 #define BULB_7 5
 #define BULB_8 6
-#define FINISH_FLASHES 20
+#define FINISH_FLASHES 3
+#define FINAL_ILLUMINATION_TIME_SECS 10
 #define DEBUG 0
 
-char defaultMessage[6] = {'B', 'R', 'A', 'V', 'O', 0};
+char defaultMessage[9] = {'C', 'O', 'D', 'E', 'B', 'L', 'U', 'E', 0};
 const char MAX_TAPS = MSG_LEN * 5;
 char expected_taps[MAX_TAPS] = {0};
 int expected_msg_length = 5;
@@ -374,6 +375,7 @@ void loop() {
   unsigned long millis_end = millis();
   unsigned long millis_start = 0;
   // Wait for the first press
+//  Serial.println("Here");
   while (!PRESSED && !completed) {
     if ((millis() - millis_end > 200) && !checked) check_tap_durations();
     if ((millis() - millis_end > 3000) && !durations_empty()) {
@@ -393,15 +395,15 @@ void loop() {
   if (completed) {
     for (int i=0; i < FINISH_FLASHES && completed; i++) flash_bulbs();
     illuminate_bulbs(8);
-    for (int i=0; completed && i < 5; i++) {
-      delay(1000);
-    }
-    illuminate_bulbs(0);
-    digitalWrite(13, HIGH);
-    digitalWrite(PIN_OUT, LOW);
-    if (DEBUG) Serial.println("Correct message! - Waiting for reset...");
+//    for (int i=0; completed && i < FINAL_ILLUMINATION_TIME_SECS; i++) {
+//      delay(1000);
+//    }
+//    illuminate_bulbs(0);
+//    digitalWrite(13, HIGH);
+//    digitalWrite(PIN_OUT, LOW);
+//    if (DEBUG) Serial.println("Correct message! - Waiting for reset...");
     while (completed) {
-      delay(10);
+      delay(11);
     }
   }
 }

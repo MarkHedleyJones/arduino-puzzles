@@ -22,6 +22,10 @@ char solenoid_triggered[2] = {0,0};
 char doors = 0;
 char switches = 0;
 
+
+bool value_wall_1 = 0;
+bool value_wall_2 = 0;
+
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
   for (int i=0; i < I2C_LEN; i++) tx_buffer[i] = '\0';
@@ -100,6 +104,8 @@ void receiveComms(int howMany) {
     solenoid_trigger[1] = 0;
     solenoid_triggered[0] = 0;
     solenoid_triggered[1] = 0;
+    value_wall_1 = digitalRead(PIN_WALL_SWITCH_1);
+    value_wall_2 = digitalRead(PIN_WALL_SWITCH_2);
     load_status();
   }
   else if (message.indexOf("*TRIG=") != -1) {
@@ -129,6 +135,8 @@ void setup() {
   pinMode(PIN_SOLENOID_2, OUTPUT);
   pinMode(PIN_LIMIT_SWITCH_2, INPUT_PULLUP);
   pinMode(PIN_WALL_SWITCH_2, INPUT_PULLUP);
+  value_wall_1 = digitalRead(PIN_WALL_SWITCH_1);
+  value_wall_2 = digitalRead(PIN_WALL_SWITCH_2);
 }
 
 void trigger_solenoid() {
@@ -146,33 +154,45 @@ void trigger_solenoid() {
   delay(100);
 }
 
+
 void loop() {
+  // Slow the loop down for debounce purposes
+  delay(50);
+  
   // Read Door-state
   if (digitalRead(PIN_LIMIT_SWITCH_1)) doors |= 1;
   else doors &= ~1;
   if (digitalRead(PIN_LIMIT_SWITCH_2)) doors |= 2;
   else doors &= ~2;
 
-  // Read wall switch-state
-  if (!digitalRead(PIN_WALL_SWITCH_1)) {
-//    Serial.println("WS1 triggered");
-    if (!(switches & 1)) {
-//      Serial.println("SW1 triggerd by watching");
-      solenoid_trigger[0]++;
-      switches |= 1;
-    }
-  }
-  else switches &= ~1;
 
-  if (!digitalRead(PIN_WALL_SWITCH_2)) {
-//    Serial.println("WS2 triggered");
-    if (!(switches & 2)) {
-//      Serial.println("SW2 triggerd by watching");
-      solenoid_trigger[1]++;
-      switches |= 2;
-    }
+// Read wall switch-state
+  if (solenoid_triggered[0] == 0 && digitalRead(PIN_WALL_SWITCH_1) != value_wall_1) {
+    value_wall_1 = digitalRead(PIN_WALL_SWITCH_1);
+    solenoid_trigger[0]++;
   }
-  else switches &= ~2;
+
+  if (solenoid_triggered[1] == 0 && digitalRead(PIN_WALL_SWITCH_2) != value_wall_2) {
+    value_wall_2 = digitalRead(PIN_WALL_SWITCH_2);
+    solenoid_trigger[1]++;
+  }
+
+//  // Read wall switch-state
+//  if (!digitalRead(PIN_WALL_SWITCH_1)) {
+//    if (!(switches & 1)) {
+//      solenoid_trigger[0]++;
+//      switches |= 1;
+//    }
+//  }
+//  else switches &= ~1;
+//
+//  if (!digitalRead(PIN_WALL_SWITCH_2)) {
+//    if (!(switches & 2)) {
+//      solenoid_trigger[1]++;
+//      switches |= 2;
+//    }
+//  }
+//  else switches &= ~2;
 
   if (solenoid_trigger[0] > solenoid_triggered[0] || solenoid_trigger[1] > solenoid_triggered[1]) trigger_solenoid();
 }

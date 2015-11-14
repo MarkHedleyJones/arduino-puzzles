@@ -139,7 +139,7 @@ unsigned int read_state() {
   }
 
   // Remove the trigger after so many cycles.
-  if (trigger && trigger_length_count < 0) trigger = 0;
+//  if (trigger && trigger_length_count < 0) trigger = 0;
   
   return state;
 }
