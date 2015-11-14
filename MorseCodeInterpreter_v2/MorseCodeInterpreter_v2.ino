@@ -71,7 +71,6 @@ void setup() {
 }
 
 void transmitComms() {
-  digitalWrite(PIN_LED, HIGH);
   int offset = wire_count * I2C_LEN;
   for (int i = 0; i < I2C_LEN; i++) tx_buffer[i] = '\0';
   for (int i = 0; i < I2C_LEN; i++) {
@@ -80,7 +79,6 @@ void transmitComms() {
   Wire.write(tx_buffer);
   if (wire_count == 2) wire_count = 0;
   else wire_count++;
-  digitalWrite(PIN_LED, 0);
 }
 
 void load_status() {
@@ -115,10 +113,10 @@ void load_status() {
   else strcat(wire_buffer, "0");
   strcat(wire_buffer, ",MSG=");
   strcat(wire_buffer, expected_msg_decoded);
-  strcat(wire_buffer, ",TARG=");
-  strcat(wire_buffer, expected_taps);
-  strcat(wire_buffer, ",LAST=");
-  strcat(wire_buffer, last_attempt);
+  // strcat(wire_buffer, ",TARG=");
+  // strcat(wire_buffer, expected_taps);
+  // strcat(wire_buffer, ",LAST=");
+  // strcat(wire_buffer, last_attempt);
   strcat(wire_buffer, '\0');
 }
 
@@ -250,8 +248,6 @@ void illuminate_bulbs(int bulbs) {
   digitalWrite(BULB_6, bulbs >= 6);
   digitalWrite(BULB_7, bulbs >= 7);
   digitalWrite(BULB_8, bulbs >= 8);
-//  digitalWrite(BULB_9, bulbs >= 9);
-//  digitalWrite(BULB_10, bulbs >= 10);
 }
 
 
@@ -367,7 +363,7 @@ void check_tap_durations() {
 void flash_bulbs() {
   illuminate_bulbs(0);
   delay(FLASH_PERIOD);
-  illuminate_bulbs(10);
+  illuminate_bulbs(8);
   delay(FLASH_PERIOD);
 }
 
@@ -375,7 +371,6 @@ void loop() {
   unsigned long millis_end = millis();
   unsigned long millis_start = 0;
   // Wait for the first press
-//  Serial.println("Here");
   while (!PRESSED && !completed) {
     if ((millis() - millis_end > 200) && !checked) check_tap_durations();
     if ((millis() - millis_end > 3000) && !durations_empty()) {
@@ -390,20 +385,10 @@ void loop() {
   while ((millis() - millis_start) < DURATION_MIN);
   add_duration(millis() - millis_start);
   checked = false;
-  print_durations();
 
   if (completed) {
-    for (int i=0; i < FINISH_FLASHES && completed; i++) flash_bulbs();
-    illuminate_bulbs(8);
-//    for (int i=0; completed && i < FINAL_ILLUMINATION_TIME_SECS; i++) {
-//      delay(1000);
-//    }
-//    illuminate_bulbs(0);
-//    digitalWrite(13, HIGH);
-//    digitalWrite(PIN_OUT, LOW);
-//    if (DEBUG) Serial.println("Correct message! - Waiting for reset...");
     while (completed) {
-      delay(11);
+    	flash_bulbs();
     }
   }
 }
