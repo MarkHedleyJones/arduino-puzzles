@@ -108,10 +108,10 @@
           <th>Secret Cupboard:</th>
           <td><span id="stat_Secret-Cupboard"></span></td>
         </tr>
-        <tr>
+<!--         <tr>
           <th>Telephone Exchange Found:</th>
           <td><span id="stat_Telephone-Exchange-Found"></span></td>
-        </tr>
+        </tr> -->
         <tr>
           <th>Telephone Exchange Completed:</th>
           <td><span id="stat_Telephone-Exchange-Completed"></span></td>
@@ -137,25 +137,27 @@
           <td><span id="stat_Secret-Message-Given"></span></td>
         </tr>
         <tr>
-          <th>Locker 1:</th>
+          <th>Locker 1 (052):</th>
           <td><span id="stat_Locker-1-Opened"></span></td>
         </tr>
         <tr>
-          <th>Locker 2:</th>
+          <th>Locker 2 (053):</th>
           <td><span id="stat_Locker-2-Opened"></span></td>
         </tr>
         <tr>
-          <th>Locker 3:</th>
+          <th>Locker 3 (054):</th>
           <td><span id="stat_Locker-3-Opened"></span></td>
         </tr>
         <tr>
-          <th>Locker 4:</th>
+          <th>Locker 4 (055):</th>
           <td><span id="stat_Locker-4-Opened"></span></td>
         </tr>
       </table>
       <span>Room is <span id="percentComplete">not</span> complete</span>
-      <button onclick="resetAll()">Reset All</button>
+      <button onclick="resetRoom()">Reset Room</button>
       <hr>
+      <span id="codes" style="color: #333; font-size: 0.9em"></span>
+      <br><br>
       <span>Last server update: </span><span id="lastUpdate"><b>Never</b></span>
     </div>
 
@@ -264,50 +266,50 @@
           <table style="margin: 0 auto">
             <tr>
               <td>
-                <label for="6">6</label><input type="checkbox" id="6">
+                <label for="6">(6) Berlin</label><input type="checkbox" id="6">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="7"><label for="7">7</label>
+                <input type="checkbox" id="7"><label for="7">St. Petersburg (7)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="5">5</label><input type="checkbox" id="5">
+                <label for="5">(5) London</label><input type="checkbox" id="5">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="8"><label for="8">8</label>
+                <input type="checkbox" id="8"><label for="8">Washington (8)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="4">4</label><input type="checkbox" id="4">
+                <label for="4">(4) Moscow</label><input type="checkbox" id="4">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="9"><label for="9">9</label>
+                <input type="checkbox" id="9"><label for="9">Munich (9)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="3">3</label><input type="checkbox" id="3">
+                <label for="3">(3) Taupo</label><input type="checkbox" id="3">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="10"><label for="10">10</label>
+                <input type="checkbox" id="10"><label for="10">Birmingham (10)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="2">2</label><input type="checkbox" id="2">
+                <label for="2">(2) Prague</label><input type="checkbox" id="2">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="11"><label for="11">11</label>
+                <input type="checkbox" id="11"><label for="11">Warsaw (11)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="1">1</label><input type="checkbox" id="1">
+                <label for="1">(1) Paris</label><input type="checkbox" id="1">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="12"><label for="12">12</label>
+                <input type="checkbox" id="12"><label for="12">Chicago (12)</label>
               </td>
             </tr>
             </table>
@@ -330,7 +332,7 @@
         </div>
         <hr>
         <div class="block">
-          <span>New message: </span><input maxlength="20" type="text" id="newMessagePhone" value="sos" style="width: 130px">
+          <span>New message: </span><input maxlength="20" type="text" id="newMessagePhone" value="KEY53" style="width: 130px">
           <button onclick="updateMessagePhone()">Set</button>
         </div>
         <hr>
@@ -393,7 +395,7 @@
         <div class="stats"></div>
         <hr>
         <div class="block">
-          <span>New message: </span><input maxlength="20" type="text" id="newMessage" value="sos" style="width: 130px">
+          <span>New message: </span><input maxlength="20" type="text" id="newMessage" value="CODEBLUE" style="width: 130px">
           <button onclick="updateMessage()">Set</button>
         </div>
         <hr>
@@ -417,6 +419,64 @@
 
 
     <script type="text/javascript">
+
+    	function char_to_morse(character) {
+    		var c = character.toLowerCase();
+    		if (c == 'a') return ".-";
+    		else if (c == 'b') return "-...";
+    		else if (c == 'c') return "-.-.";
+    		else if (c == 'd') return "-..";
+    		else if (c == 'e') return ".";
+    		else if (c == 'f') return "..-.";
+    		else if (c == 'g') return "--.";
+    		else if (c == 'h') return "....";
+    		else if (c == 'i') return "..";
+    		else if (c == 'j') return ".---";
+    		else if (c == 'k') return "-.-";
+    		else if (c == 'l') return ".-..";
+    		else if (c == 'm') return "--";
+    		else if (c == 'n') return "-.";
+    		else if (c == 'o') return "---";
+    		else if (c == 'p') return ".--.";
+    		else if (c == 'q') return "--.-";
+    		else if (c == 'r') return ".-.";
+    		else if (c == 's') return "...";
+    		else if (c == 't') return "-";
+    		else if (c == 'u') return "..-";
+    		else if (c == 'v') return "...-";
+    		else if (c == 'w') return ".--";
+    		else if (c == 'x') return "-..-";
+    		else if (c == 'y') return "-.--";
+    		else if (c == 'z') return "--..";
+    		else if (c == '1') return ".----";
+    		else if (c == '2') return "..---";
+    		else if (c == '3') return "...--";
+    		else if (c == '4') return "....-";
+    		else if (c == '5') return ".....";
+    		else if (c == '6') return "-....";
+    		else if (c == '7') return "--...";
+    		else if (c == '8') return "---..";
+    		else if (c == '9') return "----.";
+    		else if (c == '0') return "-----";
+    		else if (c == ' ') return "_";
+    		else return "?";
+    	}
+
+    	function button_to_city_telex(number) {
+    		if (number == 1) return "Paris";
+    		else if (number == 2) return "Prague";
+    		else if (number == 3) return "Taupo";
+    		else if (number == 4) return "Moscow";
+    		else if (number == 5) return "London";
+    		else if (number == 6) return "Berlin";
+    		else if (number == 7) return "St. Petersburg";
+    		else if (number == 8) return "Washington";
+    		else if (number == 9) return "Munich";
+    		else if (number == 10) return "Birmingham";
+    		else if (number == 11) return "Warsaw";
+    		else if (number == 12) return "Chicago";
+    	}
+
       var $grid = $('.grid').masonry({
         itemSelector: '.grid-item',
         columnWidth: 30,
@@ -425,9 +485,14 @@
 
       var locker_thresholds = [500, 500, 500, 500];
 
+      var messages = {
+      	"phone": "",
+      	"interpreter": "",
+      	"telex": ""
+      }
+
       var triggers = {
         "Secret Cupboard": 0,
-        "Telephone Exchange Found": 0,
         "Telephone Exchange Completed": 0,
         "Wall Switch 1": 0,
         "Wall Switch 2": 0,
@@ -453,11 +518,13 @@
         10: "Secret Message"
       }
 
+
       puzzle_data = {}
       var lastUpdate = 0;
       var warned = false;
       var counter = 0;
-      var last_sum = 0;
+      var last_progress = 0;
+      var server_state = -1;
 
       function getStats() {
         counter++;
@@ -468,7 +535,7 @@
             $("#serverState").html("CAN&rsquo;T COMMUNICATE WITH SERVER!");
             $("#serverState").css("font-weight", 700);
             $("#serverState").css("color", 'red');
-            $("#serverTip").html("You may need to reset it using the key.");
+            $("#serverTip").html("Is it turned on? If it is, you may need to reset it using the key.");
             if (lastUpdate == 0) {
               $("#lastUpdate").html("<b>Never</b>");
             }
@@ -478,7 +545,22 @@
             }
             setTimeout(getStats, 1000);
           },
-          timeout: 2000,
+          timeout: 10000,
+          complete: function (jqXHR, status) {
+          	if (status == "parsererror") {
+	            $("#serverState").html("CAN&rsquo;T INTERPRET SERVERS RESPONSE!");
+	            $("#serverState").css("font-weight", 700);
+	            $("#serverState").css("color", 'red');
+	            $("#serverTip").html("It is likely that a puzzle is having trouble");
+	            if (lastUpdate == 0) {
+	              $("#lastUpdate").html("<b>Never</b>");
+	            }
+	            else {
+	              var now = new Date();
+	              $("#lastUpdate").html("<b>"+Math.round((now.getTime() - lastUpdate.getTime())/1000)+" seconds ago</b>");
+	            }
+          	}
+          },
           success: function (data, status) {
             lastUpdate = new Date();
             $("#lastUpdate").html("Within the last second");
@@ -488,81 +570,31 @@
             });
             updateStats();
 
-            var sum = 0;
+            var progress = 0;
+            var total = 145;
+            var steps = 0;
+            for (key in triggers) steps++;
+
             for(var key in triggers) {
-              sum += triggers[key];
-            }
-            if (sum != last_sum) {
-              switch (sum) {
-                case 0:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=0");
-                  break;
-
-                case 1:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=12");
-                  break;
-
-                case 2:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=24");
-                  break;
-
-                case 3:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=36");
-                  break;
-
-                case 4:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=48");
-                  break;
-
-                case 5:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=60");
-                  break;
-
-                case 6:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=72");
-                  break;
-
-                case 7:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=84");
-                  break;
-
-                case 8:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=96");
-                  break;
-
-                case 9:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=108");
-                  break;
-
-                case 10:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=120");
-                  break;
-
-                case 11:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=132");
-                  break;
-
-                case 12:
-                  sendMessage_ignoreResponse(3, "*SET_PROG=145");
-                  break;
-              }
-              last_sum = sum;
+            	if (triggers[key] == 1) progress++;
             }
 
-            $("#percentComplete").html(sum + "/12 (" + Math.round((sum/12) * 100) + " %)");
+            // if (leds_green != Math.round((total/steps) * progress)) {
+            // 	sendMessage_ignoreResponse(3, "*SET_PROG="+Math.round((total/steps) * progress));
+            // }
+
+
+            if ((server_state == 1 || server_state == 2) && (progress != last_progress)) {
+            	sendMessage_ignoreResponse(3, "*SET_PROG="+Math.round((total/steps) * progress));
+              last_progress = progress;
+            }
+
+            $("#percentComplete").html(progress + "/"+steps+" (" + Math.round((progress/steps) * 100) + " %)");
 
             getStats();
           }
         });
 
-        // $.getJSON("http://192.168.2.177?device="+0+"&command=*STAT?", function(data) {
-        //   $.each( data, function( key, val ) {
-        //     puzzle_data[names[key]] = val.split(",");
-        //   });
-        //   updateStats();
-        //   $("#lastUpdate").html("Updated");
-        //   getStats();
-        // });
       }
 
       function updateStats() {
@@ -578,6 +610,7 @@
               g.html("Ready");
               g.css("color", "blue");
               e.html("Click the button to start the room");
+              server_state = 0;
               break;
 
             case "1":
@@ -585,6 +618,7 @@
               g.html("In progress");
               g.css("color", "green");
               e.html("The puzzles are doing their thing...");
+              server_state = 1;
               break;
 
             case "2":
@@ -595,6 +629,7 @@
                 e.html("Just waiting for the correct morse code message");
               }
               else e.html("Just waiting for the message via telephone (press button when done).");
+              server_state = 2;
               break;
 
             case "3":
@@ -606,6 +641,7 @@
                 alert("The players have finished the room!");
                 warned = true;
               }
+              server_state = 3;
               break;
 
             case "4":
@@ -614,6 +650,7 @@
               g.css("color", "grey");
               e.html("The puzzles are resetting...");
               warned = false;
+              server_state = 4;
               break;
           }
         });
@@ -636,9 +673,11 @@
 
             case "LEDS_GRN":
               if (d[1] >= 0) {
-                html += "<button onclick=\"sendMessage(3'*SET_PROG=-1')\">Turn off</button>";
+                html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
                 table += "<tr><th>State:</th><td>On</td></tr>";
                 table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.round((d[1]/145)*100)+"%)</td></tr>";
+                leds_green = Math.round(d[1]);
+                console.log(leds_green);
               }
               else {
                 html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
@@ -707,68 +746,73 @@
         table = "<table>";
         $.each(puzzle_data["Locker Door Sensors"], function (key, val) {
           d = val.split("=");
-          switch (d[0]) {
-            case "TIME":
-              table += "<tr><th>Time:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "D_1":
-              table += "<tr><th>Locker 1 level:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "1_MAX":
-              if (d[1] > locker_thresholds[0]) {
-                triggers["Locker 1 Opened"] = 1;
-                table += "<tr><th>Locker 1 opened:</th><td style=\"color: red\">Yes</td></tr>";
+          
+          switch(d[0]) {
+            case "L1":
+              if (d[1] & 1) {
+								table += "<tr><th>Locker 1 state:</th><td style=\"color: red\">Open</td></tr>";
               }
               else {
-                triggers["Locker 1 Opened"] = 0;
-                table += "<tr><th>Locker 1 opened:</th><td style=\"color: green\">No</td></tr>";
+              	table += "<tr><th>Locker 1 state:</th><td style=\"color: green\">Closed</td></tr>";
               }
-              break;
-
-            case "D_2":
-              table += "<tr><th>Locker 2 level:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "2_MAX":
-              if (d[1] > locker_thresholds[1]) {
-                triggers["Locker 2 Opened"] = 1;
-                table += "<tr><th>Locker 2 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              if (d[1] & 2) {
+              	triggers["Locker 1 Opened"] = 1;
+								table += "<tr><th>Locker 1 opened:</th><td style=\"color: red\">Yes</td></tr>";
               }
               else {
-                triggers["Locker 2 Opened"] = 0;
-                table += "<tr><th>Locker 2 opened:</th><td style=\"color: green\">No</td></tr>";
+              	triggers["Locker 1 Opened"] = 0;
+              	table += "<tr><th>Locker 1 opened:</th><td style=\"color: green\">No</td></tr>";
               }
               break;
 
-            case "D_3":
-              table += "<tr><th>Locker 3 level:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "3_MAX":
-              if (d[1] > locker_thresholds[2]) {
-                triggers["Locker 3 Opened"] = 1;
-                table += "<tr><th>Locker 3 opened:</th><td style=\"color: red\">Yes</td></tr>";
+            case "L2":
+              if (d[1] & 1) {
+								table += "<tr><th>Locker 2 state:</th><td style=\"color: red\">Open</td></tr>";
               }
               else {
-                table += "<tr><th>Locker 3 opened:</th><td style=\"color: green\">No</td></tr>";
-                triggers["Locker 3 Opened"] = 0;
+              	table += "<tr><th>Locker 2 state:</th><td style=\"color: green\">Closed</td></tr>";
               }
-              break;
-
-            case "D_4":
-              table += "<tr><th>Locker 4 level:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "4_MAX":
-              if (d[1] > locker_thresholds[3]) {
-                triggers["Locker 4 Opened"] = 1;
-                table += "<tr><th>Locker 4 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              if (d[1] & 2) {
+              	triggers["Locker 2 Opened"] = 1;
+								table += "<tr><th>Locker 2 opened:</th><td style=\"color: red\">Yes</td></tr>";
               }
               else {
-                triggers["Locker 4 Opened"] = 0;
-                table += "<tr><th>Locker 4 opened:</th><td style=\"color: green\">No</td></tr>";
+              	triggers["Locker 2 Opened"] = 0;
+              	table += "<tr><th>Locker 2 opened:</th><td style=\"color: green\">No</td></tr>";
+              }
+              break;
+
+            case "L3":
+              if (d[1] & 1) {
+								table += "<tr><th>Locker 3 state:</th><td style=\"color: red\">Open</td></tr>";
+              }
+              else {
+              	table += "<tr><th>Locker 3 state:</th><td style=\"color: green\">Closed</td></tr>";
+              }
+              if (d[1] & 2) {
+              	triggers["Locker 3 Opened"] = 1;
+								table += "<tr><th>Locker 3 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+              	triggers["Locker 3 Opened"] = 0;
+              	table += "<tr><th>Locker 3 opened:</th><td style=\"color: green\">No</td></tr>";
+              }
+              break;
+
+            case "L4":
+              if (d[1] & 1) {
+								table += "<tr><th>Locker 4 state:</th><td style=\"color: red\">Open</td></tr>";
+              }
+              else {
+              	table += "<tr><th>Locker 4 state:</th><td style=\"color: green\">Closed</td></tr>";
+              }
+              if (d[1] & 2) {
+              	triggers["Locker 4 Opened"] = 1;
+								table += "<tr><th>Locker 4 opened:</th><td style=\"color: red\">Yes</td></tr>";
+              }
+              else {
+              	triggers["Locker 4 Opened"] = 0;
+              	table += "<tr><th>Locker 4 opened:</th><td style=\"color: green\">No</td></tr>";
               }
               break;
           }
@@ -835,11 +879,25 @@
               break;
 
             case "ATTEMPTS":
-              table += "<tr><th>Attempts:</th><td>"+d[1]+"</td></tr>";
+              table += "<tr><th>Failed Attempts:</th><td>"+d[1]+"</td></tr>";
               break;
 
             case "MSG":
-              table += "<tr><th>Target Message:</th><td>"+d[1]+"</td></tr>";
+              // table += "<tr><th>Target Message:</th><td>"+d[1]+"</td></tr>";
+              var target_string = "";
+              var string_length = d[1].length;
+              var pattern = "";
+              var table_tmp = "";
+              messages["interpreter"] = d[1];
+              for (var i=0; i < string_length; i++) {
+              	pattern = char_to_morse(d[1].charAt(i));
+              	target_string = target_string.concat(pattern);
+              	target_string = target_string.concat("|");
+              	table_tmp += "<tr><td>" + d[1].charAt(i) + "</td>&nbsp;<td>" + char_to_morse(d[1].charAt(i)) + "</td></tr>";
+              }
+              
+              // table += "<tr><th>Target Pattern:</th><td style='font-size: 1em; font-family: monospace'>"+target_string+"</td></tr>";
+              table += "<tr><th>Target:</th><td style='font-size: 1.5em; font-family: monospace'><table>"+table_tmp+"</table></td></tr>";
               break;
 
             case "TARG":
@@ -874,11 +932,11 @@
             case "DOOR_1":
               if (d[1] == 1) {
                 table += "<tr><th>Left door:</th><td style='color: green'>Closed</td></tr>";
-                triggers["Wall Switch 1"] = 1;
+                triggers["Wall Switch 1"] = 0;
               }
               else {
                 table += "<tr><th>Left door:</th><td style='color: red'>Open</td></tr>";
-                triggers["Wall Switch 1"] = 0;
+                triggers["Wall Switch 1"] = 1;
               }
               break;
 
@@ -895,7 +953,7 @@
             case "DOOR_2":
               if (d[1] == 1) {
                 table += "<tr><th>Right door:</th><td style='color: green'>Closed</td></tr>";
-                triggers["Wall Switch 2"] = 1;
+                triggers["Wall Switch 2"] = 0;
               }
               else {
                 table += "<tr><th>Right door:</th><td style='color: red'>Open</td></tr>";
@@ -939,6 +997,7 @@
 
             case "MSG":
               table += "<tr><th>Message:</th><td>"+d[1]+"</td></tr>";
+              messages["phone"] = d[1];
               break;
 
             case "PLAYED":
@@ -964,11 +1023,11 @@
             case "TRIGGERED":
               if (d[1] == 0) {
                 table += "<tr><th>Solved:</th><td style='color: green'>No</td></tr>";
-                triggers["Telephone Exchange Completed"] = 1;
+                triggers["Telephone Exchange Completed"] = 0;
               }
               else {
                 table += "<tr><th>Solved:</th><td style='color: red'>Yes</td></tr>";
-                triggers["Telephone Exchange Completed"] = 0;
+                triggers["Telephone Exchange Completed"] = 1;
               }
               break;
 
@@ -987,9 +1046,14 @@
               if (d[1] & 1024) state.push(11);
               if (d[1] & 2048) state.push(12);
               table += "<tr><th>Combination:</th><td>";
+              messages["telex"] = "";
               $.each(state, function(key, val)  {
-                table += val
-                if (key != state.length - 1) table += "+";
+                table += button_to_city_telex(val);
+                messages["telex"] += button_to_city_telex(val);
+                if (key != state.length - 1) {
+                	table += " +<br>";
+                	messages["telex"] += "+";
+                }
               })
               table += "</td></tr>";
               break;
@@ -1008,11 +1072,13 @@
               if (d[1] & 512) state.push(10);
               if (d[1] & 1024) state.push(11);
               if (d[1] & 2048) state.push(12);
-              if (state != []) triggers["Telephone Exchange Completed"] = 1;
+              // if (state.length > 0) {
+              // 	triggers["Telephone Exchange Found"] = 1;
+              // }
               table += "<tr><th>Buttons pressed:</th><td>";
               $.each(state, function(key, val)  {
-                table += val
-                if (key != state.length - 1) table += "+";
+                table += button_to_city_telex(val);
+                if (key != state.length - 1) table += " +<br>";
               })
               table += "</td></tr>";
               break;
@@ -1041,7 +1107,7 @@
               else {
                 table += "<tr><th>Message given:</th><td style='color: green'>No</td></tr>";
                 html += "<hr><button onclick=\"sendMessage(10,'*SET')\">Set</button>";
-
+                triggers["Secret Message Given"] = 0;
               }
 
           }
@@ -1060,14 +1126,14 @@
           $("#stat_Secret-Cupboard").css("color", "green");
         }
 
-        if (triggers["Telephone Exchange Found"]) {
-          $("#stat_Telephone-Exchange-Found").html("Found");
-          $("#stat_Telephone-Exchange-Found").css("color", "red");
-        }
-        else {
-          $("#stat_Telephone-Exchange-Found").html("Ready");
-          $("#stat_Telephone-Exchange-Found").css("color", "green");
-        }
+        // if (triggers["Telephone Exchange Found"]) {
+        //   $("#stat_Telephone-Exchange-Found").html("Found");
+        //   $("#stat_Telephone-Exchange-Found").css("color", "red");
+        // }
+        // else {
+        //   $("#stat_Telephone-Exchange-Found").html("Ready");
+        //   $("#stat_Telephone-Exchange-Found").css("color", "green");
+        // }
 
         if (triggers["Telephone Exchange Completed"]) {
           $("#stat_Telephone-Exchange-Completed").html("Completed");
@@ -1159,6 +1225,8 @@
           $("#stat_Locker-4-Opened").css("color", "green");
         }
 
+        $("#codes").html("<span>Phone message: <b>" + messages["phone"] + "</b></span>; <span>Morse interpreter message: <b>" + messages["interpreter"] + "</b></span>; <span>Telex combination: <b>" + messages["telex"] + "</b></span>");
+
         $grid.masonry('layout');
       }
 
@@ -1174,22 +1242,11 @@
       function sendMessage(id, msg) {
         $.ajax({
           url: "http://192.168.2.177?device="+id+"&command="+msg,
-          complete: processResponse,
+          // complete: processResponse,
           datatype: 'json',
           type: 'GET',
           timeout: 1000
         });
-      }
-
-      function processResponse(xhr, status) {
-        if (status == "success") {
-          rsp = xhr.responseJSON;
-          puzzle_data[names[rsp["device"]]] = rsp["response"].split(",");
-          updateStats();
-        }
-        else {
-          alert("Failed to communicate with room controller");
-        }
       }
 
       function updateTime() {
@@ -1229,14 +1286,9 @@
         sendMessage(9,'*COMBO='+combo)
       }
 
-      function resetAll() {
-        $.getJSON("http://192.168.2.177?device="+0+"&command=*RST", function(data) {
-          $.each( data, function( key, val ) {
-            puzzle_data[names[key]] = val.split(",");
-          });
-          updateStats();
-        });
-
+      function resetRoom() {
+        $.getJSON("http://192.168.2.177?device=0&command=*RST");
+        updateMessagePhone();
       }
     </script>
   </body>
