@@ -5,7 +5,7 @@
 #define BUF_LEN 96
 #define I2C_LEN 32
 #define WIRE_ADDR 9
-#define DEFAULT_COMBO 2178
+#define DEFAULT_COMBO 132
 #define TRIGGER_LENGTH 10
 
 unsigned int combination;
@@ -139,7 +139,7 @@ unsigned int read_state() {
   }
 
   // Remove the trigger after so many cycles.
-  if (trigger && trigger_length_count < 0) trigger = 0;
+//  if (trigger && trigger_length_count < 0) trigger = 0;
   
   return state;
 }

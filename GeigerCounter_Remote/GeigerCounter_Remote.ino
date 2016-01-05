@@ -9,53 +9,50 @@
 #define PIN_METER     6
 #define PIN_LED       13
 #define PIN_BATT      A5
+#define PIN_CAL_POT   A0
+#define PIN_RX_SIG    A3
 #define AVGS          1
 
-unsigned int strength[AVGS] = {0};
-unsigned char index = 0;
-char tx_buffer[20] = {0};
-float battvolt = 1.23;
+// Resistor to the display
+// 68k + 10k + 6.8k = 84.8k (driven at 5v)
+
 
 void setup() {
-  // initialize digital pin 13 as an output.
   pinMode(PIN_DIAL_X01, INPUT_PULLUP);
   pinMode(PIN_DIAL_X1, INPUT_PULLUP);
   pinMode(PIN_DIAL_X10, INPUT_PULLUP);
   pinMode(PIN_DIAL_X100, INPUT_PULLUP);
   pinMode(PIN_DIAL_ZERO, INPUT_PULLUP);
-  pinMode(A0, INPUT_PULLUP);
+  pinMode(PIN_CAL_POT, INPUT_PULLUP);
+  pinMode(PIN_RX_SIG, INPUT);
   pinMode(PIN_GROUND, OUTPUT);
-  pinMode(2, OUTPUT);
-  pinMode(3, INPUT);
   pinMode(PIN_BATT, INPUT);
-  digitalWrite(2, LOW);
+  pinMode(PIN_LED, OUTPUT);
   digitalWrite(PIN_GROUND, LOW);
-  pinMode(13, OUTPUT);
   Serial.begin(9600);
-  index = 0;
 }
 
 unsigned int get_dial_setting() {
   int out = 0;
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   delay(1);
-  out += analogRead(A0);
+  out += analogRead(PIN_CAL_POT);
   out /= 10;
   out = 310 - out;
   if (out < 0) out = 0;
@@ -66,31 +63,17 @@ unsigned int get_dial_setting() {
 unsigned int get_multiplier_setting() {
   unsigned int out = 0;
   if (digitalRead(PIN_DIAL_ZERO) == 0) out = 0;
-  else if (digitalRead(PIN_DIAL_X100) == 0) out = 1000;
-  else if (digitalRead(PIN_DIAL_X10) == 0) out = 100;
-  else if (digitalRead(PIN_DIAL_X1) == 0) out = 10;
+  else if (digitalRead(PIN_DIAL_X100) == 0) out = 8;
+  else if (digitalRead(PIN_DIAL_X10) == 0) out = 4;
+  else if (digitalRead(PIN_DIAL_X1) == 0) out = 2;
   else if (digitalRead(PIN_DIAL_X01) == 0) out = 1;
   return out;
 }
 
 unsigned int get_signal_strength() {
-  unsigned int out = 0;
-  out = 98 - pulseIn(3, LOW, 200);
-
-  if (out > 10000) out = 0; // Overflowed
-
-  out = out * 2.602;
-  out += 1;
-  if (out > 255) out = 255; // Trim to max
-
-  strength[index] = out;
-
-  out = 0;
-  for (int i=0; i<AVGS; i++) out += strength[i];
-  out /= AVGS;
-  index++;
-  if (index >= AVGS) index = 0;
-
+  int out = analogRead(PIN_RX_SIG);
+  out -= 4;
+  if (out < 0) out = 0;
   return out;
 }
 
@@ -109,16 +92,12 @@ void loop() {
   sig_strength = get_signal_strength();
   offset = get_dial_setting();
   multiplier = get_multiplier_setting();
-
+  sig_strength /= 4;
   output = sig_strength * multiplier;
   Serial.println(sig_strength);
-  output /= 20;
   output += offset;
-  if (output > 190) output = 190;
+  if (output > 255) output = 255;
   if (output < 0) output = 0;
-
   analogWrite(PIN_METER, output);
-  battvolt = get_battery_voltage();    
-//  Serial.println(battvolt);
   delay(100);
 }

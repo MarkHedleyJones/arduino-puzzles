@@ -9,7 +9,7 @@
 #define WIRE_ADDR 5
 #define PIN_OUT 2
 #define PRESSED !digitalRead(PIN_MORSE)
-#define BOUNDARY_PADDING 30            // Percent 
+#define BOUNDARY_PADDING 40            // Percent 
 #define true 1
 #define false 0
 #define DURATION_MIN 10
@@ -22,10 +22,11 @@
 #define BULB_6 4
 #define BULB_7 5
 #define BULB_8 6
-#define FINISH_FLASHES 20
+#define FINISH_FLASHES 3
+#define FINAL_ILLUMINATION_TIME_SECS 10
 #define DEBUG 0
 
-char defaultMessage[6] = {'B', 'R', 'A', 'V', 'O', 0};
+char defaultMessage[9] = {'C', 'O', 'D', 'E', 'B', 'L', 'U', 'E', 0};
 const char MAX_TAPS = MSG_LEN * 5;
 char expected_taps[MAX_TAPS] = {0};
 int expected_msg_length = 5;
@@ -49,6 +50,7 @@ void setup() {
   pinMode(PIN_MORSE, INPUT);
   pinMode(13, OUTPUT);
   pinMode(PIN_OUT, OUTPUT);
+  digitalWrite(PIN_OUT, HIGH);
   pinMode(BULB_1, OUTPUT);
   pinMode(BULB_2, OUTPUT);
   pinMode(BULB_3, OUTPUT);
@@ -59,7 +61,6 @@ void setup() {
   pinMode(BULB_8, OUTPUT);
 //  pinMode(BULB_9, OUTPUT);
 //  pinMode(BULB_10, OUTPUT);
-  digitalWrite(PIN_OUT, HIGH);
   digitalWrite(13, LOW);
   Serial.begin(9600);
   Wire.begin(WIRE_ADDR);
@@ -70,7 +71,6 @@ void setup() {
 }
 
 void transmitComms() {
-  digitalWrite(PIN_LED, HIGH);
   int offset = wire_count * I2C_LEN;
   for (int i = 0; i < I2C_LEN; i++) tx_buffer[i] = '\0';
   for (int i = 0; i < I2C_LEN; i++) {
@@ -79,7 +79,6 @@ void transmitComms() {
   Wire.write(tx_buffer);
   if (wire_count == 2) wire_count = 0;
   else wire_count++;
-  digitalWrite(PIN_LED, 0);
 }
 
 void load_status() {
@@ -114,10 +113,10 @@ void load_status() {
   else strcat(wire_buffer, "0");
   strcat(wire_buffer, ",MSG=");
   strcat(wire_buffer, expected_msg_decoded);
-  strcat(wire_buffer, ",TARG=");
-  strcat(wire_buffer, expected_taps);
-  strcat(wire_buffer, ",LAST=");
-  strcat(wire_buffer, last_attempt);
+  // strcat(wire_buffer, ",TARG=");
+  // strcat(wire_buffer, expected_taps);
+  // strcat(wire_buffer, ",LAST=");
+  // strcat(wire_buffer, last_attempt);
   strcat(wire_buffer, '\0');
 }
 
@@ -249,8 +248,6 @@ void illuminate_bulbs(int bulbs) {
   digitalWrite(BULB_6, bulbs >= 6);
   digitalWrite(BULB_7, bulbs >= 7);
   digitalWrite(BULB_8, bulbs >= 8);
-//  digitalWrite(BULB_9, bulbs >= 9);
-//  digitalWrite(BULB_10, bulbs >= 10);
 }
 
 
@@ -366,7 +363,7 @@ void check_tap_durations() {
 void flash_bulbs() {
   illuminate_bulbs(0);
   delay(FLASH_PERIOD);
-  illuminate_bulbs(10);
+  illuminate_bulbs(8);
   delay(FLASH_PERIOD);
 }
 
@@ -388,20 +385,11 @@ void loop() {
   while ((millis() - millis_start) < DURATION_MIN);
   add_duration(millis() - millis_start);
   checked = false;
-  print_durations();
 
   if (completed) {
-    for (int i=0; i < FINISH_FLASHES && completed; i++) flash_bulbs();
-    illuminate_bulbs(8);
-    for (int i=0; completed && i < 5; i++) {
-      delay(1000);
-    }
-    illuminate_bulbs(0);
-    digitalWrite(13, HIGH);
     digitalWrite(PIN_OUT, LOW);
-    if (DEBUG) Serial.println("Correct message! - Waiting for reset...");
     while (completed) {
-      delay(10);
+    	flash_bulbs();
     }
   }
 }
