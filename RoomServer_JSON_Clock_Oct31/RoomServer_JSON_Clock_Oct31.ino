@@ -207,6 +207,7 @@ void update_clock() {
     matrix.writeDigitNum(3, (seconds / 10) % 60, true);
     matrix.writeDigitNum(4, seconds % 10, true);
     matrix.writeDisplay();
+    // Serial.println("Clock updated");
 }
 
 void set_status_clock() {
@@ -238,6 +239,21 @@ void set_status_secret_message() {
     else strcat(wire_buffer, "0");
 }
 
+void reset_server_state() {
+  state = STATE_RESET;
+  counter = 0;
+  first_entry = 1;
+
+}
+
+void reset_clock() {
+  seconds_since_reset = millis() / 1000;
+  update_clock();
+}
+
+void reset_secret_message() {
+  message_given = 0;
+}
             
 void handle_http_client(EthernetClient client) {
   char wire_prevCommand[BUFLEN] = "";
@@ -293,42 +309,48 @@ void handle_http_client(EthernetClient client) {
         client.println();
         
         for (int i=0; i<BUFLEN; i++) wire_prevCommand[i] = wire_buffer[i];
+        // Serial.print(device_addr);
+        // Serial.print(" ");
+        // Serial.println(wire_buffer);
         if (device_addr == 0) {
           char tmp[BUFLEN] = {0};
-          strcpy(tmp, wire_buffer);
-          String message = String(wire_buffer);
+          char reset = 0;
+          if (strcmp(wire_buffer,"*RST") == 0) reset = 1;
           client.println("{");
+
           for (int i=1; i<11; i++) {
+
             if (i == 1) {
+              if (reset) reset_server_state();
               strcpy(i2c_msg, "STATE:");
               sprintf(tmp, "%d", state);
               strcat(i2c_msg, tmp);
             }
             else if (i == 4) {
               // Override for clock
+              if (reset) reset_clock();
               set_status_clock();
               strcpy(i2c_msg, wire_buffer);
             }
             else if (i == 10) {
               // Override for secret message
+              if (reset) reset_secret_message();
               set_status_secret_message();
               strcpy(i2c_msg, wire_buffer);
             }
-            else {
-              // Fallback request to remote device for info
-              if (strcmp(tmp,"*RST") == 0) {
+            else if (reset) {
                 strcpy(i2c_msg, "*RST");
                 i2c_send(i, i2c_msg);
-              }
-              else {
-                strcpy(i2c_msg, "*STAT?");
-                i2c_ask(i, i2c_msg);
-                if (i == 5) {
-                  // Check to see if the morse code has been triggerd as a failsafe
-                  if (i2c_msg[19] == '1') morse_correct = 1; //equates to checking if DONE=1 in the message
-                  else morse_correct = 0;
-                  
-                }
+                if (i == 5) morse_correct = 0;
+            }
+            else {
+              strcpy(i2c_msg, "*STAT?");
+              i2c_ask(i, i2c_msg);
+              if (i == 5) {
+                // Check to see if the morse code has been triggerd as a failsafe
+                if (i2c_msg[19] == '1') morse_correct = 1; //equates to checking if DONE=1 in the message
+                else morse_correct = 0;
+                
               }
             }
             client.print("\"");
@@ -341,19 +363,15 @@ void handle_http_client(EthernetClient client) {
             if (i % 2 == 0) system_tasks();
           }
           client.println("}");
-          if (strcmp(tmp, "*RST") == 0) {
-            state = STATE_RESET;
-            counter = 0;
-            first_entry = 1;
+          if (reset) {
+            message_given = 0;
+            morse_correct = 0;
           }
           break;
         }
         else if (device_addr == 4) {
           String message = String(wire_buffer);
-          if (strcmp(wire_buffer,"*RST") == 0) {
-            seconds_since_reset = millis() / 1000;
-            update_clock();
-          }
+          if (strcmp(wire_buffer,"*RST") == 0) reset_clock();
           else if (message.indexOf("*PAUSE=") != -1)  {
             clock_paused = message.substring(7).toInt();
           }
@@ -367,9 +385,7 @@ void handle_http_client(EthernetClient client) {
         }
         else if (device_addr == 10) {
           String message = String(wire_buffer);
-          if (strcmp(wire_buffer,"*RST") == 0) {
-            message_given = 0;
-          }
+          if (strcmp(wire_buffer,"*RST") == 0) reset_secret_message();
           else if (strcmp(wire_buffer,"*SET") == 0) {
             message_given = 1;
           }
@@ -403,7 +419,7 @@ void handle_http_client(EthernetClient client) {
         break;
       }
     }
-    Serial.println("Disconnect");
+    // Serial.println("Disconnect");
   }
   // give the web browser time to receive the data
   delay(1);
@@ -441,6 +457,7 @@ void button_reset() {
 void system_tasks() {
   button_read();
   clock_routine();
+
   if (led_state == 2) digitalWrite(PIN_LED, millis()/500 % 2);
   else if (led_state == 1) digitalWrite(PIN_LED, 1);
   else digitalWrite(PIN_LED, 0);

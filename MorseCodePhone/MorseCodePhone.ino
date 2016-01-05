@@ -23,7 +23,7 @@ TIMINGS AS SET
 A4990MotorShield motors;
 
 
-char morse_message[MSG_LEN + 1] = "SOS";
+char morse_message[MSG_LEN + 1] = "KEY53";
 bool ringer_fault = false;
 bool execute_signal_received = false;
 bool phone_ringing = false;

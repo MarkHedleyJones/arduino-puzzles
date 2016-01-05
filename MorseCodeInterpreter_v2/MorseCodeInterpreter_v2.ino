@@ -50,6 +50,7 @@ void setup() {
   pinMode(PIN_MORSE, INPUT);
   pinMode(13, OUTPUT);
   pinMode(PIN_OUT, OUTPUT);
+  digitalWrite(PIN_OUT, HIGH);
   pinMode(BULB_1, OUTPUT);
   pinMode(BULB_2, OUTPUT);
   pinMode(BULB_3, OUTPUT);
@@ -60,7 +61,6 @@ void setup() {
   pinMode(BULB_8, OUTPUT);
 //  pinMode(BULB_9, OUTPUT);
 //  pinMode(BULB_10, OUTPUT);
-  digitalWrite(PIN_OUT, HIGH);
   digitalWrite(13, LOW);
   Serial.begin(9600);
   Wire.begin(WIRE_ADDR);
@@ -387,6 +387,7 @@ void loop() {
   checked = false;
 
   if (completed) {
+    digitalWrite(PIN_OUT, LOW);
     while (completed) {
     	flash_bulbs();
     }
