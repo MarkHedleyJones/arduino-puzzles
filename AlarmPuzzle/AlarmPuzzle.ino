@@ -72,7 +72,6 @@ const uint8_t defuse_lookup[24][4] = {
 };
 
 const uint8_t default_defuse_combination = 17;
-const uint8_t default_alarm_state = READY;
 const uint8_t default_time_factor = 12;
 const uint8_t default_siren_duration = 15;
 
@@ -161,7 +160,7 @@ void receiveComms(int howMany) {
     seconds_since_reset = millis() / 1000;
     // Reset other variables here
     defuse_combination = default_defuse_combination;
-    alarm_state = default_alarm_state;
+    alarm_state = READY;
     time_factor = default_time_factor;
     load_status();
   }
@@ -178,11 +177,15 @@ void receiveComms(int howMany) {
     load_status();
   }
   else if (message.indexOf("*TRIG") != -1) {
-    alarm_state = 3;
+    alarm_state = TRIGGERED;
     load_status();
   }
   else if (message.indexOf("*ARM") != -1) {
-    alarm_state = 2;
+    alarm_state = ARMED;
+    load_status();
+  }
+  else if (message.indexOf("*DEFUSE") != -1) {
+    alarm_state = DISABLED;
     load_status();
   }
   else strcpy(wire_buffer,"Unknown command");
@@ -204,7 +207,7 @@ void setup() {
 
   // Reset state variables
   defuse_combination = default_defuse_combination;
-  alarm_state = default_alarm_state;
+  alarm_state = READY;
   time_factor = default_time_factor;
   siren_duration = default_siren_duration * 1000;
 }
@@ -305,12 +308,14 @@ void loop() {
     digitalWrite(PIN_BUZZER, HIGH);
     // Only disable the alarm if not 0
     if (siren_duration > 0) {
-      delay(siren_duration);
+      for (int i=0; i < siren_duration && alarm_state == TRIGGERED; i++) {
+        delay(1);
+      }
       digitalWrite(PIN_LED, LOW);
       digitalWrite(PIN_BUZZER, LOW);
     }
     // Wait here until reset
-    while(alarm_state == TRIGGERED);
+    while(alarm_state == TRIGGERED) delay(1);
   }
 
   while (alarm_state == DISABLED) {
@@ -330,6 +335,6 @@ void loop() {
     digitalWrite(PIN_LED, LOW);
     digitalWrite(PIN_BUZZER, LOW);
     // Wait here until reset
-    while(alarm_state == DISABLED);
+    while(alarm_state == DISABLED) delay(1);
   }
 }
