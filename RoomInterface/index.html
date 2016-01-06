@@ -155,6 +155,10 @@
           <th>Locker 4 (055):</th>
           <td><span id="stat_Locker-4-Opened"></span></td>
         </tr>
+        <tr>
+          <th>Alarm:</th>
+          <td><span id="stat_Alarm-Deactivated"></span></td>
+        </tr>
       </table>
       <span>Room is <span id="percentComplete">not</span> complete</span>
       <button onclick="resetRoom()">Reset Room</button>
@@ -227,7 +231,7 @@
         <button onclick="sendMessage(10,'*RST')">Reset</button>
       </div>
 
-			<!-- ****************************************************************** -->
+      <!-- ****************************************************************** -->
       <!--******************* Morse Code Interpreter *************************-->
       <!-- ****************************************************************** -->
       <div class="grid-item" id="Morse-Code-Interpreter">
@@ -246,7 +250,7 @@
         <button onclick="sendMessage(5,'*RST')">Reset</button>
       </div>
 
-			<!-- ****************************************************************** -->
+      <!-- ****************************************************************** -->
       <!-- **************************** Alarm ******************************* -->
       <!-- ****************************************************************** -->
       <div class="grid-item" id="Alarm">
@@ -254,15 +258,15 @@
         <div class="stats"></div>
         <hr>
         <div class="block">
-          <span>New combination: </span><input maxlength="4" type="text" id="newCombo" value="3421" style="width: 130px">
+          <span>New defuse order: </span><input maxlength="4" type="text" id="newAlarmCombo" value="" style="width: 40px">
           <button onclick="updateAlarmCombo()">Set</button>
         </div>
         <hr>
         <div class="block">
-          <button onclick="sendMessage(5, '*TRIG')">Trigger</button>
+          <button onclick="sendMessage(11, '*TRIG')">Trigger</button>
         </div>
         <hr>
-        <button onclick="sendMessage(5,'*RST')">Reset</button>
+        <button onclick="sendMessage(11,'*RST')">Reset</button>
       </div>
 
 
@@ -447,62 +451,62 @@
 
     <script type="text/javascript">
 
-    	function char_to_morse(character) {
-    		var c = character.toLowerCase();
-    		if (c == 'a') return ".-";
-    		else if (c == 'b') return "-...";
-    		else if (c == 'c') return "-.-.";
-    		else if (c == 'd') return "-..";
-    		else if (c == 'e') return ".";
-    		else if (c == 'f') return "..-.";
-    		else if (c == 'g') return "--.";
-    		else if (c == 'h') return "....";
-    		else if (c == 'i') return "..";
-    		else if (c == 'j') return ".---";
-    		else if (c == 'k') return "-.-";
-    		else if (c == 'l') return ".-..";
-    		else if (c == 'm') return "--";
-    		else if (c == 'n') return "-.";
-    		else if (c == 'o') return "---";
-    		else if (c == 'p') return ".--.";
-    		else if (c == 'q') return "--.-";
-    		else if (c == 'r') return ".-.";
-    		else if (c == 's') return "...";
-    		else if (c == 't') return "-";
-    		else if (c == 'u') return "..-";
-    		else if (c == 'v') return "...-";
-    		else if (c == 'w') return ".--";
-    		else if (c == 'x') return "-..-";
-    		else if (c == 'y') return "-.--";
-    		else if (c == 'z') return "--..";
-    		else if (c == '1') return ".----";
-    		else if (c == '2') return "..---";
-    		else if (c == '3') return "...--";
-    		else if (c == '4') return "....-";
-    		else if (c == '5') return ".....";
-    		else if (c == '6') return "-....";
-    		else if (c == '7') return "--...";
-    		else if (c == '8') return "---..";
-    		else if (c == '9') return "----.";
-    		else if (c == '0') return "-----";
-    		else if (c == ' ') return "_";
-    		else return "?";
-    	}
+      function char_to_morse(character) {
+        var c = character.toLowerCase();
+        if (c == 'a') return ".-";
+        else if (c == 'b') return "-...";
+        else if (c == 'c') return "-.-.";
+        else if (c == 'd') return "-..";
+        else if (c == 'e') return ".";
+        else if (c == 'f') return "..-.";
+        else if (c == 'g') return "--.";
+        else if (c == 'h') return "....";
+        else if (c == 'i') return "..";
+        else if (c == 'j') return ".---";
+        else if (c == 'k') return "-.-";
+        else if (c == 'l') return ".-..";
+        else if (c == 'm') return "--";
+        else if (c == 'n') return "-.";
+        else if (c == 'o') return "---";
+        else if (c == 'p') return ".--.";
+        else if (c == 'q') return "--.-";
+        else if (c == 'r') return ".-.";
+        else if (c == 's') return "...";
+        else if (c == 't') return "-";
+        else if (c == 'u') return "..-";
+        else if (c == 'v') return "...-";
+        else if (c == 'w') return ".--";
+        else if (c == 'x') return "-..-";
+        else if (c == 'y') return "-.--";
+        else if (c == 'z') return "--..";
+        else if (c == '1') return ".----";
+        else if (c == '2') return "..---";
+        else if (c == '3') return "...--";
+        else if (c == '4') return "....-";
+        else if (c == '5') return ".....";
+        else if (c == '6') return "-....";
+        else if (c == '7') return "--...";
+        else if (c == '8') return "---..";
+        else if (c == '9') return "----.";
+        else if (c == '0') return "-----";
+        else if (c == ' ') return "_";
+        else return "?";
+      }
 
-    	function button_to_city_telex(number) {
-    		if (number == 1) return "Paris";
-    		else if (number == 2) return "Prague";
-    		else if (number == 3) return "Taupo";
-    		else if (number == 4) return "Moscow";
-    		else if (number == 5) return "London";
-    		else if (number == 6) return "Berlin";
-    		else if (number == 7) return "St. Petersburg";
-    		else if (number == 8) return "Washington";
-    		else if (number == 9) return "Munich";
-    		else if (number == 10) return "Birmingham";
-    		else if (number == 11) return "Warsaw";
-    		else if (number == 12) return "Chicago";
-    	}
+      function button_to_city_telex(number) {
+        if (number == 1) return "Paris";
+        else if (number == 2) return "Prague";
+        else if (number == 3) return "Taupo";
+        else if (number == 4) return "Moscow";
+        else if (number == 5) return "London";
+        else if (number == 6) return "Berlin";
+        else if (number == 7) return "St. Petersburg";
+        else if (number == 8) return "Washington";
+        else if (number == 9) return "Munich";
+        else if (number == 10) return "Birmingham";
+        else if (number == 11) return "Warsaw";
+        else if (number == 12) return "Chicago";
+      }
 
       var $grid = $('.grid').masonry({
         itemSelector: '.grid-item',
@@ -513,36 +517,36 @@
       var locker_thresholds = [500, 500, 500, 500];
 
       var messages = {
-      	"phone": "",
-      	"interpreter": "",
-      	"telex": ""
+        "phone": "",
+        "interpreter": "",
+        "telex": ""
       }
 
       var alarm_wire_combos = [
-				"1234", //0
-				"1243", //1
-				"1324", //2
-				"1342", //3
-				"1423", //4
-				"1432", //5
-				"2134", //6
-				"2143", //7
-				"2314", //8
-				"2341", //9
-				"2413", //10
-				"2431", //11
-				"3124", //12
-				"3142", //13
-				"3214", //14
-				"3241", //15
-				"3412", //16
-				"3421", //17
-				"4123", //18
-				"4132", //19
-				"4213", //20
-				"4231", //21
-				"4312", //22
-				"4321" //23
+        "1234", //0
+        "1243", //1
+        "1324", //2
+        "1342", //3
+        "1423", //4
+        "1432", //5
+        "2134", //6
+        "2143", //7
+        "2314", //8
+        "2341", //9
+        "2413", //10
+        "2431", //11
+        "3124", //12
+        "3142", //13
+        "3214", //14
+        "3241", //15
+        "3412", //16
+        "3421", //17
+        "4123", //18
+        "4132", //19
+        "4213", //20
+        "4231", //21
+        "4312", //22
+        "4321" //23
       ]
 
       var triggers = {
@@ -556,7 +560,8 @@
         "Locker 1 Opened": 0,
         "Locker 2 Opened": 0,
         "Locker 3 Opened": 0,
-        "Locker 4 Opened": 0
+        "Locker 4 Opened": 0,
+        "Alarm finished": 0
       }
 
       var names = {
@@ -569,7 +574,8 @@
         6: "Wall Switch Controller",
         8: "Morse Code Phone",
         9: "Telephone Exchange",
-        10: "Secret Message"
+        10: "Secret Message",
+        11: "Alarm"
       }
 
 
@@ -579,6 +585,7 @@
       var counter = 0;
       var last_progress = 0;
       var server_state = -1;
+      var alarm_finished_type = 0;
 
       function getStats() {
         counter++;
@@ -601,19 +608,19 @@
           },
           timeout: 10000,
           complete: function (jqXHR, status) {
-          	if (status == "parsererror") {
-	            $("#serverState").html("CAN&rsquo;T INTERPRET SERVERS RESPONSE!");
-	            $("#serverState").css("font-weight", 700);
-	            $("#serverState").css("color", 'red');
-	            $("#serverTip").html("It is likely that a puzzle is having trouble");
-	            if (lastUpdate == 0) {
-	              $("#lastUpdate").html("<b>Never</b>");
-	            }
-	            else {
-	              var now = new Date();
-	              $("#lastUpdate").html("<b>"+Math.round((now.getTime() - lastUpdate.getTime())/1000)+" seconds ago</b>");
-	            }
-          	}
+            if (status == "parsererror") {
+              $("#serverState").html("CAN&rsquo;T INTERPRET SERVERS RESPONSE!");
+              $("#serverState").css("font-weight", 700);
+              $("#serverState").css("color", 'red');
+              $("#serverTip").html("It is likely that a puzzle is having trouble");
+              if (lastUpdate == 0) {
+                $("#lastUpdate").html("<b>Never</b>");
+              }
+              else {
+                var now = new Date();
+                $("#lastUpdate").html("<b>"+Math.round((now.getTime() - lastUpdate.getTime())/1000)+" seconds ago</b>");
+              }
+            }
           },
           success: function (data, status) {
             lastUpdate = new Date();
@@ -630,16 +637,11 @@
             for (key in triggers) steps++;
 
             for(var key in triggers) {
-            	if (triggers[key] == 1) progress++;
+              if (triggers[key] == 1) progress++;
             }
 
-            // if (leds_green != Math.round((total/steps) * progress)) {
-            // 	sendMessage_ignoreResponse(3, "*SET_PROG="+Math.round((total/steps) * progress));
-            // }
-
-
             if ((server_state == 1 || server_state == 2) && (progress != last_progress)) {
-            	sendMessage_ignoreResponse(3, "*SET_PROG="+Math.round((total/steps) * progress));
+              sendMessage_ignoreResponse(3, "*SET_PROG="+Math.round((total/steps) * progress));
               last_progress = progress;
             }
 
@@ -804,69 +806,69 @@
           switch(d[0]) {
             case "L1":
               if (d[1] & 1) {
-								table += "<tr><th>Locker 1 state:</th><td style=\"color: red\">Open</td></tr>";
+                table += "<tr><th>Locker 1 state:</th><td style=\"color: red\">Open</td></tr>";
               }
               else {
-              	table += "<tr><th>Locker 1 state:</th><td style=\"color: green\">Closed</td></tr>";
+                table += "<tr><th>Locker 1 state:</th><td style=\"color: green\">Closed</td></tr>";
               }
               if (d[1] & 2) {
-              	triggers["Locker 1 Opened"] = 1;
-								table += "<tr><th>Locker 1 opened:</th><td style=\"color: red\">Yes</td></tr>";
+                triggers["Locker 1 Opened"] = 1;
+                table += "<tr><th>Locker 1 opened:</th><td style=\"color: red\">Yes</td></tr>";
               }
               else {
-              	triggers["Locker 1 Opened"] = 0;
-              	table += "<tr><th>Locker 1 opened:</th><td style=\"color: green\">No</td></tr>";
+                triggers["Locker 1 Opened"] = 0;
+                table += "<tr><th>Locker 1 opened:</th><td style=\"color: green\">No</td></tr>";
               }
               break;
 
             case "L2":
               if (d[1] & 1) {
-								table += "<tr><th>Locker 2 state:</th><td style=\"color: red\">Open</td></tr>";
+                table += "<tr><th>Locker 2 state:</th><td style=\"color: red\">Open</td></tr>";
               }
               else {
-              	table += "<tr><th>Locker 2 state:</th><td style=\"color: green\">Closed</td></tr>";
+                table += "<tr><th>Locker 2 state:</th><td style=\"color: green\">Closed</td></tr>";
               }
               if (d[1] & 2) {
-              	triggers["Locker 2 Opened"] = 1;
-								table += "<tr><th>Locker 2 opened:</th><td style=\"color: red\">Yes</td></tr>";
+                triggers["Locker 2 Opened"] = 1;
+                table += "<tr><th>Locker 2 opened:</th><td style=\"color: red\">Yes</td></tr>";
               }
               else {
-              	triggers["Locker 2 Opened"] = 0;
-              	table += "<tr><th>Locker 2 opened:</th><td style=\"color: green\">No</td></tr>";
+                triggers["Locker 2 Opened"] = 0;
+                table += "<tr><th>Locker 2 opened:</th><td style=\"color: green\">No</td></tr>";
               }
               break;
 
             case "L3":
               if (d[1] & 1) {
-								table += "<tr><th>Locker 3 state:</th><td style=\"color: red\">Open</td></tr>";
+                table += "<tr><th>Locker 3 state:</th><td style=\"color: red\">Open</td></tr>";
               }
               else {
-              	table += "<tr><th>Locker 3 state:</th><td style=\"color: green\">Closed</td></tr>";
+                table += "<tr><th>Locker 3 state:</th><td style=\"color: green\">Closed</td></tr>";
               }
               if (d[1] & 2) {
-              	triggers["Locker 3 Opened"] = 1;
-								table += "<tr><th>Locker 3 opened:</th><td style=\"color: red\">Yes</td></tr>";
+                triggers["Locker 3 Opened"] = 1;
+                table += "<tr><th>Locker 3 opened:</th><td style=\"color: red\">Yes</td></tr>";
               }
               else {
-              	triggers["Locker 3 Opened"] = 0;
-              	table += "<tr><th>Locker 3 opened:</th><td style=\"color: green\">No</td></tr>";
+                triggers["Locker 3 Opened"] = 0;
+                table += "<tr><th>Locker 3 opened:</th><td style=\"color: green\">No</td></tr>";
               }
               break;
 
             case "L4":
               if (d[1] & 1) {
-								table += "<tr><th>Locker 4 state:</th><td style=\"color: red\">Open</td></tr>";
+                table += "<tr><th>Locker 4 state:</th><td style=\"color: red\">Open</td></tr>";
               }
               else {
-              	table += "<tr><th>Locker 4 state:</th><td style=\"color: green\">Closed</td></tr>";
+                table += "<tr><th>Locker 4 state:</th><td style=\"color: green\">Closed</td></tr>";
               }
               if (d[1] & 2) {
-              	triggers["Locker 4 Opened"] = 1;
-								table += "<tr><th>Locker 4 opened:</th><td style=\"color: red\">Yes</td></tr>";
+                triggers["Locker 4 Opened"] = 1;
+                table += "<tr><th>Locker 4 opened:</th><td style=\"color: red\">Yes</td></tr>";
               }
               else {
-              	triggers["Locker 4 Opened"] = 0;
-              	table += "<tr><th>Locker 4 opened:</th><td style=\"color: green\">No</td></tr>";
+                triggers["Locker 4 Opened"] = 0;
+                table += "<tr><th>Locker 4 opened:</th><td style=\"color: green\">No</td></tr>";
               }
               break;
           }
@@ -945,10 +947,10 @@
               var table_tmp = "";
               messages["interpreter"] = d[1];
               for (var i=0; i < string_length; i++) {
-              	pattern = char_to_morse(d[1].charAt(i));
-              	target_string = target_string.concat(pattern);
-              	target_string = target_string.concat("|");
-              	table_tmp += "<tr><td>" + d[1].charAt(i) + "</td>&nbsp;<td>" + char_to_morse(d[1].charAt(i)) + "</td></tr>";
+                pattern = char_to_morse(d[1].charAt(i));
+                target_string = target_string.concat(pattern);
+                target_string = target_string.concat("|");
+                table_tmp += "<tr><td>" + d[1].charAt(i) + "</td>&nbsp;<td>" + char_to_morse(d[1].charAt(i)) + "</td></tr>";
               }
               
               // table += "<tr><th>Target Pattern:</th><td style='font-size: 1em; font-family: monospace'>"+target_string+"</td></tr>";
@@ -1059,10 +1061,10 @@
               var table_tmp = "";
               messages["phone"] = d[1];
               for (var i=0; i < string_length; i++) {
-              	pattern = char_to_morse(d[1].charAt(i));
-              	target_string = target_string.concat(pattern);
-              	target_string = target_string.concat("|");
-              	table_tmp += "<tr><td>" + d[1].charAt(i) + "</td>&nbsp;<td>" + char_to_morse(d[1].charAt(i)) + "</td></tr>";
+                pattern = char_to_morse(d[1].charAt(i));
+                target_string = target_string.concat(pattern);
+                target_string = target_string.concat("|");
+                table_tmp += "<tr><td>" + d[1].charAt(i) + "</td>&nbsp;<td>" + char_to_morse(d[1].charAt(i)) + "</td></tr>";
               }
               
               // table += "<tr><th>Target Pattern:</th><td style='font-size: 1em; font-family: monospace'>"+target_string+"</td></tr>";
@@ -1120,8 +1122,8 @@
                 table += button_to_city_telex(val);
                 messages["telex"] += button_to_city_telex(val);
                 if (key != state.length - 1) {
-                	table += " +<br>";
-                	messages["telex"] += "+";
+                  table += " +<br>";
+                  messages["telex"] += "+";
                 }
               })
               table += "</td></tr>";
@@ -1142,7 +1144,7 @@
               if (d[1] & 1024) state.push(11);
               if (d[1] & 2048) state.push(12);
               // if (state.length > 0) {
-              // 	triggers["Telephone Exchange Found"] = 1;
+              //  triggers["Telephone Exchange Found"] = 1;
               // }
               table += "<tr><th>Buttons pressed:</th><td>";
               $.each(state, function(key, val)  {
@@ -1184,6 +1186,103 @@
         });
         table += "</table>";
         $("#Secret-Message .stats").html(table+html);
+
+        html = "";
+        table = "<table>";
+        $.each(puzzle_data["Alarm"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "TIME":
+              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+            case "COMBO":
+              table += "<tr><th>Defuse order:</th>";
+              table += "<td>";
+              if (d[1] < alarm_wire_combos.length) {
+                table += alarm_wire_combos[d[1]][0];
+                table += ",";
+                table += alarm_wire_combos[d[1]][1];
+                table += ",";
+                table += alarm_wire_combos[d[1]][2];
+                table += ",";
+                table += alarm_wire_combos[d[1]][3];
+              }
+              else table += "Unknown";
+              table += "</td>";                
+              table += "</tr>";
+              
+              break;
+
+            case "STATE":
+              table += "<tr><th>Alarm state:</th>";
+              if (d[1] == 0) {
+                table += "<td style=\"color: black\">";
+                table += "Disabled";
+                table += "</td>";
+                triggers["Alarm finished"] = 1;
+                alarm_finished_type = 1;
+              }
+              else if(d[1] == 1) {
+                table += "<td style=\"color: green\">";
+                table += "Ready";
+                table += "</td>";
+                triggers["Alarm finished"] = 0;
+              }
+              else if(d[1] == 2) {
+                table += "<td style=\"color: blue\">";
+                table += "Armed";
+                table += "</td>";
+                triggers["Alarm finished"] = 0;
+              }
+              else if(d[1] == 3) {
+                table += "<td style=\"color: red\">";
+                table += "Triggered";
+                table += "</td>";
+                triggers["Alarm finished"] = 1;
+                alarm_finished_type = 0;
+              }
+              table += "</tr>";
+            break;
+
+            case "WIRES":
+              table += "<tr><th>Wires disconnected:</th><td>";
+              var count = 0;
+              if (d[1] == 0) table += "None";
+              else {
+                if (d[1] & 1 == 1) {
+                  table += "1";
+                  count++;
+                }
+                if (d[1] & 2 == 1) {
+                  if (count > 0) table += ",";
+                  table += "2";
+                  count++;
+                }
+                if (d[1] & 4 == 1) {
+                  if (count > 0) table += ",";
+                  table += "3";
+                  count++;
+                }
+                if (d[1] & 8 == 1) {
+                  if (count > 0) table += ",";
+                  table += "4";
+                  count++;
+                }
+              }
+              table += "</td></tr>";
+              
+            break;
+
+            case "TFACTOR":
+              table += "<tr><th>Time factor:</th><td>"+d[1]+"</td></tr>";
+              break;
+
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Alarm .stats").html(table+html);
 
 
         if (triggers["Secret Cupboard"]) {
@@ -1294,6 +1393,20 @@
           $("#stat_Locker-4-Opened").css("color", "green");
         }
 
+        if (triggers["Alarm finished"]) {
+          if (alarm_finished_type == 1) {
+            $("#stat_Alarm-Deactivated").html("Defused");
+          }
+          else {
+            $("#stat_Alarm-Deactivated").html("Triggered");
+          }
+          $("#stat_Alarm-Deactivated").css("color", "red");
+        }
+        else {
+          $("#stat_Alarm-Deactivated").html("Ready");
+          $("#stat_Alarm-Deactivated").css("color", "green");
+        }
+
         $("#codes").html("<span>Phone message: <b>" + messages["phone"] + "</b></span>; <span>Morse interpreter message: <b>" + messages["interpreter"] + "</b></span>; <span>Telex combination: <b>" + messages["telex"] + "</b></span>");
 
         $grid.masonry('layout');
@@ -1353,6 +1466,15 @@
         if ($('#11')[0].checked) combo += 1024;
         if ($('#12')[0].checked) combo += 2048;
         sendMessage(9,'*COMBO='+combo)
+      }
+
+      function updateAlarmCombo() {
+        var combo = -1;
+        for (var i = 0; i < alarm_wire_combos.length; i++) {
+          if (alarm_wire_combos[i] == $("#newAlarmCombo").val()) combo = i;
+        }
+        if (combo == -1) alert("Error interpreting defuse order");
+        sendMessage(11,"*COMBO="+combo);
       }
 
       function resetRoom() {
