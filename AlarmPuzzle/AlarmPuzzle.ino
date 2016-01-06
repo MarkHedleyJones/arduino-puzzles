@@ -123,12 +123,12 @@ void load_status() {
   sprintf(tmp, "%d", seconds);
   strcat(wire_buffer, tmp);
   // END OF TIME TRANSMIT
-  
-  strcat(wire_buffer, ",COMBO=");
-  sprintf(tmp, "%d", defuse_combination);
-  strcat(wire_buffer, tmp);
+
   strcat(wire_buffer, ",STATE=");
   sprintf(tmp, "%d", alarm_state);
+  strcat(wire_buffer, tmp);
+  strcat(wire_buffer, ",COMBO=");
+  sprintf(tmp, "%d", defuse_combination);
   strcat(wire_buffer, tmp);
   strcat(wire_buffer, ",TFACTOR=");
   sprintf(tmp, "%d", time_factor);

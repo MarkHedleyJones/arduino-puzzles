@@ -13,6 +13,12 @@
 #define STATE_ENDED           3
 #define STATE_RESET           4
 
+
+#define READY 1
+#define ARMED 2
+#define DISABLED 0
+#define TRIGGERED 3
+
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
 
@@ -32,8 +38,8 @@ char success = false;
 char clock_paused = 0;
 unsigned long seconds_since_reset = 0;
 char update_flag = 1;
-bool message_given = 0;
-bool morse_correct = 0;
+bool alarm_finished = 0;
+int hint_count = 0;
 char i2c_msg[BUFLEN] = {0};
 
 int counter = 0;
@@ -233,26 +239,26 @@ void set_status_clock() {
 }
 
 
-void set_status_secret_message() {
-    strcpy(wire_buffer, "MSG_RECEIVED=");
-    if (message_given) strcat(wire_buffer, "1");
-    else strcat(wire_buffer, "0");
+void set_status_hint_counter() {
+    char tmp[4] = "";
+    strcpy(wire_buffer, "HINT_COUNT=");
+    sprintf(tmp, "%d", hint_count);
+    strcat(wire_buffer, tmp);
+}
+
+void reset_hint_counter() {
+  hint_count = 0;
 }
 
 void reset_server_state() {
   state = STATE_RESET;
   counter = 0;
   first_entry = 1;
-
 }
 
 void reset_clock() {
   seconds_since_reset = millis() / 1000;
   update_clock();
-}
-
-void reset_secret_message() {
-  message_given = 0;
 }
             
 void handle_http_client(EthernetClient client) {
@@ -333,24 +339,28 @@ void handle_http_client(EthernetClient client) {
               strcpy(i2c_msg, wire_buffer);
             }
             else if (i == 10) {
-              // Override for secret message
-              if (reset) reset_secret_message();
-              set_status_secret_message();
+              // Override for hint counter
+              if (reset) reset_hint_counter();
+              set_status_hint_counter();
               strcpy(i2c_msg, wire_buffer);
             }
             else if (reset) {
                 strcpy(i2c_msg, "*RST");
                 i2c_send(i, i2c_msg);
-                if (i == 5) morse_correct = 0;
+                if (i == 10) hint_count = 0;
+                if (i == 11) alarm_finished = 0;
             }
             else {
               strcpy(i2c_msg, "*STAT?");
               i2c_ask(i, i2c_msg);
-              if (i == 5) {
-                // Check to see if the morse code has been triggerd as a failsafe
-                if (i2c_msg[19] == '1') morse_correct = 1; //equates to checking if DONE=1 in the message
-                else morse_correct = 0;
-                
+              if (i == 11) {
+                if (i2c_msg[20] == TRIGGERED ||
+                    i2c_msg[20] == DISABLED) {
+                  alarm_finished = 1;    
+                }
+                else {
+                  alarm_finished = 0;
+                }
               }
             }
             client.print("\"");
@@ -363,10 +373,6 @@ void handle_http_client(EthernetClient client) {
             if (i % 2 == 0) system_tasks();
           }
           client.println("}");
-          if (reset) {
-            message_given = 0;
-            morse_correct = 0;
-          }
           break;
         }
         else if (device_addr == 4) {
@@ -385,11 +391,17 @@ void handle_http_client(EthernetClient client) {
         }
         else if (device_addr == 10) {
           String message = String(wire_buffer);
-          if (strcmp(wire_buffer,"*RST") == 0) reset_secret_message();
-          else if (strcmp(wire_buffer,"*SET") == 0) {
-            message_given = 1;
+          if (strcmp(wire_buffer,"*RST") == 0) reset_hint_counter();
+          else if (message.indexOf("*HINT_COUNT=") != -1) {
+            hint_count = message.substring(12).toInt();
           }
-          set_status_secret_message();
+          else if (strcmp(wire_buffer,"*INCREMENT") == 0) {
+            hint_count += 1;
+          }
+          else if (strcmp(wire_buffer,"*DECREMENT") == 0) {
+            if (hint_count > 0) hint_count -= 1;
+          }
+          set_status_hint_counter();
         }
         else if (i2c_send(device_addr, wire_buffer) == false) {
           strcpy(wire_buffer,"No response");
@@ -508,46 +520,46 @@ void loop() {
       }
 
       if (button_duration > 10 && button_state == 0) {
-        message_given = 1;
+        hint_count += 1;
       }
       else if (button_duration > 2000) {
         first_entry = 1;
         state = STATE_RESET;
         break;
       }
-      if (message_given || morse_correct) {
-        state = STATE_ENDCONDITION;
-        first_entry = 1;
-      }
-      else first_entry = 0;
-      break;
-    
-    case STATE_ENDCONDITION:
-      if (first_entry) {
-        counter = 0;
-        Serial.println("STATE_ENDCONDITION");
-        button_reset();
-      }
-      
-      // blink the LED
-      led_state = 2; //blink
-
-      // Check for a button press
-      if (button_duration > 10 && button_state == 0) {
-        message_given = 1;
-      }
-      else if (button_duration > 2000) {
-        first_entry = 1;
-        state = STATE_RESET;
-        break;
-      }
-
-      if (message_given && morse_correct) {
+      if (alarm_finished) {
         state = STATE_ENDED;
         first_entry = 1;
       }
       else first_entry = 0;
       break;
+    
+//    case STATE_ENDCONDITION:
+//      if (first_entry) {
+//        counter = 0;
+//        Serial.println("STATE_ENDCONDITION");
+//        button_reset();
+//      }
+//      
+//      // blink the LED
+//      led_state = 2; //blink
+//
+//      // Check for a button press
+//      if (button_duration > 10 && button_state == 0) {
+//        message_given = 1;
+//      }
+//      else if (button_duration > 2000) {
+//        first_entry = 1;
+//        state = STATE_RESET;
+//        break;
+//      }
+//
+//      if (message_given && morse_correct) {
+//        state = STATE_ENDED;
+//        first_entry = 1;
+//      }
+//      else first_entry = 0;
+//      break;
       
     
     case STATE_ENDED:
@@ -590,9 +602,9 @@ void loop() {
         i2c_send(11, i2c_msg);
       }
 
-      message_given = 0;
+      hint_count = 0;
+      alarm_finished = 0;
       led_state = 0;
-      morse_correct = 0;
 
       if (button_state == 0) {
         state = STATE_PRE_RUN;
