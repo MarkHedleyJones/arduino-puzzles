@@ -178,7 +178,11 @@ void receiveComms(int howMany) {
     load_status();
   }
   else if (message.indexOf("*TRIG") != -1) {
-    if (alarm_state < 2) alarm_state = 2;
+    alarm_state = 3;
+    load_status();
+  }
+  else if (message.indexOf("*ARM") != -1) {
+    alarm_state = 2;
     load_status();
   }
   else strcpy(wire_buffer,"Unknown command");
@@ -299,9 +303,12 @@ void loop() {
     Serial.println("Triggered");
     digitalWrite(PIN_LED, HIGH);
     digitalWrite(PIN_BUZZER, HIGH);
-    delay(siren_duration);
-    digitalWrite(PIN_LED, LOW);
-    digitalWrite(PIN_BUZZER, LOW);
+    // Only disable the alarm if not 0
+    if (siren_duration > 0) {
+      delay(siren_duration);
+      digitalWrite(PIN_LED, LOW);
+      digitalWrite(PIN_BUZZER, LOW);
+    }
     // Wait here until reset
     while(alarm_state == TRIGGERED);
   }
