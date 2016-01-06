@@ -108,7 +108,7 @@
       </a>
       <table style="margin: 20px auto; clear: both;">
         <tr>
-          <th>Secret Cupboard:</th>
+          <th style="text-align: right">Secret Cupboard:</th>
           <td><span id="stat_Secret-Cupboard"></span></td>
         </tr>
 <!--         <tr>
@@ -116,47 +116,38 @@
           <td><span id="stat_Telephone-Exchange-Found"></span></td>
         </tr> -->
         <tr>
-          <th>Telephone Exchange Completed:</th>
+          <th style="text-align: right">Telephone Exchange:</th>
           <td><span id="stat_Telephone-Exchange-Completed"></span></td>
         </tr>
         <tr>
-          <th>Wall Switch 1:</th>
+          <th style="text-align: right">Wooden Box (wall switch):</th>
           <td><span id="stat_Wall-Switch-1"></span></td>
         </tr>
         <tr>
-          <th>Wall Switch 2:</th>
+          <th style="text-align: right">Coloured Wires (to enable morse tapper):</th>
+          <td><span id="stat_Coloured-Wires-Connected"></span></td>
+        </tr>
+        <tr>
+          <th style="text-align: right">Plastic Box (released by transmitting morse code):</th>
           <td><span id="stat_Wall-Switch-2"></span></td>
         </tr>
-        <tr>
-          <th>Morse Code Machine Found:</th>
-          <td><span id="stat_Morse-Code-Machine-Found"></span></td>
-        </tr>
-        <tr>
-          <th>Morse Code Message Sent:</th>
-          <td><span id="stat_Morse-Code-Message-Sent"></span></td>
-        </tr>
-        <tr>
-          <th>Secret Message Received:</th>
-          <td><span id="stat_Secret-Message-Given"></span></td>
-        </tr>
-        <tr>
-          <th>Locker 1 (052):</th>
+          <th style="text-align: right">Locker 1 (052):</th>
           <td><span id="stat_Locker-1-Opened"></span></td>
         </tr>
         <tr>
-          <th>Locker 2 (053):</th>
+          <th style="text-align: right">Locker 2 (053):</th>
           <td><span id="stat_Locker-2-Opened"></span></td>
         </tr>
         <tr>
-          <th>Locker 3 (054):</th>
+          <th style="text-align: right">Locker 3 (054):</th>
           <td><span id="stat_Locker-3-Opened"></span></td>
         </tr>
         <tr>
-          <th>Locker 4 (055):</th>
+          <th style="text-align: right">Locker 4 (055):</th>
           <td><span id="stat_Locker-4-Opened"></span></td>
         </tr>
         <tr>
-          <th>Alarm:</th>
+          <th style="text-align: right">Alarm:</th>
           <td><span id="stat_Alarm-Deactivated"></span></td>
         </tr>
       </table>
@@ -571,8 +562,7 @@
         "Telephone Exchange Completed": 0,
         "Wall Switch 1": 0,
         "Wall Switch 2": 0,
-        "Morse Code Machine Found": 0,
-        "Morse Code Message Sent": 0,
+        "Coloured Wires Connected": 0,
         "Secret Message Given": 0,
         "Locker 1 Opened": 0,
         "Locker 2 Opened": 0,
@@ -933,22 +923,20 @@
             case "DONE":
               if (d[1]==1) {
                 table += "<tr><th>Completed:</th><td style='color: red'>Yes</td></tr>";
-                triggers["Morse Code Message Sent"] = 1;
               }
               else {
                 table += "<tr><th>Completed:</th><td style='color: green'>No</td></tr>";
-                triggers["Morse Code Message Sent"] = 0;
               }
               break;
 
             case "PRESSED":
               if (d[1] == 1) {
                 table += "<tr><th>Pressed:</th><td style='color: red'>Yes</td></tr>";
-                triggers["Morse Code Machine Found"] = 1;
+                triggers["Coloured Wires Connected"] = 1;
               }
               else {
                 table += "<tr><th>Pressed:</th><td style='color: green'>No</td></tr>";
-                triggers["Morse Code Machine Found"] = 0;
+                triggers["Coloured Wires Connected"] = 0;
               }
               break;
 
@@ -1337,7 +1325,7 @@
         }
 
         if (triggers["Wall Switch 1"]) {
-          $("#stat_Wall-Switch-1").html("Triggered");
+          $("#stat_Wall-Switch-1").html("Released");
           $("#stat_Wall-Switch-1").css("color", "red");
         }
         else {
@@ -1346,7 +1334,7 @@
         }
 
         if (triggers["Wall Switch 2"]) {
-          $("#stat_Wall-Switch-2").html("Triggered");
+          $("#stat_Wall-Switch-2").html("Released");
           $("#stat_Wall-Switch-2").css("color", "red");
         }
         else {
@@ -1354,22 +1342,13 @@
           $("#stat_Wall-Switch-2").css("color", "green");
         }
 
-        if (triggers["Morse Code Machine Found"]) {
-          $("#stat_Morse-Code-Machine-Found").html("Found");
-          $("#stat_Morse-Code-Machine-Found").css("color", "red");
+        if (triggers["Coloured Wires Connected"]) {
+          $("#stat_Coloured-Wires-Connected").html("Enabled");
+          $("#stat_Coloured-Wires-Connected").css("color", "red");
         }
         else {
-          $("#stat_Morse-Code-Machine-Found").html("Ready");
-          $("#stat_Morse-Code-Machine-Found").css("color", "green");
-        }
-
-        if (triggers["Morse Code Message Sent"]) {
-          $("#stat_Morse-Code-Message-Sent").html("Yes");
-          $("#stat_Morse-Code-Message-Sent").css("color", "red");
-        }
-        else {
-          $("#stat_Morse-Code-Message-Sent").html("Ready");
-          $("#stat_Morse-Code-Message-Sent").css("color", "green");
+          $("#stat_Coloured-Wires-Connected").html("Not pressed");
+          $("#stat_Coloured-Wires-Connected").css("color", "green");
         }
 
         if (triggers["Secret Message Given"]) {
