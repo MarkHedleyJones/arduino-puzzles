@@ -1,0 +1,2077 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="2519.4443"
+   height="1304.3484"
+   viewBox="0 0 2519.4444 1304.3484"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="full-layout.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="2036.4051"
+     inkscape:cy="411.86963"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:window-width="1215"
+     inkscape:window-height="1000"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4136"
+       originx="1074.6874px"
+       originy="61.07137px"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(1074.6874,190.9148)">
+    <g
+       id="g4310"
+       transform="translate(238,29.999995)">
+      <rect
+         y="442.36221"
+         x="-490"
+         height="59.999992"
+         width="80"
+         id="rect4140-8"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9"
+         y="476.00235"
+         x="-450.16113"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4179"
+           y="476.00235"
+           x="-450.16113"
+           sodipodi:role="line">Room Server</tspan></text>
+    </g>
+    <g
+       id="g4305"
+       transform="translate(-302,-95.000039)">
+      <rect
+         y="547.36224"
+         x="-535"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2"
+         y="581.00238"
+         x="-495.16113"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4179-3"
+           y="581.00238"
+           x="-495.16113"
+           sodipodi:role="line">PC</tspan></text>
+    </g>
+    <g
+       id="g4293"
+       transform="translate(-687,104.99996)">
+      <rect
+         y="597.36224"
+         x="-385"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4179-3-8"
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line">Office</tspan><tspan
+           id="tspan4263"
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line">Desk Phone</tspan></text>
+    </g>
+    <g
+       id="g4299"
+       transform="translate(54.428572,-285.00004)">
+      <rect
+         y="677.36224"
+         x="-515"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-4"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-7"
+         y="704.68646"
+         x="-474.70703"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4263-0"
+           y="704.68646"
+           x="-474.70703"
+           sodipodi:role="line">Room</tspan><tspan
+           id="tspan4291"
+           y="717.18646"
+           x="-474.70703"
+           sodipodi:role="line">Wall Phone</tspan></text>
+    </g>
+    <g
+       id="g4305-0"
+       transform="translate(41.31133,-577.28919)">
+      <rect
+         y="553.52435"
+         x="-534.89502"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-6"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-6"
+         y="581.00238"
+         x="-495.16113"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4179-3-7"
+           y="581.00238"
+           x="-495.16113"
+           sodipodi:role="line">Network</tspan><tspan
+           y="593.50238"
+           x="-495.16113"
+           sodipodi:role="line"
+           id="tspan4339">Switch</tspan></text>
+    </g>
+    <g
+       id="g4305-2"
+       transform="translate(310.8992,-637.54479)">
+      <rect
+         y="547.36224"
+         x="-535"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-4"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-9"
+         y="581.00238"
+         x="-495.16113"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4179-3-4"
+           y="581.00238"
+           x="-495.16113"
+           sodipodi:role="line">Camera 1</tspan></text>
+    </g>
+    <g
+       id="g4305-2-8"
+       transform="translate(1022.2857,-621.42862)">
+      <rect
+         y="547.36224"
+         x="-535"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-4-0"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-9-1"
+         y="581.00238"
+         x="-495.16113"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4179-3-4-4"
+           y="581.00238"
+           x="-495.16113"
+           sodipodi:role="line">Camera 2</tspan></text>
+    </g>
+    <g
+       id="g4299-9"
+       transform="translate(263,-545.00004)">
+      <rect
+         y="677.36224"
+         x="-515"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-4-5"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-7-0"
+         y="704.68646"
+         x="-474.70703"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4291-1"
+           y="704.68646"
+           x="-474.70703"
+           sodipodi:role="line">Morse</tspan><tspan
+           y="717.18646"
+           x="-474.70703"
+           sodipodi:role="line"
+           id="tspan4441">Code Phone</tspan></text>
+    </g>
+    <g
+       id="g4293-0"
+       transform="translate(-317,224.99996)">
+      <rect
+         y="597.36224"
+         x="-385"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4263-06"
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line">Office</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4472">Remote Ctrl.</tspan></text>
+    </g>
+    <g
+       id="g4293-0-8"
+       transform="translate(1513,-185.00004)">
+      <rect
+         y="597.36224"
+         x="-385"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-7"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-6"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4472-5">Wall Switch</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4503">Controller</tspan></text>
+    </g>
+    <g
+       id="g4293-0-8-8"
+       transform="translate(493,-5.0000389)">
+      <rect
+         y="597.36224"
+         x="-385"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-7-5"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-6-7"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4503-3">Locker</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4534">Door Sensors</tspan></text>
+    </g>
+    <g
+       id="g4299-9-4"
+       transform="translate(1345,-45.000017)">
+      <rect
+         y="677.36224"
+         x="-515"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-4-5-9"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-7-0-9"
+         y="697.46722"
+         x="-475.30273"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4291-1-3"
+           y="697.46722"
+           x="-475.30273"
+           sodipodi:role="line">Morse</tspan><tspan
+           y="709.96722"
+           x="-475.30273"
+           sodipodi:role="line"
+           id="tspan4441-3">Code</tspan><tspan
+           y="722.46722"
+           x="-475.30273"
+           sodipodi:role="line"
+           id="tspan4563">Interpreter</tspan></text>
+    </g>
+    <g
+       id="g4293-0-7"
+       transform="translate(312.77539,171.27682)">
+      <rect
+         y="591.08539"
+         x="-384.77539"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4472-7">Clock</tspan></text>
+    </g>
+    <g
+       id="g4293-8"
+       transform="translate(412.89014,-455.00004)">
+      <rect
+         y="597.36224"
+         x="-384.89014"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-44"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-2"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4623">Cupboard</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan5636">Sensor</tspan></text>
+    </g>
+    <g
+       id="g4293-0-7-5"
+       transform="translate(1062.2754,-189.22318)">
+      <rect
+         y="591.08539"
+         x="-384.77539"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-1"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-4"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4472-7-1">Breakout</tspan></text>
+    </g>
+    <g
+       id="g4293-0-7-5-1"
+       transform="translate(1294.6483,-483.83374)">
+      <rect
+         y="598.33881"
+         x="-385.21973"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-1-2"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-4-9"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4472-7-1-6">Telephone</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4673">Exchange</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -775.36189,452.3622 -475.2218,36.235155"
+       id="path4675"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4305"
+       inkscape:connection-end="#g4305-0"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -224.1008,-50.324008 -413.58369,-3.6233828"
+       id="path4677"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4305-2"
+       inkscape:connection-end="#g4305-0"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 487.2857,-42.015076 -413.58369,4.1838549"
+       id="path4679"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4305-2-8"
+       inkscape:connection-end="#g4305-0"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -438.97552,36.235155 -226.60817,472.36221"
+       id="path4681"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4305-0"
+       inkscape:connection-end="#g4310"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -380.57143,437.70467 -252,487.01974"
+       id="path4683"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4299"
+       inkscape:connection-end="#g4310"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -50.620688,762.36221 -193.37931,532.3622"
+       id="path4687"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#g4310"
+       inkscape:connection-start="#g4293-0-7"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -212,192.3622 0,280.00001"
+       id="path4689"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4299-9"
+       inkscape:connection-end="#g4310"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 42.545461,202.3622 -186.54546,472.36221"
+       id="path4691"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-8"
+       inkscape:connection-end="#g4310"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 108,609.02887 -172,515.69554"
+       id="path4695"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-8-8"
+       inkscape:connection-end="#g4310"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -172,499.32832 677.50001,434.89609"
+       id="path4697"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4310"
+       inkscape:connection-end="#g4293-0-7-5"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 741.71328,401.86221 925.2153,174.50506"
+       id="path4699"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-5"
+       inkscape:connection-end="#g4293-0-7-5-1"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 757.50001,432.7945 1128,441.4299"
+       id="path4701"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-5"
+       inkscape:connection-end="#g4293-0-8"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 737.34816,461.8622 850.15185,632.36223"
+       id="path4703"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-5"
+       inkscape:connection-end="#g4299-9-4"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-67.373535"
+       y="833.06042"
+       id="text4705-9-1-6-1-5-0-0-6-4"><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="833.06042"
+         id="tspan4891-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 10:</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="842.43542"
+         id="tspan4946"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="851.81042"
+         id="tspan4948"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="861.18542"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="870.56042"
+         id="tspan4952"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="879.93542"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107">Orange/white =</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="889.31042"
+         id="tspan4958"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="898.68542"
+         id="tspan4960"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         =</tspan><tspan
+         sodipodi:role="line"
+         x="-67.373535"
+         y="908.06042"
+         id="tspan4962"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <g
+       id="g4293-0-7-9"
+       transform="translate(-522.22461,156.27682)">
+      <rect
+         y="591.08539"
+         x="-384.77539"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-7"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-0"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4472-7-3">Wall Plate</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -252,519.1561 -827,760.56831"
+       id="path5053"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4310"
+       inkscape:connection-end="#g4293-0-7-9"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -907,766.45311 -85,-23.18182"
+       id="path5055"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-9"
+       inkscape:connection-end="#g4293"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -827,791.99635 125,45.7317"
+       id="path5057"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-9"
+       inkscape:connection-end="#g4293-0"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-902.37354"
+       y="833.06042"
+       id="text4705-9-1-6-1-5-0-0-6-4-04"><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="833.06042"
+         id="tspan4891-9-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 2:</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="842.43542"
+         id="tspan4946-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="851.81042"
+         id="tspan4948-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = LED (remote)</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="861.18542"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-2">Green/white  = L2 (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="870.56042"
+         id="tspan4952-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = L1 (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="879.93542"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-8">Orange/white = 0V (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="889.31042"
+         id="tspan4958-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="898.68542"
+         id="tspan4960-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Reset (remote)</tspan><tspan
+         sodipodi:role="line"
+         x="-902.37354"
+         y="908.06042"
+         id="tspan4962-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Buttom (remote)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="173.22588"
+       y="665.79877"
+       id="text4705-9-1-6-1-5-0-0-6-4-3"><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="665.79877"
+         id="tspan4891-9-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 15:</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="675.17377"
+         id="tspan4946-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="684.54877"
+         id="tspan4948-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="693.92377"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-5">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="703.29877"
+         id="tspan4952-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="712.67377"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-4">Orange/white =</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="722.04877"
+         id="tspan4958-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="731.42377"
+         id="tspan4960-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         =</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="740.79877"
+         id="tspan4962-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="750.17377"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3583" /><tspan
+         sodipodi:role="line"
+         x="173.22588"
+         y="759.54877"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3585">Plugs into telephone exchange port</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-202.37354"
+       y="208.06046"
+       id="text4705-9-1-6-1-5-0-0-6-4-3-6"><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="208.06046"
+         id="tspan4891-9-5-0"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 3:</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="217.43546"
+         id="tspan4946-2-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="226.81046"
+         id="tspan4948-4-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="236.18546"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-5-0">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="245.56046"
+         id="tspan4952-3-0"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="254.93546"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-4-6">Orange/white =</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="264.31046"
+         id="tspan4958-7-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="273.68546"
+         id="tspan4960-9-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Trigger</tspan><tspan
+         sodipodi:role="line"
+         x="-202.37354"
+         y="283.06046"
+         id="tspan4962-3-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="62.220581"
+       y="213.45963"
+       id="text4705-9-1-6-1-5-0-0-6-4-3-6-9"><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="213.45963"
+         id="tspan4891-9-5-0-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Dircet cable:</tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="222.83463"
+         id="tspan4946-2-7-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="232.20963"
+         id="tspan4948-4-1-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="241.58463"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-5-0-5">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="250.95963"
+         id="tspan4952-3-0-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="260.33463"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-4-6-4">Orange/white =</tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="269.70963"
+         id="tspan4958-7-7-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="279.08463"
+         id="tspan4960-9-7-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = </tspan><tspan
+         sodipodi:role="line"
+         x="62.220581"
+         y="288.45963"
+         id="tspan4962-3-7-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-458.60849"
+       y="468.92157"
+       id="text4705-9-1-6-1-5-0-0-6-4-3-6-9-4"><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="468.92157"
+         id="tspan4891-9-5-0-2-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Dircet cable:</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="478.29657"
+         id="tspan4946-2-7-7-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  =</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="487.67157"
+         id="tspan4948-4-1-7-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        =</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="497.04657"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5323">Green/white  = L?</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="506.42157"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5327">Green        = L?</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="515.79657"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-4-6-4-2">Orange/white = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="525.17157"
+         id="tspan4958-7-7-6-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V</tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="534.54657"
+         id="tspan4960-9-7-4-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = </tspan><tspan
+         sodipodi:role="line"
+         x="-458.60849"
+         y="543.92157"
+         id="tspan4962-3-7-6-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="556.76501"
+       y="295.14383"
+       id="text4705-9-1-6-1-5-0-0-6-4-4"><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="295.14383"
+         id="tspan4891-9-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 8:</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="304.51883"
+         id="tspan4946-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="313.89383"
+         id="tspan4948-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="323.26883"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="332.64383"
+         id="tspan4952-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="342.01883"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2">Orange/white = Wall Switch +</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="351.39383"
+         id="tspan4958-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="360.76883"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5499">Blue         = Out (morse code interpreter)</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="370.14383"
+         id="tspan4962-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Out (telephone exchange)</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="379.51883"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3648" /><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="388.89383"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3650">Pugs into Morse Code Interpreter (TAP)</tspan><tspan
+         sodipodi:role="line"
+         x="556.76501"
+         y="398.26883"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3581" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="1004.2162"
+       y="96.759804"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2"><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="96.759804"
+         id="tspan4891-9-4-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct cable:</tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="106.1348"
+         id="tspan4946-4-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="115.5098"
+         id="tspan4948-1-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="124.8848"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-4">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="134.2598"
+         id="tspan4952-6-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="143.63481"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-2">Orange/white = </tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="153.00981"
+         id="tspan4958-4-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="162.38481"
+         id="tspan4960-3-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Out</tspan><tspan
+         sodipodi:role="line"
+         x="1004.2162"
+         y="171.75981"
+         id="tspan4962-9-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="922.31512"
+       y="630.26971"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2-4"><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="630.26971"
+         id="tspan4891-9-4-4-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct cable:</tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="639.64471"
+         id="tspan4946-4-3-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="649.01971"
+         id="tspan4948-1-1-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="658.39471"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-4-0">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="667.76971"
+         id="tspan4952-6-9-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="677.14471"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-2-8">Orange/white = </tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="686.51971"
+         id="tspan4958-4-8-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V </tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="695.89471"
+         id="tspan4960-3-7-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = </tspan><tspan
+         sodipodi:role="line"
+         x="922.31512"
+         y="705.26971"
+         id="tspan4962-9-6-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Out</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="1223.5911"
+       y="409.66769"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2-4-8"><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="409.66769"
+         id="tspan4891-9-4-4-1-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct cable:</tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="419.04269"
+         id="tspan4946-4-3-6-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="428.41769"
+         id="tspan4948-1-1-8-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="437.79269"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-4-0-9">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="447.16769"
+         id="tspan4952-6-9-1-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="456.54269"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-2-8-1">Orange/white = </tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="465.91769"
+         id="tspan4958-4-8-5-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V </tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="475.29269"
+         id="tspan4960-3-7-1-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         =</tspan><tspan
+         sodipodi:role="line"
+         x="1223.5911"
+         y="484.66769"
+         id="tspan4962-9-6-6-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-358.67303"
+       y="-39.240128"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-4"><tspan
+         sodipodi:role="line"
+         x="-358.67303"
+         y="-39.240128"
+         id="tspan4962-9-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="83.68187"
+       y="-45.145729"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-4-9"><tspan
+         sodipodi:role="line"
+         x="83.68187"
+         y="-45.145729"
+         id="tspan4962-9-1-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 14</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-725.6684"
+       y="272.87387"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-4-92"><tspan
+         sodipodi:role="line"
+         x="-725.6684"
+         y="272.87387"
+         id="tspan4962-9-1-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-435.00204"
+       y="224.34444"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-4-92-8"><tspan
+         sodipodi:role="line"
+         x="-435.00204"
+         y="224.34444"
+         id="tspan4962-9-1-4-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct connect</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-1075.0609"
+       y="773.45959"
+       id="text4705-9-1-6-1-5-0-0-6-4-04-8"><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="773.45959"
+         id="tspan4891-9-9-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct connect:</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="782.83459"
+         id="tspan4946-6-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="792.20959"
+         id="tspan4948-3-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        =</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="801.58459"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-2-5">Green/white  = L2 (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="810.95959"
+         id="tspan4952-4-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = L1 (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="820.33459"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-8-6">Orange/white = 0V (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="829.70959"
+         id="tspan4958-3-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V (phone)</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="839.08459"
+         id="tspan4960-2-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         =</tspan><tspan
+         sodipodi:role="line"
+         x="-1075.0609"
+         y="848.45959"
+         id="tspan4962-8-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="-702.37354"
+       y="893.45959"
+       id="text4705-9-1-6-1-5-0-0-6-4-04-6"><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="893.45959"
+         id="tspan4891-9-9-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct connect:</tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="902.83459"
+         id="tspan4946-6-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="912.20959"
+         id="tspan4948-3-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = LED (remote)</tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="921.58459"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-2-8">Green/white  = </tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="930.95959"
+         id="tspan4952-4-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = </tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="940.33459"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-8-0">Orange/white = </tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="949.70959"
+         id="tspan4958-3-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="959.08459"
+         id="tspan4960-2-70"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Reset (remote)</tspan><tspan
+         sodipodi:role="line"
+         x="-702.37354"
+         y="968.45959"
+         id="tspan4962-8-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Buttom (remote)</tspan></text>
+    <g
+       id="g4293-0-7-57"
+       transform="translate(562.27539,-318.72318)">
+      <rect
+         y="591.08539"
+         x="-384.77539"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-6"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-41"
+         y="618.40961"
+         x="-344.92676"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="618.40961"
+           x="-344.92676"
+           sodipodi:role="line"
+           id="tspan5718">Door LED</tspan><tspan
+           y="630.90961"
+           x="-344.92676"
+           sodipodi:role="line"
+           id="tspan5722">Controller</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -172,483.73589 177.5,320.98851"
+       id="path5716"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4310"
+       inkscape:connection-end="#g4293-0-7-57"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="177.22058"
+       y="368.45963"
+       id="text4705-9-1-6-1-5-0-0-6-4-3-6-9-8"><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="368.45963"
+         id="tspan4891-9-5-0-2-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Dircet cable:</tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="377.83463"
+         id="tspan4946-2-7-7-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="387.20963"
+         id="tspan4948-4-1-7-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="396.58463"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-5-0-5-7">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="405.95963"
+         id="tspan4952-3-0-9-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="415.33463"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-4-6-4-7">Orange/white =</tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="424.70963"
+         id="tspan4958-7-7-6-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="434.08463"
+         id="tspan4960-9-7-4-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = </tspan><tspan
+         sodipodi:role="line"
+         x="177.22058"
+         y="443.45963"
+         id="tspan4962-3-7-6-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <g
+       id="g3641"
+       transform="translate(17.00003,36.000058)">
+      <rect
+         y="826.36218"
+         x="493"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-4-5-9-4"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-7-0-9-0"
+         y="846.46716"
+         x="532.69727"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           id="tspan4291-1-3-3"
+           y="846.46716"
+           x="532.69727"
+           sodipodi:role="line">Morse</tspan><tspan
+           y="858.96716"
+           x="532.69727"
+           sodipodi:role="line"
+           id="tspan4441-3-0">Code</tspan><tspan
+           y="871.46716"
+           x="532.69727"
+           sodipodi:role="line"
+           id="tspan4563-5">Tapper</tspan></text>
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:connector-type="polyline"
+       id="path5796"
+       d="M 590.00003,863.61223 830,691.11223"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       inkscape:connection-start="#g3641"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#g4299-9-4"
+       inkscape:connection-end-point="d4" />
+    <g
+       id="g4299-9-4-3"
+       transform="translate(1388.1281,324.25152)">
+      <rect
+         y="677.39642"
+         x="-515.271"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-4-5-9-8"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-7-0-9-7"
+         y="697.46722"
+         x="-475.30273"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="697.46722"
+           x="-475.30273"
+           sodipodi:role="line"
+           id="tspan4563-8">Morse</tspan><tspan
+           y="709.96722"
+           x="-475.30273"
+           sodipodi:role="line"
+           id="tspan5934">Code</tspan><tspan
+           y="722.46722"
+           x="-475.30273"
+           sodipodi:role="line"
+           id="tspan5936">Lights</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 873.48162,692.36222 35.89386,309.28568"
+       id="path5890"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4299-9-4"
+       inkscape:connection-end="#g4299-9-4-3"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="963.03259"
+       y="980.11664"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2-4-1-4"><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="980.11664"
+         id="tspan4891-9-4-4-1-3-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 6:</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="989.49164"
+         id="tspan4946-4-3-6-6-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = Lamp1</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="998.86664"
+         id="tspan4948-1-1-8-9-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = Lamp2</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1008.2416"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-4-0-3-5">Green/white  = Lamp3</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1017.6166"
+         id="tspan4952-6-9-1-5-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = Lamp4</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1026.9917"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-2-8-6-6">Orange/white = Lamp5</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1036.3666"
+         id="tspan4958-4-8-5-4-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = Lamp6</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1045.7416"
+         id="tspan4960-3-7-1-0-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Lamp7</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1055.1166"
+         id="tspan4962-9-6-6-3-0"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Lamp8</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1064.4916"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3697" /><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1073.8666"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3699">12V Common for lamps</tspan><tspan
+         sodipodi:role="line"
+         x="963.03259"
+         y="1083.2416"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3701">done with speaker cable</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="506.91013"
+       y="939.89166"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-9"><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="939.89166"
+         id="tspan4891-9-4-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 5:</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="949.26666"
+         id="tspan4946-4-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V (camera power)</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="958.64166"
+         id="tspan4948-1-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V (camera power)</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="968.01666"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-6">Green/white  = Speaker +</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="977.39166"
+         id="tspan4952-6-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = Speaker -</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="986.76666"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-0">Orange/white = </tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="996.14166"
+         id="tspan4958-4-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = </tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="1005.5167"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5499-3">Blue         = Morse tapper +</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="1014.8917"
+         id="tspan4962-9-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Morse tapper -</tspan><tspan
+         sodipodi:role="line"
+         x="506.91013"
+         y="1024.2666"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3581-3" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="119.34077"
+       y="935.9494"
+       id="text4705-9-1-6-1-5-0-0-6-4-3-9"><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="935.9494"
+         id="tspan4891-9-5-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 11:</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="945.3244"
+         id="tspan4946-2-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = Locker 1</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="954.6994"
+         id="tspan4948-4-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = Locker 1</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="964.0744"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-5-2">Green/white  = Locker 2</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="973.4494"
+         id="tspan4952-3-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = Locker 2</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="982.8244"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-4-4">Orange/white = Locker 4</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="992.1994"
+         id="tspan4958-7-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = Locker 4</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="1001.5744"
+         id="tspan4960-9-0"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Locker 3</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="1010.9494"
+         id="tspan4962-3-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   = Locker 3</tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="1020.3244"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3583-4" /><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="1029.6995"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3585-5">Dont mix the browns &amp; greens from </tspan><tspan
+         sodipodi:role="line"
+         x="119.34077"
+         y="1039.0743"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan4235">cable 15 with the one!</tspan></text>
+    <g
+       id="g4293-0-8-8-9"
+       transform="translate(505.2143,264.38892)">
+      <rect
+         y="597.36224"
+         x="-385"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-7-5-4"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-6-7-2"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4534-6">LDRs</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 149.36022,652.3622 9.49386,209.38896"
+       id="path3348"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="3"
+       inkscape:connection-start="#g4293-0-8-8"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#g4293-0-8-8-9"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5.00000008, 5.00000008;stroke-dashoffset:0"
+       d="m 434.49999,-184.83733 0,1295.71433"
+       id="path3350"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="746.99615"
+       y="-75.292702"
+       id="text3352"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3354"
+         x="746.99615"
+         y="-75.292702">Back of room</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-327.03311"
+       y="-160.52419"
+       id="text3352-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3354-4"
+         x="-327.03311"
+         y="-160.52419">Central wall</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-934.84155"
+       y="-141.0144"
+       id="text3352-4-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3354-4-9"
+         x="-934.84155"
+         y="-141.0144">Front Office</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5.00000008, 5.00000008;stroke-dashoffset:0"
+       d="m -553.21429,-184.78068 0,1295.71428"
+       id="path3350-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -96.6673,31.01157 860.64999,0"
+       id="path3416"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="194.91287"
+       y="16.530121"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-4-9-6"><tspan
+         sodipodi:role="line"
+         x="194.91287"
+         y="16.530121"
+         id="tspan4962-9-1-3-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 12</tspan><tspan
+         sodipodi:role="line"
+         x="194.91287"
+         y="25.905121"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+         id="tspan3463">SPARE (Terminates at clock)</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -94.39642,70.14538 860.65001,0"
+       id="path3416-8"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="197.18378"
+       y="55.663933"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-4-9-6-0"><tspan
+         sodipodi:role="line"
+         x="197.18378"
+         y="55.663933"
+         id="tspan4962-9-1-3-4-2"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Cable 13</tspan><tspan
+         sodipodi:role="line"
+         x="197.18378"
+         y="65.038933"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+         id="tspan3465">SPARE (Terminates at cupboard, via clock)</tspan></text>
+    <g
+       id="g4293-0-7-5-1-0"
+       transform="translate(1527.7183,33.556591)">
+      <rect
+         y="598.33881"
+         x="-385.21973"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-1-2-6"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-4-9-2"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan4673-6">Bannana</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan3339">Puzzle</tspan></text>
+    </g>
+    <g
+       id="g4293-0-7-5-1-0-2"
+       transform="translate(667.22186,-113.94522)">
+      <rect
+         y="598.33881"
+         x="-385.21973"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-1-2-6-7"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-4-9-2-5"
+         y="624.84027"
+         x="-345.0415"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="624.84027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan3339-4">Wall</tspan><tspan
+           y="637.34027"
+           x="-345.0415"
+           sodipodi:role="line"
+           id="tspan3373">Switch</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 1397.5,674.70552 0,-21.42857"
+       id="path3375"
+       inkscape:connector-curvature="0"
+       transform="translate(-1074.6874,-190.91482)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 1398.3037,735.37996 0,16.66752"
+       id="path3377"
+       inkscape:connector-curvature="0"
+       transform="translate(-1074.6874,-190.91482)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 1389.0179,752.11624 17.8571,0"
+       id="path3379"
+       inkscape:connector-curvature="0"
+       transform="translate(-1074.6874,-190.91482)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 317.23225,564.4157 12.0536,0"
+       id="path3381"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 320.8037,567.71927 4.9107,0"
+       id="path3383"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="329.89038"
+       y="476.13437"
+       id="text4705-9-1-6-1-5-0-0-6-4-3-6-9-8-6"><tspan
+         sodipodi:role="line"
+         x="329.89038"
+         y="476.13437"
+         id="tspan4962-3-7-6-1-4"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange/white</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 2243.5488,663.40659 2257.691,823.0107"
+       id="path3453"
+       inkscape:connector-curvature="0"
+       transform="translate(-1074.6874,-190.91482)"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="1183.6277"
+       y="584.16473"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2-4-8-5"><tspan
+         sodipodi:role="line"
+         x="1183.6277"
+         y="584.16473"
+         id="tspan4962-9-6-6-6-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Red &amp; Black cables</tspan></text>
+    <g
+       id="g4293-0-7-5-1-5"
+       transform="translate(1438.4175,-337.25379)">
+      <rect
+         y="598.33881"
+         x="-385.21973"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-1-2-64"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-4-9-9"
+         y="625.84369"
+         x="-345.37109"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="625.84369"
+           x="-345.37109"
+           sodipodi:role="line"
+           id="tspan4673-9">Alarm</tspan><tspan
+           y="638.34369"
+           x="-345.37109"
+           sodipodi:role="line"
+           id="tspan3458">Controller</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="1147.2712"
+       y="253.33977"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2-44"><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="253.33977"
+         id="tspan4891-9-4-4-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct cable:</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="262.71478"
+         id="tspan4946-4-3-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="272.08975"
+         id="tspan4948-1-1-83"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = 5V</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="281.46475"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-4-8">Green/white  = SCK</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="290.83975"
+         id="tspan4952-6-9-8"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = SDA</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="300.21475"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-2-7">Orange/white = </tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="309.58975"
+         id="tspan4958-4-8-1"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = 12V</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="318.96475"
+         id="tspan4960-3-7-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         =</tspan><tspan
+         sodipodi:role="line"
+         x="1147.2712"
+         y="328.33975"
+         id="tspan4962-9-6-0"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue/white   =</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 1832.1874,607.78868 295.6978,-110.8005"
+       id="path3382"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-5"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#g4293-0-7-5-1-5"
+       inkscape:connection-end-point="d4"
+       transform="translate(-1074.6874,-190.91482)" />
+    <g
+       id="g4293-0-7-5-1-5-9"
+       transform="translate(1601.2466,-504.90522)">
+      <rect
+         y="598.33881"
+         x="-385.21973"
+         height="59.999992"
+         width="80"
+         id="rect4140-8-4-1-6-3-1-2-64-4"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         id="text4142-9-2-5-3-61-4-9-9-4"
+         y="632.09369"
+         x="-345.07324"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         xml:space="preserve"><tspan
+           y="632.09369"
+           x="-345.07324"
+           sodipodi:role="line"
+           id="tspan4673-9-4">Alarm</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 2197.0222,451.99984 2301.5772,344.3484"
+       id="path3411"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4293-0-7-5-1-5"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#g4293-0-7-5-1-5-9"
+       inkscape:connection-end-point="d4"
+       transform="translate(-1074.6874,-190.91482)" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold"
+       x="1310.9618"
+       y="85.420105"
+       id="text4705-9-1-6-1-5-0-0-6-4-4-2-44-0"><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="85.420105"
+         id="tspan4891-9-4-4-3-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono Bold">Direct cable:</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="94.795105"
+         id="tspan4946-4-3-5-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown/white  = 0V</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="104.1701"
+         id="tspan4948-1-1-83-9"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Brown        = Speaker + (12V)</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="113.5451"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5103-6-4-8-3">Green/white  = Row 1</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="122.9201"
+         id="tspan4952-6-9-8-7"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Green        = Row 2</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="132.2951"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan5107-2-2-7-7">Orange/white = Row 3</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="141.6701"
+         id="tspan4958-4-8-1-6"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Orange       = Row 4</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="151.0451"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono"
+         id="tspan3460">Blue/white   = LED</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="160.4201"
+         id="tspan4960-3-7-5-5"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono">Blue         = Switch</tspan><tspan
+         sodipodi:role="line"
+         x="1310.9618"
+         y="169.7951"
+         id="tspan4962-9-6-0-3"
+         style="font-size:7.5px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;font-family:DejaVu Sans Mono;-inkscape-font-specification:DejaVu Sans Mono" /></text>
+  </g>
+</svg>

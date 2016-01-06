@@ -246,6 +246,25 @@
         <button onclick="sendMessage(5,'*RST')">Reset</button>
       </div>
 
+			<!-- ****************************************************************** -->
+      <!-- **************************** Alarm ******************************* -->
+      <!-- ****************************************************************** -->
+      <div class="grid-item" id="Alarm">
+        <h3>Alarm</h3>
+        <div class="stats"></div>
+        <hr>
+        <div class="block">
+          <span>New combination: </span><input maxlength="4" type="text" id="newCombo" value="3421" style="width: 130px">
+          <button onclick="updateAlarmCombo()">Set</button>
+        </div>
+        <hr>
+        <div class="block">
+          <button onclick="sendMessage(5, '*TRIG')">Trigger</button>
+        </div>
+        <hr>
+        <button onclick="sendMessage(5,'*RST')">Reset</button>
+      </div>
+
 
       <!-- ****************************************************************** -->
       <!-- *********************** Telephone Exchange *********************** -->
@@ -498,6 +517,33 @@
       	"interpreter": "",
       	"telex": ""
       }
+
+      var alarm_wire_combos = [
+				"1234", //0
+				"1243", //1
+				"1324", //2
+				"1342", //3
+				"1423", //4
+				"1432", //5
+				"2134", //6
+				"2143", //7
+				"2314", //8
+				"2341", //9
+				"2413", //10
+				"2431", //11
+				"3124", //12
+				"3142", //13
+				"3214", //14
+				"3241", //15
+				"3412", //16
+				"3421", //17
+				"4123", //18
+				"4132", //19
+				"4213", //20
+				"4231", //21
+				"4312", //22
+				"4321" //23
+      ]
 
       var triggers = {
         "Secret Cupboard": 0,
