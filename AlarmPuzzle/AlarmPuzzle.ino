@@ -74,11 +74,13 @@ const uint8_t defuse_lookup[24][4] = {
 const uint8_t default_defuse_combination = 17;
 const uint8_t default_alarm_state = READY;
 const uint8_t default_time_factor = 12;
+const uint8_t default_siren_duration = 15;
 
 uint8_t defuse_combination;
 uint8_t alarm_state;
 uint8_t time_factor;
 uint8_t current_combination;
+uint16_t siren_duration;
 
 const char device_name[] = "Alarm";
 unsigned long seconds_since_reset = 0;
@@ -135,6 +137,9 @@ void load_status() {
   strcat(wire_buffer, ",WIRES=");
   sprintf(tmp, "%d", current_combination);
   strcat(wire_buffer, tmp);
+  strcat(wire_buffer, ",SIREN_T=");
+  sprintf(tmp, "%d", siren_duration / 1000);
+  strcat(wire_buffer, tmp);
   
   // TERMINATE THE WIREBUFFER
   strcat(wire_buffer, 0);
@@ -164,6 +169,14 @@ void receiveComms(int howMany) {
     defuse_combination = message.substring(7).toInt();
     load_status();
   }
+  else if (message.indexOf("*SIREN_T=") != -1) {
+    siren_duration = message.substring(9).toInt() * 1000;
+    load_status();
+  }
+  else if (message.indexOf("*TFACTOR=") != -1) {
+    time_factor = message.substring(9).toInt();
+    load_status();
+  }
   else if (message.indexOf("*TRIG") != -1) {
     if (alarm_state < 2) alarm_state = 2;
     load_status();
@@ -189,6 +202,7 @@ void setup() {
   defuse_combination = default_defuse_combination;
   alarm_state = default_alarm_state;
   time_factor = default_time_factor;
+  siren_duration = default_siren_duration * 1000;
 }
 
 void check_door(void) {
@@ -285,7 +299,7 @@ void loop() {
     Serial.println("Triggered");
     digitalWrite(PIN_LED, HIGH);
     digitalWrite(PIN_BUZZER, HIGH);
-    delay(15000);
+    delay(siren_duration);
     digitalWrite(PIN_LED, LOW);
     digitalWrite(PIN_BUZZER, LOW);
     // Wait here until reset
