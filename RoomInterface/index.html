@@ -265,14 +265,14 @@
               <td><button onclick="updateAlarmCombo()">Set</button></td>
             </tr>
             <tr>
-              <td style="text-align: right">Alarm duration (sec):</td>
-              <td><input maxlength="2" type="text" id="newAlarmDuration" value="" style="width: 40px"></td>
-              <td><button onclick="updateAlarmDuration()">Set</button></td>
-            </tr>
-            <tr>
               <td style="text-align: right">Defuse duration factor:</td>
               <td><input maxlength="3" type="text" id="newAlarmDefuseDuration" value="" style="width: 40px"></td>
               <td><button onclick="updateAlarmDefuseDuration()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Alarm duration (sec):</td>
+              <td><input maxlength="2" type="text" id="newAlarmDuration" value="" style="width: 40px"></td>
+              <td><button onclick="updateAlarmDuration()">Set</button></td>
             </tr>
           </table>
         </div>
@@ -280,6 +280,7 @@
         <div class="block">
           <button onclick="sendMessage(11, '*ARM')">Arm</button>
           <button onclick="sendMessage(11, '*TRIG')">Trigger</button>
+          <button onclick="sendMessage(11, '*DEFUSE')">Defuse</button>
         </div>
         <hr>
         <button onclick="sendMessage(11,'*RST')">Reset</button>
@@ -1291,7 +1292,7 @@
             break;
 
             case "TFACTOR":
-              table += "<tr><th>Time factor:</th><td>"+d[1]+"</td></tr>";
+              table += "<tr><th>Defuse duration factor:</th><td>"+d[1]+"</td></tr>";
               break;
 
             case "SIREN_T":
@@ -1501,8 +1502,8 @@
       }
 
       function updateAlarmDuration() {
-        var newTime = $("#newAlarmDuration").val();
-        if (typeof newTime === 'number') {
+        var newTime = parseInt($("#newAlarmDuration").val());
+        if (newTime !== NaN) {
           if (newTime < 127 && newTime >= 0) sendMessage(11,"*SIREN_T="+newTime);
           else alert("Specified time may be too extreme")
         }
@@ -1510,8 +1511,8 @@
       }
 
       function updateAlarmDefuseDuration() {
-        var newFactor = $("#newAlarmDefuseDuration").val();
-        if (typeof newFactor === 'number') {
+        var newFactor = parseInt($("#newAlarmDefuseDuration").val());
+        if (newFactor !== NaN) {
           if (newFactor < 1015 && newFactor > 0) sendMessage(11,"*TFACTOR="+newFactor);
           else alert("Specified factor is too extreme")
         }
