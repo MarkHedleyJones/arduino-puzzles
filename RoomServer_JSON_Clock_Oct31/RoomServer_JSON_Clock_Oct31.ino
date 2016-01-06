@@ -318,7 +318,7 @@ void handle_http_client(EthernetClient client) {
           if (strcmp(wire_buffer,"*RST") == 0) reset = 1;
           client.println("{");
 
-          for (int i=1; i<11; i++) {
+          for (int i=1; i<12; i++) {
 
             if (i == 1) {
               if (reset) reset_server_state();
@@ -358,7 +358,7 @@ void handle_http_client(EthernetClient client) {
             client.print("\":\"");
             client.print(i2c_msg);
             client.print("\"");
-            if (i < 10) client.print(",\n");
+            if (i < 11) client.print(",\n");
             else client.print("\n");
             if (i % 2 == 0) system_tasks();
           }
@@ -586,6 +586,8 @@ void loop() {
         i2c_send(8, i2c_msg);
         strcpy(i2c_msg, "*RST");
         i2c_send(9, i2c_msg);
+        strcpy(i2c_msg, "*RST");
+        i2c_send(11, i2c_msg);
       }
 
       message_given = 0;

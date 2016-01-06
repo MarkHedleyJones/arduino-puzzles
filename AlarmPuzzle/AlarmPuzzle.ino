@@ -181,6 +181,10 @@ void setup() {
   pinMode(PIN_4, INPUT_PULLUP);
   pinMode(PIN_DOOR, INPUT_PULLUP);
 
+  Wire.begin(WIRE_ADDR);
+  Wire.onReceive(receiveComms);
+  Wire.onRequest(transmitComms);
+
   // Reset state variables
   defuse_combination = default_defuse_combination;
   alarm_state = default_alarm_state;

@@ -22,8 +22,8 @@ TIMINGS AS SET
 
 A4990MotorShield motors;
 
-
-char morse_message[MSG_LEN + 1] = "KEY53";
+char default_morse_message[MSG_LEN + 1] = "KEY53";
+char morse_message[MSG_LEN + 1];
 bool ringer_fault = false;
 bool execute_signal_received = false;
 bool phone_ringing = false;
@@ -65,6 +65,7 @@ void setup() {
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_RECEIVER, OUTPUT);
 //  Serial.println("I'm awake...");
+  strcpy(morse_message, default_morse_message);
   Wire.begin(8);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
@@ -143,7 +144,8 @@ void receiveComms(int howMany) {
     execute_signal_received = false;
     play_count = 0;
     ringer_fault = 0;
-    strcpy(morse_message, "SOS");
+    strcpy(morse_message, default_morse_message);
+//    strcpy(morse_message, "SOS");
     load_status();
   }
   else if (wire_buffer[0] == '*' &&
