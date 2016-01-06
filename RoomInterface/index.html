@@ -213,12 +213,36 @@
       </div>
 
       <!-- ****************************************************************** -->
-      <!-- ************************* Secret Message ************************* -->
+      <!-- ************************** Hint Counter ************************** -->
       <!-- ****************************************************************** -->
-      <div class="grid-item" id="Secret-Message">
-        <h3>Secret Message</h3>
+      <div class="grid-item" id="Hint-Counter">
+        <h3>Penalty Counter</h3>
         <div class="stats"></div>
         <hr>
+        <div class="block">
+          <table style="margin: 0 auto">
+            <tr>
+              <td style="text-align: right">Hint given cost:</td>
+              <td><input maxlength="4" type="text" id="hintGivenCost" value="" style="width: 40px"></td>
+              <td><button onclick="updateHintGivenCost()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Alarm triggered cost:</td>
+              <td><input maxlength="3" type="text" id="alarmTriggerCost" value="" style="width: 40px"></td>
+              <td><button onclick="updateAlarmTriggerCost()">Set</button></td>
+            </tr>
+          </table>
+        </div>
+        <hr>
+        <div class="block">
+          <span>Set hint count: </span><input maxlength="3" type="text" id="newHintCount" value="" style="width: 40px">
+          <button onclick="updateHintCount()">Set</button>
+        </div>
+        <hr>
+        <div class="block">
+          <button onclick="sendMessage(10, '*DECREMENT')">Decrement hints</button>
+          <button onclick="sendMessage(10, '*INCREMENT')">Increment hints</button>
+        </div>
         <button onclick="sendMessage(10,'*RST')">Reset</button>
       </div>
 
@@ -563,7 +587,6 @@
         "Wall Switch 1": 0,
         "Wall Switch 2": 0,
         "Coloured Wires Connected": 0,
-        "Secret Message Given": 0,
         "Locker 1 Opened": 0,
         "Locker 2 Opened": 0,
         "Locker 3 Opened": 0,
@@ -581,7 +604,7 @@
         6: "Wall Switch Controller",
         8: "Morse Code Phone",
         9: "Telephone Exchange",
-        10: "Secret Message",
+        10: "Hint Counter",
         11: "Alarm"
       }
 
@@ -592,7 +615,7 @@
       var counter = 0;
       var last_progress = 0;
       var server_state = -1;
-      var alarm_finished_type = 0;
+      var alarm_finished_type = -1;
 
       function getStats() {
         counter++;
@@ -684,16 +707,16 @@
               server_state = 1;
               break;
 
-            case "2":
-              // STATE_ENDCONDITION
-              g.html("Waiting for last trigger");
-              g.css("color", "purple");
-              if (triggers["Secret Message Given"]) {
-                e.html("Just waiting for the correct morse code message");
-              }
-              else e.html("Just waiting for the message via telephone (press button when done).");
-              server_state = 2;
-              break;
+            // case "2":
+            //   // STATE_ENDCONDITION
+            //   g.html("Waiting for last trigger");
+            //   g.css("color", "purple");
+            //   if (triggers["Secret Message Given"]) {
+            //     e.html("Just waiting for the correct morse code message");
+            //   }
+            //   else e.html("Just waiting for the message via telephone (press button when done).");
+            //   server_state = 2;
+            //   break;
 
             case "3":
               // STATE_ENDED
@@ -740,7 +763,6 @@
                 table += "<tr><th>State:</th><td>On</td></tr>";
                 table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.round((d[1]/145)*100)+"%)</td></tr>";
                 leds_green = Math.round(d[1]);
-                console.log(leds_green);
               }
               else {
                 html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
@@ -1167,30 +1189,34 @@
 
         html = "";
         table = "<table>";
-        $.each(puzzle_data["Secret Message"], function (key, val) {
+        $.each(puzzle_data["Hint Counter"], function (key, val) {
           d = val.split("=");
           switch (d[0]) {
-            case "TIME":
-              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "MSG_RECEIVED":
-              if (d[1] == 1) {
-                table += "<tr><th>Message given:</th><td style='color: red'>Yes</td></tr>";
-                html += "<hr><button onclick=\"sendMessage(10,'*RST')\">Reset</button>";
-                triggers["Secret Message Given"] = 1;
+            case "HINT_COUNT":
+              table += "<tr>";
+              table += "<th>Hints given: </th>";
+              if (d[1] == 0) {
+                table += "<td style='color: green'>None</td>";
               }
               else {
-                table += "<tr><th>Message given:</th><td style='color: green'>No</td></tr>";
-                html += "<hr><button onclick=\"sendMessage(10,'*SET')\">Set</button>";
-                triggers["Secret Message Given"] = 0;
+                table += "<td style=\"color: red; font-weight: 700\">" + d[1] + "</td>";
               }
+              table += "</tr>";
 
+              table += "<tr>";
+              table += "<th>Alarm triggered: </th>";
+              
+              if (triggers["Alarm Finished"] == 1 && alarm_finished_type == 1) {
+                table += "<td style=\"color: red\">Yes</td>";
+              }
+              else table += "<td style=\"color: green\">No</td>";
+              table += "</tr>";
+            break;
           }
           // html += d[0] + d[1] + "<br>";
         });
         table += "</table>";
-        $("#Secret-Message .stats").html(table+html);
+        $("#Hint-Counter .stats").html(table+html);
 
         html = "";
         table = "<table>";
@@ -1233,12 +1259,14 @@
                 table += "Ready";
                 table += "</td>";
                 triggers["Alarm finished"] = 0;
+                alarm_finished_type = -1;
               }
               else if(d[1] == 2) {
                 table += "<td style=\"color: blue\">";
                 table += "Armed";
                 table += "</td>";
                 triggers["Alarm finished"] = 0;
+                alarm_finished_type = -1;
               }
               else if(d[1] == 3) {
                 table += "<td style=\"color: red\">";
@@ -1351,15 +1379,6 @@
           $("#stat_Coloured-Wires-Connected").css("color", "green");
         }
 
-        if (triggers["Secret Message Given"]) {
-          $("#stat_Secret-Message-Given").html("Yes");
-          $("#stat_Secret-Message-Given").css("color", "red");
-        }
-        else {
-          $("#stat_Secret-Message-Given").html("Ready");
-          $("#stat_Secret-Message-Given").css("color", "green");
-        }
-
         if (triggers["Locker 1 Opened"]) {
           $("#stat_Locker-1-Opened").html("Open");
           $("#stat_Locker-1-Opened").css("color", "red");
@@ -1452,6 +1471,14 @@
       function updateMessagePhone() {
         val = $("#newMessagePhone").val();
         sendMessage(8,'*MSG='+val);
+      }
+
+      function updateHintCount() {
+        val = parseInt($("#newHintCount").val());
+        if (val >= 0 || val < 999) {
+          sendMessage(10,'*HINT_COUNT=' + val)
+        }
+        else alert("Error interpreting hint count");        
       }
 
       function setCombo() {
