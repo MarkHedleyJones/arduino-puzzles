@@ -3,14 +3,14 @@
   <head>
     <script type="text/javascript">
       var default_settings = {
-        "Morse Code Phone Message": "KEY01", //KEY53
+        "Morse Code Phone Message": "KEY53",
         "Penalty Hint": 5,
         "Penalty Alarm Trigger": 5,
-        "Alarm Defuse Order": "1234", //3421
-        "Alarm Time To Defuse Factor": 11, //12
-        "Alarm Siren Duration": 5, //15
-        "Telephone Exhange Combination": 60, //11
-        "Morse Code Interpreter Message": "CODEGREEN", //CODEBLUE
+        "Alarm Defuse Order": "3421",
+        "Alarm Time To Defuse Factor": 12,
+        "Alarm Siren Duration": 15,
+        "Telephone Exhange Combination": 1044,
+        "Morse Code Interpreter Message": "CODEBLUE",
       }
     </script>
     <script src="jquery-2.1.4.min.js"></script>
@@ -772,8 +772,6 @@
 
             $("#percentComplete").html(progress + "/"+steps+" (" + Math.round((progress/steps) * 100) + " %)");
 
-            console.log(server_state);
-            console.log(settings_loaded);
             if (server_state == 0 && settings_loaded == 0) load_defaults();
             else if (server_state != 0) settings_loaded = 0;
 

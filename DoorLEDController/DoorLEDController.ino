@@ -7,6 +7,11 @@
 #define I2C_LEN 32
 #define WIRE_ADDR 3
 
+#define PIN_SPK_1 8
+#define PIN_SPK_2 9
+#define PIN_LATCH 11
+#define PIN_LIGHTS 12
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(290, PIN, NEO_GRB + NEO_KHZ800);
 
 unsigned long seconds_since_reset = 0;
@@ -23,6 +28,10 @@ char transition = 1;
 int leds_set_prev = -1;
 int brightness;
 int transition_blinks = 3;
+int trigger_latch = 0;
+int state_lights = 1;
+int latch_ms = 1000;
+int sounds_enabled = 1;
 
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
@@ -62,17 +71,30 @@ void load_status() {
   
   leds_grn = 145-leds_set;
   leds_red = leds_set;
-  strcat(wire_buffer, ",LEDS_RED=");
+  strcat(wire_buffer, ",RED=");
   sprintf(tmp, "%d", leds_grn);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",LEDS_GRN=");
+  strcat(wire_buffer, ",GRN=");
   sprintf(tmp, "%d", leds_red);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",TRANSITION=");
+  strcat(wire_buffer, ",TRANS=");
   sprintf(tmp, "%d", transition);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",TRANSITION_BLINKS=");
+  
+  strcat(wire_buffer, ",TRANS_BLINKS=");
   sprintf(tmp, "%d", transition_blinks);
+  strcat(wire_buffer, tmp);
+  
+  strcat(wire_buffer, ",LIGHTS=");
+  sprintf(tmp, "%d", state_lights);
+  strcat(wire_buffer, tmp);
+  
+  strcat(wire_buffer, ",LATCH_MS=");
+  sprintf(tmp, "%d", latch_ms);
+  strcat(wire_buffer, tmp);
+
+  strcat(wire_buffer, ",SOUNDS=");
+  sprintf(tmp, "%d", sounds_enabled);
   strcat(wire_buffer, tmp);
   
   // TERMINATE THE WIREBUFFER
@@ -103,18 +125,34 @@ void receiveComms(int howMany) {
     else if (leds_set > 145) leds_set = 145;
     load_status();
   }
-  else if (message.indexOf("*SET_BRIG=") != -1) {
-    leds_brightness = message.substring(10).toInt();
+  else if (message.indexOf("*BRIGHT=") != -1) {
+    leds_brightness = message.substring(8).toInt();
     if (leds_brightness < 0) leds_brightness = 0;
     if (leds_brightness > 255) leds_brightness = 255;
     load_status();
   }
-  else if (message.indexOf("*SET_TRANS=") != -1) {
-    transition = message.substring(11).toInt();
+  else if (message.indexOf("*TRANS=") != -1) {
+    transition = message.substring(7).toInt();
     load_status();
   }
-  else if (message.indexOf("*SET_TRANS_BLINKS=") != -1) {
-    transition_blinks = message.substring(11).toInt();
+  else if (message.indexOf("*TRANS_BLINKS=") != -1) {
+    transition_blinks = message.substring(14).toInt();
+    load_status();
+  }
+  else if (strcmp(wire_buffer, "*TRIG=") != -1) {
+    trigger_latch = 1;
+    load_status();
+  }
+  else if (strcmp(wire_buffer, "*LATCH_MS=") != -1) {
+    latch_ms = message.substring(10).toInt();
+    load_status();
+  }
+  else if (strcmp(wire_buffer, "*LIGHTS=") != -1) {
+    state_lights = message.substring(8).toInt();
+    load_status();
+  }
+  else if (strcmp(wire_buffer, "*SOUNDS=") != -1) {
+    sounds_enabled = message.substring(8).toInt();
     load_status();
   }
   else if (strcmp(wire_buffer, "*BLINK=") != -1) {
@@ -147,9 +185,11 @@ void update_leds(int setleds, int bright) {
 
 void blink_leds(int leds_set, int leds_brightness) {
   update_leds(-1, leds_brightness);
-  delay(100);
+  if (sounds_enabled) play_sound(100,400);
+  else delay(100);
   update_leds(leds_set, leds_brightness);
-  delay(100);
+  if (sounds_enabled) play_sound(100,400);
+  else delay(100);
 }
 
 
@@ -161,10 +201,40 @@ void setup() {
   Wire.begin(WIRE_ADDR);
   Wire.onReceive(receiveComms);
   Wire.onRequest(transmitComms);
+  pinMode(PIN_SPK_1, OUTPUT);
+  pinMode(PIN_SPK_2, OUTPUT);
+  pinMode(PIN_LIGHTS, OUTPUT);
+  digitalWrite(PIN_LIGHTS, 0);
+}
+
+void play_sound(unsigned long duration, int period) {
+  for (unsigned long i=0; i < duration; i++) {
+    PORTB = 0b00000001;
+    delayMicroseconds(period);
+    PORTB = 0b00000010;
+    delayMicroseconds(period);
+  }  
+}
+
+void play_sound_completed() {
+  play_sound(100,600);
+  play_sound(100,500);
+  play_sound(150,400);
+}
+
+void lights(bool state) {
+  if (state == 0) digitalWrite(PIN_LIGHTS, 1);
+  else digitalWrite(PIN_LIGHTS, 0);
+}
+
+void latch(bool state) {
+  if (state == 0) digitalWrite(PIN_LATCH, 1);
+  else digitalWrite(PIN_LATCH, 0);
 }
 
 void loop() {
   if (leds_set != leds_set_prev) {
+    if (sounds_enabled) play_sound_completed();
     if (transition) {
       brightness = leds_brightness;
       while (brightness > 0) {
@@ -184,6 +254,7 @@ void loop() {
     leds_set_prev = leds_set;
   }
   else update_leds(leds_set, leds_brightness);
+  
   if (make_pattern) {
     while (make_pattern > 0) {
       blink_leds(leds_set, leds_brightness);
@@ -191,6 +262,17 @@ void loop() {
     }
     make_pattern = 0;
   }
-  delay(200);
+
+  if (trigger_latch > 0) {
+    latch(1);
+    delay(latch_ms);
+    latch(0);
+    delay(latch_ms);
+    trigger_latch--;
+  }
+
+  lights(state_lights);
+  
+//  delay(200);
 }
 
