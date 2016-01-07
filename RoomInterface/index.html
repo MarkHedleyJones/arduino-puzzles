@@ -11,6 +11,7 @@
         "Alarm Siren Duration": 15,
         "Telephone Exhange Combination": 1044,
         "Morse Code Interpreter Message": "CODEBLUE",
+        "Latch Open Close Delay": 1500
       }
     </script>
     <script src="jquery-2.1.4.min.js"></script>
@@ -462,15 +463,26 @@
         </div>
         <hr>
         <div class="block">
-          <button onclick="sendMessage(3,'*BRIGHT=5')">Faint</button>
+          <button onclick="sendMessage(3,'*BRIGHT=5')">Min</button>
           <button onclick="sendMessage(3,'*BRIGHT=30')">Dim</button>
           <button onclick="sendMessage(3,'*BRIGHT=100')">Normal</button>
           <button onclick="sendMessage(3,'*BRIGHT=150')">Bright</button>
-          <button onclick="sendMessage(3,'*BRIGHT=255')">High</button>
+          <button onclick="sendMessage(3,'*BRIGHT=255')">Max</button>
         </div>
         <hr>
         <div class="block">
-          <tr><button onclick="sendMessage(3,'*BLINK=3')">Blink</button></tr>
+          <button onclick="sendMessage(3,'*BLINK=3')">Blink</button>
+          <button onclick="sendMessage(3,'*TRIG')">Trigger latch</button>
+        </div>
+        <hr>
+        <div class="block">
+          <table style="margin: 0 auto">
+            <tr>
+              <td style="text-align: right">Set latch delay:</td>
+              <td><input maxlength="4" type="text" id="newLatchDelay" value="" style="width: 40px"> (ms)</td>
+              <td><button onclick="updateLatchDelay()">Set</button></td>
+            </tr>
+          </table>
         </div>
         <hr>
         <tr><button onclick="sendMessage(3,'*RST')">Reset</button></tr>
@@ -492,14 +504,15 @@
     <script type="text/javascript">
 
       var actual_settings = {
-        "Morse Code Phone Message": -1, //KEY53
+        "Morse Code Phone Message": -1,
         "Penalty Hint": -1,
         "Penalty Alarm Trigger": -1,
-        "Alarm Defuse Order": -1, //3421
-        "Alarm Time To Defuse Factor": -1, //12
-        "Alarm Siren Duration": -1, //15
-        "Telephone Exhange Combination": -1, //11
-        "Morse Code Interpreter Message": -1 //CODEBLUE
+        "Alarm Defuse Order": -1,
+        "Alarm Time To Defuse Factor": -1,
+        "Alarm Siren Duration": -1,
+        "Telephone Exhange Combination": -1,
+        "Morse Code Interpreter Message": -1,
+        "Latch Open Close Delay": -1
       }
 
       function char_to_morse(character) {
@@ -706,6 +719,11 @@
           updateMessage();
         }
 
+        if (actual_settings["Latch Open Close Delay"] != default_settings["Latch Open Close Delay"]) {
+          $("#newLatchDelay").val(default_settings["Latch Open Close Delay"]);
+          updateLatchDelay();
+        }
+
         updateHintGivenCost();
         updateAlarmTriggerCost();
 
@@ -823,9 +841,19 @@
               g.css("color", "black");
               e.html("The players have completed the room (hold the button for 3 secs to reset)");
               if (warned == false) {
-                alert("The players have finished the room!");
+                sendMessage(3, "*LIGHTS=0");
+                sendMessage(3, "*BRIGHT=255");
+                setTimeout(function(){
+                  sendMessage(3, "*TRIG");  
+                }, 3000);
+                setTimeout(function(){
+                  sendMessage(3, "*LIGHTS=1");
+                  sendMessage(3, "*BRIGHT=100");
+                }, 15000);
+                // alert("The players have finished the room!");
                 warned = true;
               }
+
               server_state = 3;
               break;
 
@@ -883,11 +911,11 @@
               table += "<th>Main Lights:</th>";
               if (d[1] == 1) {
                 table += "<td>On</td>"
-                html += "<button onclick=\"sendMessage(3,'*LIGHTS=1')\">Lights - OFF</button>";
+                html += "<button onclick=\"sendMessage(3,'*LIGHTS=0')\">Lights - OFF</button>";
               }
               else {
                 table += "<td>Off</td>" 
-                html += "<button onclick=\"sendMessage(3,'*LIGHTS=0')\">Lights - ON</button>";
+                html += "<button onclick=\"sendMessage(3,'*LIGHTS=1')\">Lights - ON</button>";
               }
               table += "</tr>";
 
@@ -899,6 +927,7 @@
               table += "<td>";
               table += d[1] + " (ms)";
               table += "</td>";
+              actual_settings["Latch Open Close Delay"] = parseInt(d[1]);
               break;
 
             case "SOUNDS":
@@ -1636,10 +1665,18 @@
 
       function updateHintCount() {
         val = parseInt($("#newHintCount").val());
-        if (val >= 0 || val < 999) {
+        if (val >= 0 && val < 999) {
           sendMessage(10,'*HINT_COUNT=' + val)
         }
         else alert("Error interpreting hint count");        
+      }
+
+      function updateLatchDelay() {
+        val = parseInt($("#newLatchDelay").val());
+        if (val >= 0 && val < 9999) {
+          sendMessage(3, "*LATCH_MS=" + val) ;
+        }
+        else alert("Error interpreting new delay");        
       }
 
       function setCombo() {
