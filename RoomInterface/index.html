@@ -1,6 +1,18 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <script type="text/javascript">
+      var default_settings = {
+        "Morse Code Phone Message": "KEY01", //KEY53
+        "Penalty Hint": 5,
+        "Penalty Alarm Trigger": 5,
+        "Alarm Defuse Order": "1234", //3421
+        "Alarm Time To Defuse Factor": 11, //12
+        "Alarm Siren Duration": 5, //15
+        "Telephone Exhange Combination": 60, //11
+        "Morse Code Interpreter Message": "CODEGREEN", //CODEBLUE
+      }
+    </script>
     <script src="jquery-2.1.4.min.js"></script>
     <script src="masonry.pkgd.min.js"></script>
     <title>Locked Room Interface</title>
@@ -111,10 +123,6 @@
           <th style="text-align: right">Secret Cupboard:</th>
           <td><span id="stat_Secret-Cupboard"></span></td>
         </tr>
-<!--         <tr>
-          <th>Telephone Exchange Found:</th>
-          <td><span id="stat_Telephone-Exchange-Found"></span></td>
-        </tr> -->
         <tr>
           <th style="text-align: right">Telephone Exchange:</th>
           <td><span id="stat_Telephone-Exchange-Completed"></span></td>
@@ -316,50 +324,50 @@
           <table style="margin: 0 auto">
             <tr>
               <td>
-                <label for="6">(6) Berlin</label><input type="checkbox" id="6">
+                <label for="6">(6<sub>32</sub>) Berlin</label><input type="checkbox" id="6">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="7"><label for="7">St. Petersburg (7)</label>
+                <input type="checkbox" id="7"><label for="7">St. Petersburg (7<sub>64</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="5">(5) London</label><input type="checkbox" id="5">
+                <label for="5">(5<sub>16</sub>) London</label><input type="checkbox" id="5">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="8"><label for="8">Washington (8)</label>
+                <input type="checkbox" id="8"><label for="8">Washington (8<sub>128</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="4">(4) Moscow</label><input type="checkbox" id="4">
+                <label for="4">(4<sub>8</sub>) Moscow</label><input type="checkbox" id="4">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="9"><label for="9">Munich (9)</label>
+                <input type="checkbox" id="9"><label for="9">Munich (9<sub>256</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="3">(3) Taupo</label><input type="checkbox" id="3">
+                <label for="3">(3<sub>4</sub>) Taupo</label><input type="checkbox" id="3">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="10"><label for="10">Birmingham (10)</label>
+                <input type="checkbox" id="10"><label for="10">Birmingham (10<sub>512</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="2">(2) Prague</label><input type="checkbox" id="2">
+                <label for="2">(2<sub>2</sub>) Prague</label><input type="checkbox" id="2">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="11"><label for="11">Warsaw (11)</label>
+                <input type="checkbox" id="11"><label for="11">Warsaw (11<sub>1024</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="1">(1) Paris</label><input type="checkbox" id="1">
+                <label for="1">(1<sub>1</sub>) Paris</label><input type="checkbox" id="1">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="12"><label for="12">Chicago (12)</label>
+                <input type="checkbox" id="12"><label for="12">Chicago (12<sub>2048</sub>)</label>
               </td>
             </tr>
             </table>
@@ -608,7 +616,6 @@
         11: "Alarm"
       }
 
-
       puzzle_data = {}
       var lastUpdate = 0;
       var warned = false;
@@ -616,6 +623,91 @@
       var last_progress = 0;
       var server_state = -1;
       var alarm_finished_type = -1;
+      var settings_loaded = 0;
+      var hintGivenCost = 0;
+      var alarmTriggerCost = 0;
+      var message_pending_flag = 0;
+
+      function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+          if ((new Date().getTime() - start) > milliseconds){
+            break;
+          }
+        }
+      }
+
+
+      function load_defaults() {
+        if ($("#newMessagePhone").val() != default_settings["Morse Code Phone Message"]) {
+          $("#newMessagePhone").val(default_settings["Morse Code Phone Message"]);
+          sleep(100);
+          updateMessagePhone();
+        }
+
+        if ($("#hintGivenCost").val() != default_settings["Penalty Hint"]) {
+          $("#hintGivenCost").val(default_settings["Penalty Hint"]);
+          sleep(100);
+          updateHintGivenCost();
+        }
+
+        if ($("#alarmTriggerCost").val() != default_settings["Penalty Alarm Trigger"]) {
+          $("#alarmTriggerCost").val(default_settings["Penalty Alarm Trigger"]);
+          sleep(100);
+          updateAlarmTriggerCost();
+        }
+
+        if ($("#newAlarmCombo").val() != default_settings["Alarm Defuse Order"]) {
+          $("#newAlarmCombo").val(default_settings["Alarm Defuse Order"]);
+          sleep(100);
+          updateAlarmCombo();
+        }
+
+        if ($("#newAlarmDefuseDuration").val() != default_settings["Alarm Time To Defuse Factor"]) {
+          $("#newAlarmDefuseDuration").val(default_settings["Alarm Time To Defuse Factor"]);
+          sleep(100);
+          updateAlarmDefuseDuration();
+        }
+
+        if ($("#newAlarmDuration").val() != default_settings["Alarm Siren Duration"]) {
+          $("#newAlarmDuration").val(default_settings["Alarm Siren Duration"]);
+          sleep(100);
+          updateAlarmDuration();
+        }
+
+        var combo = 0;
+        if ($('#1')[0].checked) combo += 1;
+        if ($('#2')[0].checked) combo += 2;
+        if ($('#3')[0].checked) combo += 4;
+        if ($('#4')[0].checked) combo += 8;
+        if ($('#5')[0].checked) combo += 16;
+        if ($('#6')[0].checked) combo += 32;
+        if ($('#7')[0].checked) combo += 64;
+        if ($('#8')[0].checked) combo += 128;
+        if ($('#9')[0].checked) combo += 256;
+        if ($('#10')[0].checked) combo += 512;
+        if ($('#11')[0].checked) combo += 1024;
+        if ($('#12')[0].checked) combo += 2048;
+        console.log(combo);
+
+        if (combo != default_settings["Telephone Exhange Combination"]) {
+          var num = default_settings["Telephone Exhange Combination"];
+          for (var i=0; i<12; i++) {
+            var id = "#" + (i + 1);
+            $(id).prop('checked', (num & (1 << i)) > 0 ? true : false);
+          }
+          sleep(100);
+          setCombo();
+        }
+
+        if ($("#newMessage").val() != default_settings["Morse Code Interpreter Message"]) {
+          $("#newMessage").val(default_settings["Morse Code Interpreter Message"]);
+          sleep(100);
+          updateMessage();
+        }
+
+        settings_loaded = 1;
+      }
 
       function getStats() {
         counter++;
@@ -676,6 +768,10 @@
             }
 
             $("#percentComplete").html(progress + "/"+steps+" (" + Math.round((progress/steps) * 100) + " %)");
+
+            if (server_state == 0 && settings_loaded == 0) load_defaults();
+            else if (server_state != 0) settings_loaded = 0;
+
 
             getStats();
           }
@@ -1435,21 +1531,29 @@
       }
 
       function sendMessage_ignoreResponse(id, msg) {
+        console.log("sending");
+        message_pending_flag = 1;
         $.ajax({
           url: "http://192.168.2.177?device="+id+"&command="+msg,
           datatype: 'json',
           type: 'GET',
-          timeout: 1000
+          timeout: 1000,
+          complete: function (data) {
+            message_pending_flag = 0;
+          }
         });
       }
 
       function sendMessage(id, msg) {
+        message_pending_flag = 1;
         $.ajax({
           url: "http://192.168.2.177?device="+id+"&command="+msg,
-          // complete: processResponse,
           datatype: 'json',
           type: 'GET',
-          timeout: 1000
+          timeout: 1000,
+          complete: function (data) {
+            message_pending_flag = 0;
+          }
         });
       }
 
@@ -1523,6 +1627,14 @@
           else alert("Specified factor is too extreme")
         }
         else alert("Error interpreting new alarm defuse duration");
+      }
+
+      function updateHintGivenCost() {
+        hintGivenCost = parseInt($("#hintGivenCost").val());
+      }
+
+      function updateAlarmTriggerCost() {
+        alarmTriggerCost = parseInt($("#alarmTriggerCost").val());
       }
 
       function resetRoom() {
