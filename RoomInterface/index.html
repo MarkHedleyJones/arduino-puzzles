@@ -462,11 +462,11 @@
         </div>
         <hr>
         <div class="block">
-          <button onclick="sendMessage(3,'*SET_BRIG=5')">Faint</button>
-          <button onclick="sendMessage(3,'*SET_BRIG=30')">Dim</button>
-          <button onclick="sendMessage(3,'*SET_BRIG=100')">Normal</button>
-          <button onclick="sendMessage(3,'*SET_BRIG=150')">Bright</button>
-          <button onclick="sendMessage(3,'*SET_BRIG=255')">High</button>
+          <button onclick="sendMessage(3,'*BRIGHT=5')">Faint</button>
+          <button onclick="sendMessage(3,'*BRIGHT=30')">Dim</button>
+          <button onclick="sendMessage(3,'*BRIGHT=100')">Normal</button>
+          <button onclick="sendMessage(3,'*BRIGHT=150')">Bright</button>
+          <button onclick="sendMessage(3,'*BRIGHT=255')">High</button>
         </div>
         <hr>
         <div class="block">
@@ -845,18 +845,18 @@
         $.each(puzzle_data["LED Door Controller"], function (key, val) {
           d = val.split("=");
           switch (d[0]) {
-            case "TRANSITION":
+            case "TRANS":
               if (d[1] == "0") {
-                html += "<button onclick=\"sendMessage(3,'*SET_TRANS=1')\">Enable Transitions</button>";
+                html += "<button onclick=\"sendMessage(3,'*TRANS=1')\">Enable Transitions</button>";
                 table += "<tr><th>Transitions:</th><td>Disabled</td></tr>";
               }
               else {
-                html +="<button onclick=\"sendMessage(3,'*SET_TRANS=0')\">Disable Transitions</button>";
+                html +="<button onclick=\"sendMessage(3,'*TRANS=0')\">Disable Transitions</button>";
                 table += "<tr><th>Transitions:</th><td>Enabled</td></tr>";
               }
               break;
 
-            case "LEDS_GRN":
+            case "GRN":
               if (d[1] >= 0) {
                 html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
                 table += "<tr><th>State:</th><td>On</td></tr>";
@@ -874,11 +874,49 @@
               table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
               break;
 
-            case "TRANSITION_BLINKS":
+            case "TRANS_BLINKS":
               table += "<tr><th>Transition Blinks:</th><td>"+d[1]+"</td></th>";
+              break;
 
+            case "LIGHTS":
+              table += "<tr>";
+              table += "<th>Main Lights:</th>";
+              if (d[1] == 1) {
+                table += "<td>On</td>"
+                html += "<button onclick=\"sendMessage(3,'*LIGHTS=1')\">Lights - OFF</button>";
+              }
+              else {
+                table += "<td>Off</td>" 
+                html += "<button onclick=\"sendMessage(3,'*LIGHTS=0')\">Lights - ON</button>";
+              }
+              table += "</tr>";
+
+              break;
+
+            case "LATCH_MS":
+              table += "<tr>";
+              table += "<th>Latch delay:</th>";
+              table += "<td>";
+              table += d[1] + " (ms)";
+              table += "</td>";
+              break;
+
+            case "SOUNDS":
+              table += "<tr>";
+              table += "<th>Sounds:</th>";
+              if (d[1] == 1) {
+                table += "<td>Enabled</td>"
+                html += "<button onclick=\"sendMessage(3,'*SOUNDS=0')\">Sounds - OFF</button>";
+              }
+              else {
+                table += "<td>Disabled</td>" 
+                html += "<button onclick=\"sendMessage(3,'*SOUNDS=1')\">Sounds - ON</button>";
+              }
+              table += "</tr>";
+              break;
           }
           // table += "<tr><th>" + d[0] + ":</th><td>" + d[1] + "</td></tr>";
+          // html += d[0] + d[1] + "<br>";
         });
         table += "</table>";
         $("#LED-Door-Controller .stats").html(table+html);
