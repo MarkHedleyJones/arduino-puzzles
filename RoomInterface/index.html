@@ -1,6 +1,18 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <script type="text/javascript">
+      var default_settings = {
+        "Morse Code Phone Message": "KEY01", //KEY53
+        "Penalty Hint": 5,
+        "Penalty Alarm Trigger": 5,
+        "Alarm Defuse Order": "1234", //3421
+        "Alarm Time To Defuse Factor": 11, //12
+        "Alarm Siren Duration": 5, //15
+        "Telephone Exhange Combination": 60, //11
+        "Morse Code Interpreter Message": "CODEGREEN", //CODEBLUE
+      }
+    </script>
     <script src="jquery-2.1.4.min.js"></script>
     <script src="masonry.pkgd.min.js"></script>
     <title>Locked Room Interface</title>
@@ -98,7 +110,7 @@
       </div>
       <hr>
       <div style="text-align: center; font-weight: 700; margin: 0 0 10px 0; font-size: 2em">
-      Time: <span id="time2" style="color: red">00:00</span>
+      Time: <span id="display_time" style="color: red">00:00</span> + Penalties: <span id="display_penalties">0</span> = Score: <span id="display_score"></span>
       </div>
       <a style="float:left; margin: 0 0 20px 5px; width: 48.5%" href="http://admin:@192.168.2.51/video.cgi">
         <img width="100%" height="auto" src="http://admin:@192.168.2.51/video.cgi" alt="Camera 1 is unavailable" class="shrinkToFit" style="width: 100%; height: auto; display: block">
@@ -111,10 +123,6 @@
           <th style="text-align: right">Secret Cupboard:</th>
           <td><span id="stat_Secret-Cupboard"></span></td>
         </tr>
-<!--         <tr>
-          <th>Telephone Exchange Found:</th>
-          <td><span id="stat_Telephone-Exchange-Found"></span></td>
-        </tr> -->
         <tr>
           <th style="text-align: right">Telephone Exchange:</th>
           <td><span id="stat_Telephone-Exchange-Completed"></span></td>
@@ -213,12 +221,36 @@
       </div>
 
       <!-- ****************************************************************** -->
-      <!-- ************************* Secret Message ************************* -->
+      <!-- ************************** Hint Counter ************************** -->
       <!-- ****************************************************************** -->
-      <div class="grid-item" id="Secret-Message">
-        <h3>Secret Message</h3>
+      <div class="grid-item" id="Hint-Counter">
+        <h3>Penalty Counter</h3>
         <div class="stats"></div>
         <hr>
+        <div class="block">
+          <table style="margin: 0 auto">
+            <tr>
+              <td style="text-align: right">Hint given cost:</td>
+              <td><input maxlength="4" type="text" id="hintGivenCost" value="" style="width: 40px"></td>
+              <td><button onclick="updateHintGivenCost()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Alarm triggered cost:</td>
+              <td><input maxlength="3" type="text" id="alarmTriggerCost" value="" style="width: 40px"></td>
+              <td><button onclick="updateAlarmTriggerCost()">Set</button></td>
+            </tr>
+          </table>
+        </div>
+        <hr>
+        <div class="block">
+          <span>Set hint count: </span><input maxlength="3" type="text" id="newHintCount" value="" style="width: 40px">
+          <button onclick="updateHintCount()">Set</button>
+        </div>
+        <hr>
+        <div class="block">
+          <button onclick="sendMessage(10, '*DECREMENT')">Decrement hints</button>
+          <button onclick="sendMessage(10, '*INCREMENT')">Increment hints</button>
+        </div>
         <button onclick="sendMessage(10,'*RST')">Reset</button>
       </div>
 
@@ -292,50 +324,50 @@
           <table style="margin: 0 auto">
             <tr>
               <td>
-                <label for="6">(6) Berlin</label><input type="checkbox" id="6">
+                <label for="6">(6<sub>32</sub>) Berlin</label><input type="checkbox" id="6">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="7"><label for="7">St. Petersburg (7)</label>
+                <input type="checkbox" id="7"><label for="7">St. Petersburg (7<sub>64</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="5">(5) London</label><input type="checkbox" id="5">
+                <label for="5">(5<sub>16</sub>) London</label><input type="checkbox" id="5">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="8"><label for="8">Washington (8)</label>
+                <input type="checkbox" id="8"><label for="8">Washington (8<sub>128</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="4">(4) Moscow</label><input type="checkbox" id="4">
+                <label for="4">(4<sub>8</sub>) Moscow</label><input type="checkbox" id="4">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="9"><label for="9">Munich (9)</label>
+                <input type="checkbox" id="9"><label for="9">Munich (9<sub>256</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="3">(3) Taupo</label><input type="checkbox" id="3">
+                <label for="3">(3<sub>4</sub>) Taupo</label><input type="checkbox" id="3">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="10"><label for="10">Birmingham (10)</label>
+                <input type="checkbox" id="10"><label for="10">Birmingham (10<sub>512</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="2">(2) Prague</label><input type="checkbox" id="2">
+                <label for="2">(2<sub>2</sub>) Prague</label><input type="checkbox" id="2">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="11"><label for="11">Warsaw (11)</label>
+                <input type="checkbox" id="11"><label for="11">Warsaw (11<sub>1024</sub>)</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="1">(1) Paris</label><input type="checkbox" id="1">
+                <label for="1">(1<sub>1</sub>) Paris</label><input type="checkbox" id="1">
               </td>
               <td style="text-align: left">
-                <input type="checkbox" id="12"><label for="12">Chicago (12)</label>
+                <input type="checkbox" id="12"><label for="12">Chicago (12<sub>2048</sub>)</label>
               </td>
             </tr>
             </table>
@@ -563,7 +595,6 @@
         "Wall Switch 1": 0,
         "Wall Switch 2": 0,
         "Coloured Wires Connected": 0,
-        "Secret Message Given": 0,
         "Locker 1 Opened": 0,
         "Locker 2 Opened": 0,
         "Locker 3 Opened": 0,
@@ -581,10 +612,9 @@
         6: "Wall Switch Controller",
         8: "Morse Code Phone",
         9: "Telephone Exchange",
-        10: "Secret Message",
+        10: "Hint Counter",
         11: "Alarm"
       }
-
 
       puzzle_data = {}
       var lastUpdate = 0;
@@ -592,7 +622,99 @@
       var counter = 0;
       var last_progress = 0;
       var server_state = -1;
-      var alarm_finished_type = 0;
+      var alarm_finished_type = -1;
+      var settings_loaded = 0;
+      var message_pending_flag = 0;
+      var hints_given = 0;
+      var alarm_triggered = 0;
+      var hintGivenCost = 0;
+      var alarmTriggerCost = 0;
+
+
+      function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+          if ((new Date().getTime() - start) > milliseconds){
+            break;
+          }
+        }
+      }
+
+      $("#hintGivenCost").val(default_settings["Penalty Hint"]);
+      updateHintGivenCost();
+
+      $("#alarmTriggerCost").val(default_settings["Penalty Alarm Trigger"]);
+      updateAlarmTriggerCost();
+
+
+      function load_defaults() {
+
+        if ($("#newMessagePhone").val() != default_settings["Morse Code Phone Message"]) {
+          $("#newMessagePhone").val(default_settings["Morse Code Phone Message"]);
+          sleep(100);
+          updateMessagePhone();
+        }
+
+        $("#hintGivenCost").val(default_settings["Penalty Hint"]);
+        updateHintGivenCost();
+
+        $("#alarmTriggerCost").val(default_settings["Penalty Alarm Trigger"]);
+        updateAlarmTriggerCost();
+
+        if ($("#newAlarmCombo").val() != default_settings["Alarm Defuse Order"]) {
+          $("#newAlarmCombo").val(default_settings["Alarm Defuse Order"]);
+          sleep(100);
+          updateAlarmCombo();
+        }
+
+        if ($("#newAlarmDefuseDuration").val() != default_settings["Alarm Time To Defuse Factor"]) {
+          $("#newAlarmDefuseDuration").val(default_settings["Alarm Time To Defuse Factor"]);
+          sleep(100);
+          updateAlarmDefuseDuration();
+        }
+
+        if ($("#newAlarmDuration").val() != default_settings["Alarm Siren Duration"]) {
+          $("#newAlarmDuration").val(default_settings["Alarm Siren Duration"]);
+          sleep(100);
+          updateAlarmDuration();
+        }
+
+        var combo = 0;
+        if ($('#1')[0].checked) combo += 1;
+        if ($('#2')[0].checked) combo += 2;
+        if ($('#3')[0].checked) combo += 4;
+        if ($('#4')[0].checked) combo += 8;
+        if ($('#5')[0].checked) combo += 16;
+        if ($('#6')[0].checked) combo += 32;
+        if ($('#7')[0].checked) combo += 64;
+        if ($('#8')[0].checked) combo += 128;
+        if ($('#9')[0].checked) combo += 256;
+        if ($('#10')[0].checked) combo += 512;
+        if ($('#11')[0].checked) combo += 1024;
+        if ($('#12')[0].checked) combo += 2048;
+        console.log(combo);
+
+        if (combo != default_settings["Telephone Exhange Combination"]) {
+          var num = default_settings["Telephone Exhange Combination"];
+          for (var i=0; i<12; i++) {
+            var id = "#" + (i + 1);
+            $(id).prop('checked', (num & (1 << i)) > 0 ? true : false);
+          }
+          sleep(100);
+          setCombo();
+        }
+
+        if ($("#newMessage").val() != default_settings["Morse Code Interpreter Message"]) {
+          $("#newMessage").val(default_settings["Morse Code Interpreter Message"]);
+          sleep(100);
+          updateMessage();
+        }
+
+        updateHintGivenCost();
+        updateAlarmTriggerCost();
+
+        settings_loaded = 1;
+      }
 
       function getStats() {
         counter++;
@@ -654,6 +776,10 @@
 
             $("#percentComplete").html(progress + "/"+steps+" (" + Math.round((progress/steps) * 100) + " %)");
 
+            if (server_state == 0 && settings_loaded == 0) load_defaults();
+            else if (server_state != 0) settings_loaded = 0;
+
+
             getStats();
           }
         });
@@ -684,16 +810,16 @@
               server_state = 1;
               break;
 
-            case "2":
-              // STATE_ENDCONDITION
-              g.html("Waiting for last trigger");
-              g.css("color", "purple");
-              if (triggers["Secret Message Given"]) {
-                e.html("Just waiting for the correct morse code message");
-              }
-              else e.html("Just waiting for the message via telephone (press button when done).");
-              server_state = 2;
-              break;
+            // case "2":
+            //   // STATE_ENDCONDITION
+            //   g.html("Waiting for last trigger");
+            //   g.css("color", "purple");
+            //   if (triggers["Secret Message Given"]) {
+            //     e.html("Just waiting for the correct morse code message");
+            //   }
+            //   else e.html("Just waiting for the message via telephone (press button when done).");
+            //   server_state = 2;
+            //   break;
 
             case "3":
               // STATE_ENDED
@@ -740,7 +866,6 @@
                 table += "<tr><th>State:</th><td>On</td></tr>";
                 table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.round((d[1]/145)*100)+"%)</td></tr>";
                 leds_green = Math.round(d[1]);
-                console.log(leds_green);
               }
               else {
                 html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
@@ -891,7 +1016,13 @@
           switch (d[0]) {
             case "TIME":
               table += "<tr><th>Time:</th><td>"+d[1]+"</td></tr>";
-              $("#time2").html(d[1]);
+              mins = parseInt(d[1].split(":")[0]);
+              penalties = (hints_given * hintGivenCost) + (alarm_triggered * alarmTriggerCost);
+              secs = parseInt(d[1].split(":")[1]);
+              $("#display_time").html(d[1]);
+              $("#display_penalties").html(penalties);
+              if (secs < 10) $("#display_score").html((mins + penalties) + ":0" + secs);
+              else $("#display_score").html((mins + penalties) + ":" + secs);
               break;
 
             case "PAUSED":
@@ -1167,30 +1298,35 @@
 
         html = "";
         table = "<table>";
-        $.each(puzzle_data["Secret Message"], function (key, val) {
+        $.each(puzzle_data["Hint Counter"], function (key, val) {
           d = val.split("=");
           switch (d[0]) {
-            case "TIME":
-              table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
-              break;
-
-            case "MSG_RECEIVED":
-              if (d[1] == 1) {
-                table += "<tr><th>Message given:</th><td style='color: red'>Yes</td></tr>";
-                html += "<hr><button onclick=\"sendMessage(10,'*RST')\">Reset</button>";
-                triggers["Secret Message Given"] = 1;
+            case "HINT_COUNT":
+              table += "<tr>";
+              table += "<th>Hints given: </th>";
+              if (d[1] == 0) {
+                table += "<td style='color: green'>None</td>";
               }
               else {
-                table += "<tr><th>Message given:</th><td style='color: green'>No</td></tr>";
-                html += "<hr><button onclick=\"sendMessage(10,'*SET')\">Set</button>";
-                triggers["Secret Message Given"] = 0;
+                table += "<td style=\"color: red; font-weight: 700\">" + d[1] + "</td>";
               }
+              hints_given = parseInt(d[1]);
+              table += "</tr>";
 
+              table += "<tr>";
+              table += "<th>Alarm triggered: </th>";
+              
+              if (triggers["Alarm Finished"] == 1 && alarm_finished_type == 1) {
+                table += "<td style=\"color: red\">Yes</td>";
+              }
+              else table += "<td style=\"color: green\">No</td>";
+              table += "</tr>";
+            break;
           }
           // html += d[0] + d[1] + "<br>";
         });
         table += "</table>";
-        $("#Secret-Message .stats").html(table+html);
+        $("#Hint-Counter .stats").html(table+html);
 
         html = "";
         table = "<table>";
@@ -1227,18 +1363,23 @@
                 table += "</td>";
                 triggers["Alarm finished"] = 1;
                 alarm_finished_type = 1;
+                alarm_triggered = 0;
               }
               else if(d[1] == 1) {
                 table += "<td style=\"color: green\">";
                 table += "Ready";
                 table += "</td>";
                 triggers["Alarm finished"] = 0;
+                alarm_finished_type = -1;
+                alarm_triggered = 0;
               }
               else if(d[1] == 2) {
                 table += "<td style=\"color: blue\">";
                 table += "Armed";
                 table += "</td>";
                 triggers["Alarm finished"] = 0;
+                alarm_finished_type = -1;
+                alarm_triggered = 0;
               }
               else if(d[1] == 3) {
                 table += "<td style=\"color: red\">";
@@ -1246,6 +1387,7 @@
                 table += "</td>";
                 triggers["Alarm finished"] = 1;
                 alarm_finished_type = 0;
+                alarm_triggered = 1;
               }
               table += "</tr>";
             break;
@@ -1351,15 +1493,6 @@
           $("#stat_Coloured-Wires-Connected").css("color", "green");
         }
 
-        if (triggers["Secret Message Given"]) {
-          $("#stat_Secret-Message-Given").html("Yes");
-          $("#stat_Secret-Message-Given").css("color", "red");
-        }
-        else {
-          $("#stat_Secret-Message-Given").html("Ready");
-          $("#stat_Secret-Message-Given").css("color", "green");
-        }
-
         if (triggers["Locker 1 Opened"]) {
           $("#stat_Locker-1-Opened").html("Open");
           $("#stat_Locker-1-Opened").css("color", "red");
@@ -1416,21 +1549,29 @@
       }
 
       function sendMessage_ignoreResponse(id, msg) {
+        console.log("sending");
+        message_pending_flag = 1;
         $.ajax({
           url: "http://192.168.2.177?device="+id+"&command="+msg,
           datatype: 'json',
           type: 'GET',
-          timeout: 1000
+          timeout: 1000,
+          complete: function (data) {
+            message_pending_flag = 0;
+          }
         });
       }
 
       function sendMessage(id, msg) {
+        message_pending_flag = 1;
         $.ajax({
           url: "http://192.168.2.177?device="+id+"&command="+msg,
-          // complete: processResponse,
           datatype: 'json',
           type: 'GET',
-          timeout: 1000
+          timeout: 1000,
+          complete: function (data) {
+            message_pending_flag = 0;
+          }
         });
       }
 
@@ -1452,6 +1593,14 @@
       function updateMessagePhone() {
         val = $("#newMessagePhone").val();
         sendMessage(8,'*MSG='+val);
+      }
+
+      function updateHintCount() {
+        val = parseInt($("#newHintCount").val());
+        if (val >= 0 || val < 999) {
+          sendMessage(10,'*HINT_COUNT=' + val)
+        }
+        else alert("Error interpreting hint count");        
       }
 
       function setCombo() {
@@ -1496,6 +1645,16 @@
           else alert("Specified factor is too extreme")
         }
         else alert("Error interpreting new alarm defuse duration");
+      }
+
+      function updateHintGivenCost() {
+        hintGivenCost = parseInt($("#hintGivenCost").val());
+        console.log(alarmTriggerCost);
+      }
+
+      function updateAlarmTriggerCost() {
+        alarmTriggerCost = parseInt($("#alarmTriggerCost").val());
+        console.log(alarmTriggerCost);
       }
 
       function resetRoom() {
