@@ -354,8 +354,7 @@ void handle_http_client(EthernetClient client) {
               strcpy(i2c_msg, "*STAT?");
               i2c_ask(i, i2c_msg);
               if (i == 11) {
-                tmp = atoi(i2c_msg[20]);
-                if (tmp == TRIGGERED || tmp == DISABLED) {
+                if (i2c_msg[20] == '3' || i2c_msg[20] == '0') {
                   alarm_finished = 1;    
                 }
                 else {
@@ -520,6 +519,7 @@ void loop() {
       }
 
       if (button_duration > 10 && button_state == 0) {
+        button_duration = 0;
         hint_count += 1;
       }
       else if (button_duration > 2000) {
