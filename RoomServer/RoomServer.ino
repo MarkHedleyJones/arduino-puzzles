@@ -520,6 +520,7 @@ void loop() {
       }
 
       if (button_duration > 10 && button_state == 0) {
+        button_duration = 0;
         hint_count += 1;
       }
       else if (button_duration > 2000) {
