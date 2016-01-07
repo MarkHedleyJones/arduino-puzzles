@@ -354,8 +354,8 @@ void handle_http_client(EthernetClient client) {
               strcpy(i2c_msg, "*STAT?");
               i2c_ask(i, i2c_msg);
               if (i == 11) {
-                if (i2c_msg[20] == TRIGGERED ||
-                    i2c_msg[20] == DISABLED) {
+                tmp = atoi(i2c_msg[20]);
+                if (tmp == TRIGGERED || tmp == DISABLED) {
                   alarm_finished = 1;    
                 }
                 else {
