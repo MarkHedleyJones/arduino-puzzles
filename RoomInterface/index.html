@@ -4,14 +4,18 @@
     <script type="text/javascript">
       var default_settings = {
         "Morse Code Phone Message": "KEY53",
-        "Penalty Hint": 5,
+        "Penalty Hint": 3,
         "Penalty Alarm Trigger": 5,
         "Alarm Defuse Order": "3421",
         "Alarm Time To Defuse Factor": 12,
         "Alarm Siren Duration": 15,
         "Telephone Exhange Combination": 1044,
         "Morse Code Interpreter Message": "CODEBLUE",
-        "Latch Open Close Delay": 1500
+        "Latch Open Close Delay": 800,
+        "Latch Open Close Count": 2,
+        "Latch Open Close Count Delay": 1000,
+        "Door LED Brightness": 100,
+        "Door LED Transision Blinks": 4
       }
     </script>
     <script src="jquery-2.1.4.min.js"></script>
@@ -170,17 +174,6 @@
 
   <div class="grid">
 
-<!--     <div class="grid-item">
-      <h3>Camera 1</h3>
-      <a href="http://admin:@192.168.2.51/video/mjpg.cgi"><img width="292" height="219" src="http://admin:@192.168.2.51/video/mjpg.cgi" alt="http://192.168.2.51/video/mjpg.cgi" class="shrinkToFit"></a>
-    </div>
-    <div class="grid-item">
-      <h3>Camera 2</h3>
-      <a href="http://admin:@192.168.2.52/video/mjpg.cgi">
-      <img width="292" height="219" src="http://admin:@192.168.2.52/video/mjpg.cgi" alt="http://192.168.2.52/video/mjpg.cgi" class="shrinkToFit">
-      </a>
-    </div> -->
-
       <!-- ****************************************************************** -->
       <!--************************* Morse Code Phone *************************-->
       <!-- ****************************************************************** -->
@@ -189,7 +182,7 @@
         <h3>Morse Code Phone</h3>
         <div class="stats"></div>
         <div class="block">
-          <button onclick="sendMessage(8,'*TRIG')">Trigger</button>
+          <button onclick="queue_command(8,'*TRIG')">Trigger</button>
         </div>
         <hr>
         <div class="block">
@@ -197,7 +190,7 @@
           <button onclick="updateMessagePhone()">Set</button>
         </div>
         <hr>
-        <button onclick="sendMessage(8,'*RST')">Reset</button>
+        <button onclick="queue_command(8,'*RST')">Reset</button>
       </div>
 
 
@@ -218,7 +211,7 @@
           <button onclick="syncTime()">Sync</button>
         </div>
         <hr>
-        <button onclick="sendMessage(4,'*RST')">Reset</button>
+        <button onclick="queue_command(4,'*RST')">Reset</button>
       </div>
 
       <!-- ****************************************************************** -->
@@ -249,10 +242,10 @@
         </div>
         <hr>
         <div class="block">
-          <button onclick="sendMessage(10, '*DECREMENT')">Decrement hints</button>
-          <button onclick="sendMessage(10, '*INCREMENT')">Increment hints</button>
+          <button onclick="queue_command(10, '*DECREMENT')">Decrement hints</button>
+          <button onclick="queue_command(10, '*INCREMENT')">Increment hints</button>
         </div>
-        <button onclick="sendMessage(10,'*RST')">Reset</button>
+        <button onclick="queue_command(10,'*RST')">Reset</button>
       </div>
 
       <!-- ****************************************************************** -->
@@ -268,10 +261,10 @@
         </div>
         <hr>
         <div class="block">
-          <button onclick="sendMessage(5, '*TRIG')">Set as done</button>
+          <button onclick="queue_command(5, '*TRIG')">Set as done</button>
         </div>
         <hr>
-        <button onclick="sendMessage(5,'*RST')">Reset</button>
+        <button onclick="queue_command(5,'*RST')">Reset</button>
       </div>
 
       <!-- ****************************************************************** -->
@@ -302,12 +295,12 @@
         </div>
         <hr>
         <div class="block">
-          <button onclick="sendMessage(11, '*ARM')">Arm</button>
-          <button onclick="sendMessage(11, '*TRIG')">Trigger</button>
-          <button onclick="sendMessage(11, '*DEFUSE')">Defuse</button>
+          <button onclick="queue_command(11, '*ARM')">Arm</button>
+          <button onclick="queue_command(11, '*TRIG')">Trigger</button>
+          <button onclick="queue_command(11, '*DEFUSE')">Defuse</button>
         </div>
         <hr>
-        <button onclick="sendMessage(11,'*RST')">Reset</button>
+        <button onclick="queue_command(11,'*RST')">Reset</button>
       </div>
 
 
@@ -318,7 +311,7 @@
         <h3>Telephone Exchange</h3>
         <div class="stats"></div>
         <div class="block">
-          <button onclick="sendMessage(9,'*TRIG')">Trigger</button>
+          <button onclick="queue_command(9,'*TRIG')">Trigger</button>
         </div>
         <hr>
         <div class="block">
@@ -376,7 +369,7 @@
         </div>
 
         <hr>
-        <button onclick="sendMessage(9,'*RST')">Reset</button>
+        <button onclick="queue_command(9,'*RST')">Reset</button>
       </div>
 
       <!-- ****************************************************************** -->
@@ -387,7 +380,7 @@
         <h3>Locker Door Sensors</h3>
         <div class="stats"></div>
         <hr>
-        <button onclick="sendMessage(2,'*RST')">Reset</button>
+        <button onclick="queue_command(2,'*RST')">Reset</button>
       </div>
 
       <!-- ****************************************************************** -->
@@ -398,7 +391,7 @@
         <h3>Secret Cupboard</h3>
         <div class="stats"></div>
         <hr>
-        <button onclick="sendMessage(7,'*RST')">Reset</button>
+        <button onclick="queue_command(7,'*RST')">Reset</button>
       </div>
 
       <!-- ****************************************************************** -->
@@ -408,7 +401,7 @@
         <h3>Geiger Counter</h3>
         <div class="stats"></div>
         <hr>
-        <button onclick="sendMessage(7,'*RST')">Reset</button>
+        <button onclick="queue_command(7,'*RST')">Reset</button>
       </div> -->
 
 
@@ -420,11 +413,11 @@
         <h3>Wall Switch Controller</h3>
         <div class="stats"></div>
         <div class="block">
-          <button onclick="sendMessage(6,'*TRIG=2')">Trigger Left</button>
-          <button onclick="sendMessage(6,'*TRIG=1')">Trigger Right</button>
+          <button onclick="queue_command(6,'*TRIG=2')">Trigger Left</button>
+          <button onclick="queue_command(6,'*TRIG=1')">Trigger Right</button>
         </div>
         <hr>
-        <button onclick="sendMessage(6,'*RST')">Reset</button>
+        <button onclick="queue_command(6,'*RST')">Reset</button>
       </div>
 
 
@@ -436,66 +429,59 @@
         <h3>LED Door Controller</h3>
         <div class="stats"></div>
         <hr>
-        <div class="block led">
-          <table style="margin: 0 auto">
-          <tr>
-            <td><button onclick="sendMessage(3,'*SET_PROG=0')">0%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=48')">33%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=96')">66%</button></td>
-          </tr>
-          <tr>
-            <td><button onclick="sendMessage(3,'*SET_PROG=12')">8%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=60')">41%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=108')">74%</button></td>
-          </tr>
-          <tr>
-            <td><button onclick="sendMessage(3,'*SET_PROG=24')">17%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=72')">50%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=120')">83%</button></td>
-          </tr>
-          <tr>
-            <td><button onclick="sendMessage(3,'*SET_PROG=36')">25%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=84')">58%</button></td>
-            <td><button onclick="sendMessage(3,'*SET_PROG=132')">91%</button></td>
-          </tr>
-          </table>
-          <button style="width: 190px" onclick="sendMessage(3,'*SET_PROG=145')">100%</button>
-        </div>
-        <hr>
-        <div class="block">
-          <button onclick="sendMessage(3,'*BRIGHT=5')">Min</button>
-          <button onclick="sendMessage(3,'*BRIGHT=30')">Dim</button>
-          <button onclick="sendMessage(3,'*BRIGHT=100')">Normal</button>
-          <button onclick="sendMessage(3,'*BRIGHT=150')">Bright</button>
-          <button onclick="sendMessage(3,'*BRIGHT=255')">Max</button>
-        </div>
-        <hr>
-        <div class="block">
-          <button onclick="sendMessage(3,'*BLINK=3')">Blink</button>
-          <button onclick="sendMessage(3,'*TRIG')">Trigger latch</button>
-        </div>
-        <hr>
         <div class="block">
           <table style="margin: 0 auto">
             <tr>
-              <td style="text-align: right">Set latch delay:</td>
-              <td><input maxlength="4" type="text" id="newLatchDelay" value="" style="width: 40px"> (ms)</td>
-              <td><button onclick="updateLatchDelay()">Set</button></td>
+              <td style="text-align: right">Progress (/145 Silent):</td>
+              <td><input maxlength="3" type="text" id="ledProgress_silent" value="" style="width: 40px"></td>
+              <td><button onclick="set_led_progress(false)">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Progress (/145 Beep):</td>
+              <td><input maxlength="3" type="text" id="ledProgress_beep" value="" style="width: 40px"></td>
+              <td><button onclick="set_led_progress(true)">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Latch delay (ms):</td>
+              <td><input maxlength="4" type="text" id="latch_delay" value="" style="width: 40px"></td>
+              <td><button onclick="set_latch_delay()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Latch count:</td>
+              <td><input maxlength="4" type="text" id="latch_count" value="" style="width: 40px"></td>
+              <td><button onclick="set_latch_count()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Inter-Latch delay (ms):</td>
+              <td><input maxlength="4" type="text" id="latch_count_delay" value="" style="width: 40px"></td>
+              <td><button onclick="set_latch_count_delay()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Door brightness: (0-255)</td>
+              <td><input maxlength="3" type="text" id="led_brightness" value="" style="width: 40px"></td>
+              <td><button onclick="set_led_brightness()">Set</button></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Door transitions (0-255)</td>
+              <td><input maxlength="1" type="text" id="led_transitions" value="" style="width: 40px"></td>
+              <td><button onclick="set_led_transitions()">Set</button></td>
             </tr>
           </table>
         </div>
         <hr>
-        <tr><button onclick="sendMessage(3,'*RST')">Reset</button></tr>
-        <!-- <table>
-          <tr>
-            <th>Command:</th>
-            <td><form onsubmit="return false;"><input type="text" id="3_cmd"><button type="submit" onclick="sendMessage(3, document.getElementById('3_cmd').value)">Send</button></form></td>
-          </tr>
-          <tr>
-            <th>Response:</th>
-            <td><span id="3_resp"></span></td>
-          </tr>
-        </table> -->
+        <div class="block">
+          Brightness
+          <button onclick="queue_command(3,'*BRIGHT=5')">Min</button>
+          <button onclick="queue_command(3,'*BRIGHT=100')">Normal</button>
+          <button onclick="queue_command(3,'*BRIGHT=255')">Max</button>
+        </div>
+        <hr>
+        <div class="block">
+          <button onclick="queue_command(3,'*BLINK=3')">Blink</button>
+          <button onclick="queue_command(3,'*TRIG')">Trigger latch</button>
+        </div>
+        <hr>
+        <tr><button onclick="queue_command(3,'*RST')">Reset</button></tr>
       </div>
 
     </div>
@@ -512,7 +498,11 @@
         "Alarm Siren Duration": -1,
         "Telephone Exhange Combination": -1,
         "Morse Code Interpreter Message": -1,
-        "Latch Open Close Delay": -1
+        "Latch Open Close Delay": -1,
+        "Latch Open Close Count": -1,
+        "Latch Open Close Count Delay": -1,
+        "Door LED Brightness": -1,
+        "Door LED Transision Blinks": -1
       }
 
       function char_to_morse(character) {
@@ -642,7 +632,7 @@
 
       puzzle_data = {}
       var lastUpdate = 0;
-      var warned = false;
+      var end_sequence_fired = 0;
       var counter = 0;
       var last_progress = 0;
       var server_state = -1;
@@ -653,6 +643,10 @@
       var alarm_triggered = 0;
       var hintGivenCost = 0;
       var alarmTriggerCost = 0;
+      var timer_lights;
+      var latch_count;
+
+      var command_stack = [];
 
 
       function sleep(milliseconds) {
@@ -673,9 +667,12 @@
 
       function load_defaults() {
 
+        clearTimeout(timer_lights);
+        // Turn lights on
+        queue_command(3,"*LIGHTS=1");
+
         if (actual_settings["Morse Code Phone Message"] != default_settings["Morse Code Phone Message"]) {
           $("#newMessagePhone").val(default_settings["Morse Code Phone Message"]);
-          sleep(500);
           updateMessagePhone();
         }
 
@@ -687,19 +684,16 @@
 
         if (actual_settings["Alarm Defuse Order"] != default_settings["Alarm Defuse Order"]) {
           $("#newAlarmCombo").val(default_settings["Alarm Defuse Order"]);
-          sleep(500);
           updateAlarmCombo();
         }
 
         if (actual_settings["Alarm Time To Defuse Factor"] != default_settings["Alarm Time To Defuse Factor"]) {
           $("#newAlarmDefuseDuration").val(default_settings["Alarm Time To Defuse Factor"]);
-          sleep(500);
           updateAlarmDefuseDuration();
         }
 
         if (actual_settings["Alarm Siren Duration"] != default_settings["Alarm Siren Duration"]) {
           $("#newAlarmDuration").val(default_settings["Alarm Siren Duration"]);
-          sleep(500);
           updateAlarmDuration();
         }
 
@@ -709,24 +703,46 @@
             var id = "#" + (i + 1);
             $(id).prop('checked', (num & (1 << i)) > 0 ? true : false);
           }
-          sleep(500);
           setCombo();
         }
 
         if (actual_settings["Morse Code Interpreter Message"] != default_settings["Morse Code Interpreter Message"]) {
           $("#newMessage").val(default_settings["Morse Code Interpreter Message"]);
-          sleep(500);
           updateMessage();
         }
 
         if (actual_settings["Latch Open Close Delay"] != default_settings["Latch Open Close Delay"]) {
-          $("#newLatchDelay").val(default_settings["Latch Open Close Delay"]);
-          updateLatchDelay();
+          $("#latch_delay").val(default_settings["Latch Open Close Delay"]);
+          set_latch_delay();
+        }
+
+        if (actual_settings["Latch Open Close Count"] != default_settings["Latch Open Close Count"]) {
+          $("#latch_count").val(default_settings["Latch Open Close Count"]);
+          set_latch_count();
+        }
+
+        if (actual_settings["Latch Open Close Count Delay"] != default_settings["Latch Open Close Count Delay"]) {
+          $("#latch_count_delay").val(default_settings["Latch Open Close Count Delay"]);
+          set_latch_count_delay();
         }
 
         updateHintGivenCost();
         updateAlarmTriggerCost();
 
+        if (actual_settings["Door LED Brightness"] != default_settings["Door LED Brightness"]) {
+          $("#led_brightness").val(default_settings["Door LED Brightness"]);
+          set_led_brightness();
+        }
+
+        if (actual_settings["Door LED Transision Blinks"] != default_settings["Door LED Transision Blinks"]) {
+          $("#led_transitions").val(default_settings["Door LED Transision Blinks"]);
+          set_led_transitions();
+        }
+
+        // Hack to force phone to reset correctly.
+        queue_command(8,"*RST");
+
+        end_sequence_fired = 0;
         settings_loaded = 1;
       }
 
@@ -764,6 +780,7 @@
                 $("#lastUpdate").html("<b>"+Math.round((now.getTime() - lastUpdate.getTime())/1000)+" seconds ago</b>");
               }
             }
+            tick_event();
           },
           success: function (data, status) {
             lastUpdate = new Date();
@@ -782,23 +799,62 @@
             for(var key in triggers) {
               if (triggers[key] == 1) progress++;
             }
-
-            if ((server_state == 1 || server_state == 2) && (progress != last_progress)) {
-              sendMessage_ignoreResponse(3, "*SET_PROG="+Math.round((total/steps) * progress));
-              last_progress = progress;
+            if (triggers["Alarm finished"] == 0) {
+              if ((server_state == 1) && (progress != last_progress)) {
+                var led_out = Math.round((total/steps) * progress);
+                if (led_out > total) led_out = total;
+                queue_command(3, "*AUDIO_PROG="+led_out);
+                last_progress = progress;
+              }
             }
+            else {
+              if (end_sequence_fired == 0) {
+                queue_command(3, "*BRIGHT=255");
+                console.log("end");
+                if (alarm_finished_type == 1) {
+                  // Alarm defused
+                  queue_command(3, "*TRANS_BLINKS=0");
+                  queue_command(3, "*PROG=145");
+                  console.log(actual_settings["Latch Open Close Count"]);
+                  console.log(actual_settings["Latch Open Close Count Delay"]);
+                  for (var i = 0; i < actual_settings["Latch Open Close Count"]; i++) {
+                    console.log(3000 + actual_settings["Latch Open Close Count Delay"] * i);
+                    setTimeout(function() { queue_command(3, "*TRIG"); }, 3000 + i * actual_settings["Latch Open Close Count Delay"]);
+                  }
+                }
+                else {
+                  // Alarm triggered
+                  queue_command(3, "*TRANS_BLINKS=0");
+                  queue_command(3, "*PROG=0");
+                }
+                queue_command(3, "*LIGHTS=0");
 
+                // Turn the lights back on
+                timer_lights = setTimeout( function() { queue_command(3, "*LIGHTS=1"); }, 20000);
+                end_sequence_fired = 1;
+              }
+            }
             $("#percentComplete").html(progress + "/"+steps+" (" + Math.round((progress/steps) * 100) + " %)");
 
             if (server_state == 0 && settings_loaded == 0) load_defaults();
             else if (server_state != 0) settings_loaded = 0;
-
-
-            getStats();
           }
         });
 
       }
+
+      function queue_command(device_id, command) {
+        command_stack.push({"id": device_id, "command": command});
+      }
+
+      function tick_event() {
+        if (command_stack.length == 0) getStats();
+        else {
+          var command = command_stack.shift();
+          sendMessage_ticked(command["id"], command["command"]);
+        }
+      }
+
 
       function updateStats() {
 
@@ -824,36 +880,11 @@
               server_state = 1;
               break;
 
-            // case "2":
-            //   // STATE_ENDCONDITION
-            //   g.html("Waiting for last trigger");
-            //   g.css("color", "purple");
-            //   if (triggers["Secret Message Given"]) {
-            //     e.html("Just waiting for the correct morse code message");
-            //   }
-            //   else e.html("Just waiting for the message via telephone (press button when done).");
-            //   server_state = 2;
-            //   break;
-
             case "3":
               // STATE_ENDED
               g.html("Finished");
               g.css("color", "black");
               e.html("The players have completed the room (hold the button for 3 secs to reset)");
-              if (warned == false) {
-                sendMessage(3, "*LIGHTS=0");
-                sendMessage(3, "*BRIGHT=255");
-                setTimeout(function(){
-                  sendMessage(3, "*TRIG");  
-                }, 3000);
-                setTimeout(function(){
-                  sendMessage(3, "*LIGHTS=1");
-                  sendMessage(3, "*BRIGHT=100");
-                }, 15000);
-                // alert("The players have finished the room!");
-                warned = true;
-              }
-
               server_state = 3;
               break;
 
@@ -862,7 +893,6 @@
               g.html("Resetting");
               g.css("color", "grey");
               e.html("The puzzles are resetting...");
-              warned = false;
               server_state = 4;
               break;
           }
@@ -875,26 +905,26 @@
           switch (d[0]) {
             case "TRANS":
               if (d[1] == "0") {
-                html += "<button onclick=\"sendMessage(3,'*TRANS=1')\">Enable Transitions</button>";
+                html += "<button onclick=\"queue_command(3,'*TRANS=1')\">Enable Transitions</button>";
                 table += "<tr><th>Transitions:</th><td>Disabled</td></tr>";
               }
               else {
-                html +="<button onclick=\"sendMessage(3,'*TRANS=0')\">Disable Transitions</button>";
+                html +="<button onclick=\"queue_command(3,'*TRANS=0')\">Disable Transitions</button>";
                 table += "<tr><th>Transitions:</th><td>Enabled</td></tr>";
               }
               break;
 
-            case "GRN":
-              if (d[1] >= 0) {
-                html += "<button onclick=\"sendMessage(3,'*SET_PROG=-1')\">Turn off</button>";
-                table += "<tr><th>State:</th><td>On</td></tr>";
-                table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.round((d[1]/145)*100)+"%)</td></tr>";
-                leds_green = Math.round(d[1]);
+            case "PROG":
+              if (d[1] == -1) {
+                html += "<button onclick=\"queue_command(3,'*PROG=0')\">Door on</button>";
+                table += "<tr><th>Door LEDs:</th><td>Off</td></tr>";
+                table += "<tr><th>Progress:</th><td>N/A</td></tr>";
               }
               else {
-                html += "<button onclick=\"sendMessage(3,'*SET_PROG=0')\">Turn on</button>";
-                table += "<tr><th>State:</th><td>Off</td></tr>";
-                table += "<tr><th>Progress:</th><td>0</td></tr>";
+                html += "<button onclick=\"queue_command(3,'*PROG=-1')\">Door off</button>";
+                table += "<tr><th>Door LEDs:</th><td>On</td></tr>";
+                table += "<tr><th>Progress:</th><td>"+d[1]+"/145 ("+Math.floor(((145-d[1])/145)*100)+"%)</td></tr>";
+                leds_green = parseInt(d[1]);
               }
               break;
 
@@ -902,7 +932,7 @@
               table += "<tr><th>Run time:</th><td>"+d[1]+"</td></tr>";
               break;
 
-            case "TRANS_BLINKS":
+            case "BLINKS":
               table += "<tr><th>Transition Blinks:</th><td>"+d[1]+"</td></th>";
               break;
 
@@ -911,11 +941,11 @@
               table += "<th>Main Lights:</th>";
               if (d[1] == 1) {
                 table += "<td>On</td>"
-                html += "<button onclick=\"sendMessage(3,'*LIGHTS=0')\">Lights - OFF</button>";
+                html += "<button onclick=\"queue_command(3,'*LIGHTS=0')\">Lights - OFF</button>";
               }
               else {
                 table += "<td>Off</td>" 
-                html += "<button onclick=\"sendMessage(3,'*LIGHTS=1')\">Lights - ON</button>";
+                html += "<button onclick=\"queue_command(3,'*LIGHTS=1')\">Lights - ON</button>";
               }
               table += "</tr>";
 
@@ -928,20 +958,6 @@
               table += d[1] + " (ms)";
               table += "</td>";
               actual_settings["Latch Open Close Delay"] = parseInt(d[1]);
-              break;
-
-            case "SOUNDS":
-              table += "<tr>";
-              table += "<th>Sounds:</th>";
-              if (d[1] == 1) {
-                table += "<td>Enabled</td>"
-                html += "<button onclick=\"sendMessage(3,'*SOUNDS=0')\">Sounds - OFF</button>";
-              }
-              else {
-                table += "<td>Disabled</td>" 
-                html += "<button onclick=\"sendMessage(3,'*SOUNDS=1')\">Sounds - ON</button>";
-              }
-              table += "</tr>";
               break;
           }
           // table += "<tr><th>" + d[0] + ":</th><td>" + d[1] + "</td></tr>";
@@ -1091,11 +1107,11 @@
             case "PAUSED":
               if (d[1]==1) {
                 table += "<tr><th>State:</th><td>Paused</td></tr>";
-                html +="<button onclick=\"sendMessage(4,'*PAUSE=0')\">Start</button>";
+                html +="<button onclick=\"queue_command(4,'*PAUSE=0')\">Start</button>";
               }
               else {
                 table += "<tr><th>State:</th><td>Running</td></tr>";
-                html +="<button onclick=\"sendMessage(4,'*PAUSE=1')\">Pause</button>";
+                html +="<button onclick=\"queue_command(4,'*PAUSE=1')\">Pause</button>";
               }
 
               break;
@@ -1345,9 +1361,6 @@
               if (d[1] & 512) state.push(10);
               if (d[1] & 1024) state.push(11);
               if (d[1] & 2048) state.push(12);
-              // if (state.length > 0) {
-              //  triggers["Telephone Exchange Found"] = 1;
-              // }
               table += "<tr><th>Buttons pressed:</th><td>";
               $.each(state, function(key, val)  {
                 table += button_to_city_telex(val);
@@ -1517,15 +1530,6 @@
           $("#stat_Secret-Cupboard").css("color", "green");
         }
 
-        // if (triggers["Telephone Exchange Found"]) {
-        //   $("#stat_Telephone-Exchange-Found").html("Found");
-        //   $("#stat_Telephone-Exchange-Found").css("color", "red");
-        // }
-        // else {
-        //   $("#stat_Telephone-Exchange-Found").html("Ready");
-        //   $("#stat_Telephone-Exchange-Found").css("color", "green");
-        // }
-
         if (triggers["Telephone Exchange Completed"]) {
           $("#stat_Telephone-Exchange-Completed").html("Completed");
           $("#stat_Telephone-Exchange-Completed").css("color", "red");
@@ -1617,19 +1621,6 @@
         $grid.masonry('layout');
       }
 
-      function sendMessage_ignoreResponse(id, msg) {
-        message_pending_flag = 1;
-        $.ajax({
-          url: "http://192.168.2.177?device="+id+"&command="+msg,
-          datatype: 'json',
-          type: 'GET',
-          timeout: 1000,
-          complete: function (data) {
-            message_pending_flag = 0;
-          }
-        });
-      }
-
       function sendMessage(id, msg) {
         message_pending_flag = 1;
         $.ajax({
@@ -1643,41 +1634,48 @@
         });
       }
 
+      function sendMessage_ticked(id, msg) {
+        message_pending_flag = 1;
+        $.ajax({
+          url: "http://192.168.2.177?device="+id+"&command="+msg,
+          datatype: 'json',
+          type: 'GET',
+          timeout: 1000,
+          complete: function (data) {
+            message_pending_flag = 0;
+            tick_event();
+          }
+        });
+      }
+
       function updateTime() {
         val = $("#newTime").val();
-        sendMessage(4,'*TIME='+val);
+        queue_command(4,'*TIME='+val);
       }
 
       function syncTime() {
         val = $("#remoteTime").val();
-        sendMessage(4,'*TIME='+val);
+        queue_command(4,'*TIME='+val);
       }
 
       function updateMessage() {
         val = $("#newMessage").val();
-        sendMessage(5,'*MSG='+val);
+        queue_command(5,'*MSG='+val);
       }
 
       function updateMessagePhone() {
         val = $("#newMessagePhone").val();
-        sendMessage(8,'*MSG='+val);
+        queue_command(8,'*MSG='+val);
       }
 
       function updateHintCount() {
         val = parseInt($("#newHintCount").val());
         if (val >= 0 && val < 999) {
-          sendMessage(10,'*HINT_COUNT=' + val)
+          queue_command(10,'*HINT_COUNT=' + val)
         }
         else alert("Error interpreting hint count");        
       }
 
-      function updateLatchDelay() {
-        val = parseInt($("#newLatchDelay").val());
-        if (val >= 0 && val < 9999) {
-          sendMessage(3, "*LATCH_MS=" + val) ;
-        }
-        else alert("Error interpreting new delay");        
-      }
 
       function setCombo() {
         var combo = 0;
@@ -1693,7 +1691,7 @@
         if ($('#10')[0].checked) combo += 512;
         if ($('#11')[0].checked) combo += 1024;
         if ($('#12')[0].checked) combo += 2048;
-        sendMessage(9,'*COMBO='+combo)
+        queue_command(9,'*COMBO='+combo)
       }
 
       function updateAlarmCombo() {
@@ -1702,13 +1700,13 @@
           if (alarm_wire_combos[i] == $("#newAlarmCombo").val()) combo = i;
         }
         if (combo == -1) alert("Error interpreting defuse order");
-        sendMessage(11,"*COMBO="+combo);
+        queue_command(11,"*COMBO="+combo);
       }
 
       function updateAlarmDuration() {
         var newTime = parseInt($("#newAlarmDuration").val());
         if (newTime !== NaN) {
-          if (newTime < 127 && newTime >= 0) sendMessage(11,"*SIREN_T="+newTime);
+          if (newTime < 127 && newTime >= 0) queue_command(11,"*SIREN_T="+newTime);
           else alert("Specified time may be too extreme")
         }
         else alert("Error interpreting new alarm duration");
@@ -1717,7 +1715,7 @@
       function updateAlarmDefuseDuration() {
         var newFactor = parseInt($("#newAlarmDefuseDuration").val());
         if (newFactor !== NaN) {
-          if (newFactor < 1015 && newFactor > 0) sendMessage(11,"*TFACTOR="+newFactor);
+          if (newFactor < 1015 && newFactor > 0) queue_command(11,"*TFACTOR="+newFactor);
           else alert("Specified factor is too extreme")
         }
         else alert("Error interpreting new alarm defuse duration");
@@ -1733,9 +1731,79 @@
         actual_settings["Penalty Alarm Trigger"] = alarmTriggerCost;
       }
 
+      function set_led_progress(beep) {
+        if (beep) {
+          val = parseInt($("#ledProgress_beep").val());
+          if (val !== NaN) {
+            if (val >= 0 && val <= 145) queue_command(3, "*AUDIO_PROG=" + val) ;
+            else alert("Progress must be a number between 0 and 145");
+          }
+          else alert("Error interpreting new progress");
+        }
+        else {
+          val = parseInt($("#ledProgress_silent").val());
+          if (val !== NaN) {
+            if (val >= 0 && val < 145) queue_command(3, "*PROG=" + val) ;
+            else alert("Progress must be a number between 0 and 145");
+          }
+          else alert("Error interpreting new progress");
+        }
+
+      }
+
+      function set_led_brightness() {
+        var brightness = parseInt($("#led_brightness").val())
+        if (brightness !== NaN) {
+          if (brightness >= 0 && brightness <= 255) queue_command(3, "*BRIGHT=" + brightness);
+          else alert("Brightness out of range. Must be between 0 and 255");
+        }
+        else alert("Error interpreting brightness");
+      }
+
+      function set_led_transitions() {
+        var value = parseInt($("#led_transitions").val())
+        if (value !== NaN) {
+          if (value >= 0 && value <= 255) queue_command(3, "*TRANS_BLINKS=" + value);
+          else alert("The number of transition blinks must be between 0 and 255");
+        }
+        else alert("Error interpreting the number of transition blinks (must be a number between 0 and 255)");
+      }
+
+      function set_latch_delay() {
+        val = parseInt($("#latch_delay").val());
+        if (val !== NaN) {
+          if (val >= 0 && val < 9999) queue_command(3, "*LATCH_MS=" + val) ;
+          else alert("Delay must be a number between 0 and 9999");
+        }
+        else alert("Error interpreting new delay");
+      }
+
+      function set_latch_count() {
+        val = parseInt($("#latch_count").val());
+        if (val !== NaN) {
+          if (val >= 0 && val < 9999) {
+            latch_count = val;
+            actual_settings["Latch Open Close Count"] = latch_count;
+          }
+          else alert("Count must be a number between 0 and 9999");
+        }
+        else alert("Error interpreting new count");
+      }
+
+      function set_latch_count_delay() {
+        val = parseInt($("#latch_count_delay").val());
+        if (val !== NaN) {
+          if (val >= 0 && val < 9999) {
+            latch_count_delay = val;
+            actual_settings["Latch Open Close Count Delay"] = latch_count_delay;
+          }
+          else alert("Delay must be a number between 0 and 9999");
+        }
+        else alert("Error interpreting new delay");
+      }
+
       function resetRoom() {
         $.getJSON("http://192.168.2.177?device=0&command=*RST");
-        updateMessagePhone();
       }
     </script>
   </body>
