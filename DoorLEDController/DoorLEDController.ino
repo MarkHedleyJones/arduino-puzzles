@@ -9,8 +9,8 @@
 
 #define PIN_SPK_1 8
 #define PIN_SPK_2 9
-#define PIN_LATCH 11
-#define PIN_LIGHTS 12
+#define PIN_LATCH 12
+#define PIN_LIGHTS 11
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(290, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -26,12 +26,12 @@ int leds_int = 0;
 char make_pattern = 0;
 char transition = 1;
 int leds_set_prev = -1;
-int brightness;
 int transition_blinks = 3;
-int trigger_latch = 0;
-int state_lights = 1;
 int latch_ms = 1000;
 int sounds_enabled = 1;
+uint8_t trigger_latch = 0;
+int state_light;
+int brightness;
 
 void transmitComms() {
   int offset = wire_count * I2C_LEN;
@@ -86,7 +86,7 @@ void load_status() {
   strcat(wire_buffer, tmp);
   
   strcat(wire_buffer, ",LIGHTS=");
-  sprintf(tmp, "%d", state_lights);
+  sprintf(tmp, "%d", state_light);
   strcat(wire_buffer, tmp);
   
   strcat(wire_buffer, ",LATCH_MS=");
@@ -103,7 +103,6 @@ void load_status() {
 
 void receiveComms(int howMany) {
   String message;
-  digitalWrite(13,1);
   int i;
   for (i=0; i<BUF_LEN; i++) wire_buffer[i] = '\0';
   i = 0;
@@ -139,23 +138,23 @@ void receiveComms(int howMany) {
     transition_blinks = message.substring(14).toInt();
     load_status();
   }
-  else if (strcmp(wire_buffer, "*TRIG=") != -1) {
+  else if (message.indexOf("*TRIG") != -1) {
     trigger_latch = 1;
     load_status();
   }
-  else if (strcmp(wire_buffer, "*LATCH_MS=") != -1) {
+  else if (message.indexOf("*LATCH_MS=") != -1) {
     latch_ms = message.substring(10).toInt();
     load_status();
   }
-  else if (strcmp(wire_buffer, "*LIGHTS=") != -1) {
-    state_lights = message.substring(8).toInt();
+  else if (message.indexOf("*LIGHTS=") != -1) {
+    state_light = message.substring(8).toInt();
     load_status();
   }
-  else if (strcmp(wire_buffer, "*SOUNDS=") != -1) {
+  else if (message.indexOf("*SOUNDS=") != -1) {
     sounds_enabled = message.substring(8).toInt();
     load_status();
   }
-  else if (strcmp(wire_buffer, "*BLINK=") != -1) {
+  else if (message.indexOf("*BLINK=") != -1) {
     make_pattern = message.substring(7).toInt();
     load_status();
   }
@@ -185,11 +184,12 @@ void update_leds(int setleds, int bright) {
 
 void blink_leds(int leds_set, int leds_brightness) {
   update_leds(-1, leds_brightness);
-  if (sounds_enabled) play_sound(100,400);
-  else delay(100);
+//  if (sounds_enabled) play_sound(100,400);
+//  else delay(100);
+  delay(100);
   update_leds(leds_set, leds_brightness);
-  if (sounds_enabled) play_sound(100,400);
-  else delay(100);
+//  if (sounds_enabled) play_sound(100,400);
+  delay(100);
 }
 
 
@@ -204,7 +204,11 @@ void setup() {
   pinMode(PIN_SPK_1, OUTPUT);
   pinMode(PIN_SPK_2, OUTPUT);
   pinMode(PIN_LIGHTS, OUTPUT);
+  pinMode(PIN_LATCH, OUTPUT);
   digitalWrite(PIN_LIGHTS, 0);
+  digitalWrite(PIN_LATCH, 0);
+  state_light = 1;
+  Serial.println("Bootup");
 }
 
 void play_sound(unsigned long duration, int period) {
@@ -220,16 +224,6 @@ void play_sound_completed() {
   play_sound(100,600);
   play_sound(100,500);
   play_sound(150,400);
-}
-
-void lights(bool state) {
-  if (state == 0) digitalWrite(PIN_LIGHTS, 1);
-  else digitalWrite(PIN_LIGHTS, 0);
-}
-
-void latch(bool state) {
-  if (state == 0) digitalWrite(PIN_LATCH, 1);
-  else digitalWrite(PIN_LATCH, 0);
 }
 
 void loop() {
@@ -263,16 +257,16 @@ void loop() {
     make_pattern = 0;
   }
 
-  if (trigger_latch > 0) {
-    latch(1);
-    delay(latch_ms);
-    latch(0);
-    delay(latch_ms);
-    trigger_latch--;
-  }
+  if (state_light == 0) digitalWrite(PIN_LIGHTS, 1);
+  else digitalWrite(PIN_LIGHTS, 0);
 
-  lights(state_lights);
+  if (trigger_latch != 0) {
+    digitalWrite(PIN_LATCH, 1);
+    delay(latch_ms);
+    digitalWrite(PIN_LATCH, 0);
+    trigger_latch = 0;
+  }
   
-//  delay(200);
+  delay(100);
 }
 
