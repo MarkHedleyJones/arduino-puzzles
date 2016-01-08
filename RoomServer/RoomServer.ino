@@ -510,7 +510,7 @@ void loop() {
         button_reset();
         clock_paused = 0;
         seconds_since_reset = millis() / 1000;
-        strcpy(i2c_msg, "*SET_PROG=0");
+        strcpy(i2c_msg, "*PROG=0");
         i2c_send(3, i2c_msg);
 
         // Do this because we want it to keep the time even under reset
@@ -564,9 +564,6 @@ void loop() {
     
     case STATE_ENDED:
       if (first_entry) {
-        Serial.println("STATE_ENDED");
-        strcpy(i2c_msg, "*SET_PROG=145");
-        i2c_send(3, i2c_msg);
         clock_paused = 1;
         button_reset();
         led_state = 1;
@@ -583,23 +580,30 @@ void loop() {
 
     case STATE_RESET:
       if (first_entry) {
-        Serial.println("STATE_RESET");
         strcpy(i2c_msg, "*RST");
         i2c_send(2, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(3, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(5, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(6, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(7, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(8, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(9, i2c_msg);
+        delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(11, i2c_msg);
+        delay(1);
       }
 
       hint_count = 0;

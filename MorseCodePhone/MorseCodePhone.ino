@@ -145,7 +145,6 @@ void receiveComms(int howMany) {
     play_count = 0;
     ringer_fault = 0;
     strcpy(morse_message, default_morse_message);
-//    strcpy(morse_message, "SOS");
     load_status();
   }
   else if (wire_buffer[0] == '*' &&
