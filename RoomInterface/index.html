@@ -4,16 +4,16 @@
     <script type="text/javascript">
       var default_settings = {
         "Morse Code Phone Message": "KEY53",
-        "Penalty Hint": 3,
+        "Penalty Hint": 0,
         "Penalty Alarm Trigger": 5,
         "Alarm Defuse Order": "3421",
         "Alarm Time To Defuse Factor": 12,
         "Alarm Siren Duration": 15,
         "Telephone Exhange Combination": 1044,
         "Morse Code Interpreter Message": "CODEBLUE",
-        "Latch Open Close Delay": 800,
+        "Latch Open Close Delay": 1000,
         "Latch Open Close Count": 2,
-        "Latch Open Close Count Delay": 1000,
+        "Latch Open Close Count Delay": 800,
         "Door LED Brightness": 100,
         "Door LED Transision Blinks": 4
       }
@@ -136,10 +136,10 @@
           <th style="text-align: right">Wooden Box (wall switch):</th>
           <td><span id="stat_Wall-Switch-1"></span></td>
         </tr>
-        <tr>
+<!--         <tr>
           <th style="text-align: right">Coloured Wires (to enable morse tapper):</th>
           <td><span id="stat_Coloured-Wires-Connected"></span></td>
-        </tr>
+        </tr> -->
         <tr>
           <th style="text-align: right">Plastic Box (released by transmitting morse code):</th>
           <td><span id="stat_Wall-Switch-2"></span></td>
@@ -158,6 +158,10 @@
         <tr>
           <th style="text-align: right">Locker 4 (055):</th>
           <td><span id="stat_Locker-4-Opened"></span></td>
+        </tr>
+        <tr>
+          <th style="text-align: right">Coloured Wires:</th>
+          <td><span id="stat_Coloured-Wires"></span></td>
         </tr>
         <tr>
           <th style="text-align: right">Alarm:</th>
@@ -422,6 +426,18 @@
 
 
       <!-- ****************************************************************** -->
+      <!--********************** Coloured Wires Puzzle  **********************-->
+      <!-- ****************************************************************** -->
+
+      <div class="grid-item" id="Coloured-Wires">
+        <h3>Coloured Wires</h3>
+        <div class="stats"></div>
+        <hr>
+        <button onclick="queue_command(12,'*RST')">Reset</button>
+      </div>
+
+
+      <!-- ****************************************************************** -->
       <!-- *********************** LED Door Controller ********************** -->
       <!-- ****************************************************************** -->
 
@@ -608,12 +624,12 @@
         "Telephone Exchange Completed": 0,
         "Wall Switch 1": 0,
         "Wall Switch 2": 0,
-        "Coloured Wires Connected": 0,
         "Locker 1 Opened": 0,
         "Locker 2 Opened": 0,
         "Locker 3 Opened": 0,
         "Locker 4 Opened": 0,
-        "Alarm finished": 0
+        "Alarm finished": 0,
+        "Coloured Wires Connected": 0
       }
 
       var names = {
@@ -627,7 +643,8 @@
         8: "Morse Code Phone",
         9: "Telephone Exchange",
         10: "Hint Counter",
-        11: "Alarm"
+        11: "Alarm",
+        12: "Coloured Wires"
       }
 
       puzzle_data = {}
@@ -1142,11 +1159,9 @@
             case "PRESSED":
               if (d[1] == 1) {
                 table += "<tr><th>Pressed:</th><td style='color: red'>Yes</td></tr>";
-                triggers["Coloured Wires Connected"] = 1;
               }
               else {
                 table += "<tr><th>Pressed:</th><td style='color: green'>No</td></tr>";
-                triggers["Coloured Wires Connected"] = 0;
               }
               break;
 
@@ -1409,6 +1424,58 @@
 
         html = "";
         table = "<table>";
+        $.each(puzzle_data["Coloured Wires"], function (key, val) {
+          d = val.split("=");
+          switch (d[0]) {
+            case "WIRES":
+              
+              table += "<tr>";
+              table += "<th>Yellow:</th>";
+              if (d[1] & 1) table += "<td style=\"color: red\">Connected</td>";
+              else table += "<td style=\"color: green;\">Disconnected</td>";
+              table += "</tr>";
+
+              table += "<tr>";
+              table += "<th>Green:</th>";
+              if (d[1] & 2) table += "<td style=\"color: red\">Connected</td>";
+              else table += "<td style=\"color: green;\">Disconnected</td>";
+              table += "</tr>";
+
+              table += "<tr>";
+              table += "<th>Black:</th>";
+              if (d[1] & 4) table += "<td style=\"color: red\">Connected</td>";
+              else table += "<td style=\"color: green;\">Disconnected</td>";
+              table += "</tr>";
+
+              table += "<tr>";
+              table += "<th>Red:</th>";
+              if (d[1] & 8) table += "<td style=\"color: red\">Connected</td>";
+              else table += "<td style=\"color: green;\">Disconnected</td>";
+              table += "</tr>";
+            break;
+
+            case "OUTPUT":
+              table += "<tr>";
+              table += "<th>State:</th>";
+              if (d[1] == 1) {
+                table += "<td>Morse enabled</td>";
+                triggers["Coloured Wires Connected"] = 1;
+              }
+              else {
+                table += "<td>Morse disabled</td>";
+                triggers["Coloured Wires Connected"] = 0;
+              }
+              table += "</tr>";
+              
+
+          }
+          // html += d[0] + d[1] + "<br>";
+        });
+        table += "</table>";
+        $("#Coloured-Wires .stats").html(table+html);
+
+        html = "";
+        table = "<table>";
         $.each(puzzle_data["Alarm"], function (key, val) {
           d = val.split("=");
           switch (d[0]) {
@@ -1520,7 +1587,6 @@
         table += "</table>";
         $("#Alarm .stats").html(table+html);
 
-
         if (triggers["Secret Cupboard"]) {
           $("#stat_Secret-Cupboard").html("Found");
           $("#stat_Secret-Cupboard").css("color", "red");
@@ -1557,14 +1623,14 @@
           $("#stat_Wall-Switch-2").css("color", "green");
         }
 
-        if (triggers["Coloured Wires Connected"]) {
-          $("#stat_Coloured-Wires-Connected").html("Enabled");
-          $("#stat_Coloured-Wires-Connected").css("color", "red");
-        }
-        else {
-          $("#stat_Coloured-Wires-Connected").html("Not pressed");
-          $("#stat_Coloured-Wires-Connected").css("color", "green");
-        }
+        // if (triggers["Coloured Wires Connected"]) {
+        //   $("#stat_Coloured-Wires-Connected").html("Enabled");
+        //   $("#stat_Coloured-Wires-Connected").css("color", "red");
+        // }
+        // else {
+        //   $("#stat_Coloured-Wires-Connected").html("Not pressed");
+        //   $("#stat_Coloured-Wires-Connected").css("color", "green");
+        // }
 
         if (triggers["Locker 1 Opened"]) {
           $("#stat_Locker-1-Opened").html("Open");
@@ -1614,6 +1680,16 @@
         else {
           $("#stat_Alarm-Deactivated").html("Ready");
           $("#stat_Alarm-Deactivated").css("color", "green");
+        }
+
+
+        if (triggers["Coloured Wires Connected"]) {
+          $("#stat_Coloured-Wires").html("Completed");
+          $("#stat_Coloured-Wires").css("color", "red");
+        }
+        else {
+          $("#stat_Coloured-Wires").html("Ready");
+          $("#stat_Coloured-Wires").css("color", "green");
         }
 
         $("#codes").html("<span>Phone message: <b>" + messages["phone"] + "</b></span>; <span>Morse interpreter message: <b>" + messages["interpreter"] + "</b></span>; <span>Telex combination: <b>" + messages["telex"] + "</b></span>");
