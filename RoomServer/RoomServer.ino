@@ -6,6 +6,8 @@
 #define PIN_BUTTON 7
 #define PIN_MORSE 5
 
+#define NUM_PUZZLES 12
+
 #define BUFLEN 96
 #define STATE_PRE_RUN         0
 #define STATE_RUNNING         1
@@ -324,7 +326,7 @@ void handle_http_client(EthernetClient client) {
           if (strcmp(wire_buffer,"*RST") == 0) reset = 1;
           client.println("{");
 
-          for (int i=1; i<12; i++) {
+          for (int i=1; i<(NUM_PUZZLES + 1); i++) {
 
             if (i == 1) {
               if (reset) reset_server_state();
@@ -367,7 +369,7 @@ void handle_http_client(EthernetClient client) {
             client.print("\":\"");
             client.print(i2c_msg);
             client.print("\"");
-            if (i < 11) client.print(",\n");
+            if (i < NUM_PUZZLES) client.print(",\n");
             else client.print("\n");
             if (i % 2 == 0) system_tasks();
           }
@@ -603,6 +605,9 @@ void loop() {
         delay(1);
         strcpy(i2c_msg, "*RST");
         i2c_send(11, i2c_msg);
+        delay(1);
+        strcpy(i2c_msg, "*RST");
+        i2c_send(12, i2c_msg);
         delay(1);
       }
 
