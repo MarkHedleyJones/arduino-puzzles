@@ -24,12 +24,12 @@ int leds_set = -1;
 int leds_brightness = 64;
 int leds_int = 0;
 char make_pattern = 0;
-char transition = 1;
+//char transition = 1;
 int leds_set_prev = -1;
 int transition_blinks = 3;
 int latch_ms = 1000;
-int sounds_enabled = 1;
 uint8_t trigger_latch = 0;
+uint8_t audio_transition = 0;
 int state_light;
 int brightness;
 
@@ -71,17 +71,17 @@ void load_status() {
   
   leds_grn = 145-leds_set;
   leds_red = leds_set;
-  strcat(wire_buffer, ",RED=");
-  sprintf(tmp, "%d", leds_grn);
-  strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",GRN=");
+  strcat(wire_buffer, ",PROG=");
   sprintf(tmp, "%d", leds_red);
   strcat(wire_buffer, tmp);
-  strcat(wire_buffer, ",TRANS=");
-  sprintf(tmp, "%d", transition);
-  strcat(wire_buffer, tmp);
+//  strcat(wire_buffer, ",GRN=");
+//  sprintf(tmp, "%d", leds_red);
+//  strcat(wire_buffer, tmp);
+//  strcat(wire_buffer, ",=");
+//  sprintf(tmp, "%d", transition);
+//  strcat(wire_buffer, tmp);
   
-  strcat(wire_buffer, ",TRANS_BLINKS=");
+  strcat(wire_buffer, ",BLINKS=");
   sprintf(tmp, "%d", transition_blinks);
   strcat(wire_buffer, tmp);
   
@@ -93,10 +93,6 @@ void load_status() {
   sprintf(tmp, "%d", latch_ms);
   strcat(wire_buffer, tmp);
 
-  strcat(wire_buffer, ",SOUNDS=");
-  sprintf(tmp, "%d", sounds_enabled);
-  strcat(wire_buffer, tmp);
-  
   // TERMINATE THE WIREBUFFER
   strcat(wire_buffer, 0);
 }
@@ -118,10 +114,18 @@ void receiveComms(int howMany) {
     leds_set = -1;
     load_status();
   }
-  else if (message.indexOf("*SET_PROG=") != -1) {
-    leds_set = message.substring(10).toInt();
+  else if (message.indexOf("*PROG=") != -1) {
+    leds_set = message.substring(6).toInt();
     if (leds_set < 0) leds_set = -1;
     else if (leds_set > 145) leds_set = 145;
+    audio_transition = 0;
+    load_status();
+  }
+  else if (message.indexOf("*AUDIO_PROG=") != -1) {
+    leds_set = message.substring(12).toInt();
+    if (leds_set < 0) leds_set = -1;
+    else if (leds_set > 145) leds_set = 145;
+    audio_transition = 1;
     load_status();
   }
   else if (message.indexOf("*BRIGHT=") != -1) {
@@ -130,10 +134,10 @@ void receiveComms(int howMany) {
     if (leds_brightness > 255) leds_brightness = 255;
     load_status();
   }
-  else if (message.indexOf("*TRANS=") != -1) {
-    transition = message.substring(7).toInt();
-    load_status();
-  }
+//  else if (message.indexOf("*TRANS=") != -1) {
+//    transition = message.substring(7).toInt();
+//    load_status();
+//  }
   else if (message.indexOf("*TRANS_BLINKS=") != -1) {
     transition_blinks = message.substring(14).toInt();
     load_status();
@@ -148,10 +152,6 @@ void receiveComms(int howMany) {
   }
   else if (message.indexOf("*LIGHTS=") != -1) {
     state_light = message.substring(8).toInt();
-    load_status();
-  }
-  else if (message.indexOf("*SOUNDS=") != -1) {
-    sounds_enabled = message.substring(8).toInt();
     load_status();
   }
   else if (message.indexOf("*BLINK=") != -1) {
@@ -184,11 +184,8 @@ void update_leds(int setleds, int bright) {
 
 void blink_leds(int leds_set, int leds_brightness) {
   update_leds(-1, leds_brightness);
-//  if (sounds_enabled) play_sound(100,400);
-//  else delay(100);
   delay(100);
   update_leds(leds_set, leds_brightness);
-//  if (sounds_enabled) play_sound(100,400);
   delay(100);
 }
 
@@ -221,22 +218,28 @@ void play_sound(unsigned long duration, int period) {
 }
 
 void play_sound_completed() {
-  play_sound(100,600);
-  play_sound(100,500);
+  noInterrupts();
+//  play_sound(100,600);
+  play_sound(100,800);
   play_sound(150,400);
+  interrupts();
 }
 
 void loop() {
   if (leds_set != leds_set_prev) {
-    if (sounds_enabled) play_sound_completed();
-    if (transition) {
+    if (audio_transition) {
+      play_sound_completed();
+      audio_transition = 0;
+    }
+    delay(1000);
+    if (transition_blinks) {
       brightness = leds_brightness;
       while (brightness > 0) {
         update_leds(leds_set_prev, brightness);
         brightness -= 3;
       }
       brightness = 0;
-      for (int i=0; i<4; i++) blink_leds(leds_set_prev, leds_brightness);
+      for (int i=0; i<transition_blinks; i++) blink_leds(leds_set_prev, leds_brightness);
       while (brightness < leds_brightness) {
         update_leds(leds_set, brightness);
         brightness += 3;
