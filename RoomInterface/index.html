@@ -115,7 +115,7 @@
       </div>
       <hr>
       <div style="text-align: center; font-weight: 700; margin: 0 0 10px 0; font-size: 2em">
-      Time: <span id="display_time" style="color: red">00:00</span> + Penalties: <span id="display_penalties">0</span> = Score: <span id="display_score"></span>
+      Time: <span id="display_time" style="color: red">00:00</span>&nbsp;&nbsp;&nbsp;Hints: <span id="display_hints">0</span>
       </div>
       <a style="float:left; margin: 0 0 20px 5px; width: 48.5%" href="http://admin:@192.168.2.51/video.cgi">
         <img width="100%" height="auto" src="http://admin:@192.168.2.51/video.cgi" alt="Camera 1 is unavailable" class="shrinkToFit" style="width: 100%; height: auto; display: block">
@@ -1113,12 +1113,12 @@
             case "TIME":
               table += "<tr><th>Time:</th><td>"+d[1]+"</td></tr>";
               mins = parseInt(d[1].split(":")[0]);
-              penalties = (hints_given * hintGivenCost) + (alarm_triggered * alarmTriggerCost);
+              // penalties = (hints_given * hintGivenCost) + (alarm_triggered * alarmTriggerCost);
               secs = parseInt(d[1].split(":")[1]);
               $("#display_time").html(d[1]);
-              $("#display_penalties").html(penalties);
-              if (secs < 10) $("#display_score").html((mins + penalties) + ":0" + secs);
-              else $("#display_score").html((mins + penalties) + ":" + secs);
+              $("#display_hints").html(hints_given);
+              // if (secs < 10) $("#display_score").html((mins + penalties) + ":0" + secs);
+              // else $("#display_score").html((mins + penalties) + ":" + secs);
               break;
 
             case "PAUSED":
