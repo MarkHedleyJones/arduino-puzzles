@@ -117,10 +117,10 @@
       <div style="text-align: center; font-weight: 700; margin: 0 0 10px 0; font-size: 2em">
       Time: <span id="display_time" style="color: red">00:00</span>&nbsp;&nbsp;&nbsp;Hints: <span id="display_hints">0</span>
       </div>
-      <a style="float:left; margin: 0 0 20px 5px; width: 48.5%" href="http://admin:@192.168.2.51/video.cgi">
+      <a id="camera_left" style="float:left; margin: 0 0 20px 5px; width: 48.5%" href="http://admin:@192.168.2.51/video.cgi">
         <img width="100%" height="auto" src="http://admin:@192.168.2.51/video.cgi" alt="Camera 1 is unavailable" class="shrinkToFit" style="width: 100%; height: auto; display: block">
       </a>
-      <a style="float:right; margin: 0 12px 20px 0; width: 48.5%" href="http://admin:@192.168.2.52/video.cgi">
+      <a id="camera_right" style="float:right; margin: 0 12px 20px 0; width: 48.5%" href="http://admin:@192.168.2.52/video.cgi">
         <img width="100%" height="auto" src="http://admin:@192.168.2.52/video.cgi" alt="Camera 2 is unavailable" class="shrinkToFit" style="width: 100%; height: auto; display: block">
       </a>
       <table style="margin: 20px auto; clear: both;">
@@ -764,8 +764,19 @@
       }
 
       function getStats() {
-        console.log("getStats");
         counter++;
+        if (counter % 2 == 0 && $("#camera_left").height() < 50) {
+          $("#camera_left").html("<img width=\"100%\" height=\"auto\" src=\"http://admin:@192.168.2.51/video.cgi\" alt=\"Camera 1 will appear when ready\" class=\"shrinkToFit\" style=\"width: 100%; height: auto; display: block\">");
+        }
+        if (counter % 2 == 1 && $("#camera_left").height() < 50) {
+          $("#camera_left").html("<img width=\"100%\" height=\"auto\" src=\"http://admin:@192.168.2.51/video.cgi\" alt=\"Retrying connection...\" class=\"shrinkToFit\" style=\"width: 100%; height: auto; display: block\">");
+        }
+        if (counter % 2 == 0 && $("#camera_right").height() < 50) {
+          $("#camera_right").html("<img width=\"100%\" height=\"auto\" src=\"http://admin:@192.168.2.52/video.cgi\" alt=\"Camera 2 will appear when ready\" class=\"shrinkToFit\" style=\"width: 100%; height: auto; display: block\">");
+        }
+        if (counter % 2 == 1 && $("#camera_right").height() < 50) {
+          $("#camera_right").html("<img width=\"100%\" height=\"auto\" src=\"http://admin:@192.168.2.52/video.cgi\" alt=\"Retrying connection...\" class=\"shrinkToFit\" style=\"width: 100%; height: auto; display: block\">");
+        }
         $.ajax({
           url: "http://192.168.2.177?device="+0+"&command=*STAT?",
           datatype: 'json',
