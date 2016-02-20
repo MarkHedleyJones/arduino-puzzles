@@ -764,6 +764,7 @@
       }
 
       function getStats() {
+        console.log("getStats");
         counter++;
         $.ajax({
           url: "http://192.168.2.177?device="+0+"&command=*STAT?",
@@ -780,9 +781,8 @@
               var now = new Date();
               $("#lastUpdate").html("<b>"+Math.round((now.getTime() - lastUpdate.getTime())/1000)+" seconds ago</b>");
             }
-            setTimeout(getStats, 1000);
           },
-          timeout: 10000,
+          timeout: 1000,
           complete: function (jqXHR, status) {
             if (status == "parsererror") {
               $("#serverState").html("CAN&rsquo;T INTERPRET SERVERS RESPONSE!");
