@@ -12,6 +12,11 @@ The communication bus between the main controller and each puzzle is I2C.
 
 ## Puzzles
 
+The puzzle schematics are intepreted as follows:
+The diagram at the top shows a simplified wiring diagram external to the module (how it connects to power and devices)
+The text at the bottom shows the comunication interface (message definitions).
+For example, sending "*IDN" over the I2C bus to the LockerSensors puzzle will result in the puzzle responding with "Locker Door Sensors". If the message "*STAT" is sent to this puzzle, it will respond with a message containing the state of the lockers.
+
 ### ClosedCircuitPhones
 This is the phone that is used to call the front desk to ask for clues etc.
 There is no electronics, the phones are just wired as shown.
