@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="141.43323mm"
+   height="80.750839mm"
+   viewBox="0 0 501.14134 286.12502"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Puzzle_Geiger.svg"
+   inkscape:export-filename="/home/mark/Dropbox/Business/LockedRoom/Electronics/Puzzle_Geiger.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="-148.60837"
+     inkscape:cy="-105.84802"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="726"
+     inkscape:window-x="1280"
+     inkscape:window-y="677"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4136"
+       originx="-69.499509"
+       originy="-609.37497" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-69.499512,-156.86219)">
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4140"
+       width="30"
+       height="30"
+       x="105"
+       y="177.3622" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.195312"
+       y="236.82692"
+       id="text4142"><tspan
+         sodipodi:role="line"
+         id="tspan4144"
+         x="95.195312"
+         y="236.82692">SDA</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="96.055908"
+       y="251.82692"
+       id="text4142-6"><tspan
+         sodipodi:role="line"
+         id="tspan4144-1"
+         x="96.055908"
+         y="251.82692">SDL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.195312"
+       y="281.76285"
+       id="text4142-0"><tspan
+         sodipodi:role="line"
+         id="tspan4144-13"
+         x="95.195312"
+         y="281.76285">5V</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.494385"
+       y="296.82693"
+       id="text4142-0-5"><tspan
+         sodipodi:role="line"
+         id="tspan4144-13-9"
+         x="95.494385"
+         y="296.82693">GND</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.195312"
+       y="266.88797"
+       id="text4142-0-5-6"><tspan
+         sodipodi:role="line"
+         id="tspan4144-13-9-1"
+         x="95.195312"
+         y="266.88797">12V</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,232.3622 10,0 0,-25"
+       id="path4226"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,247.3622 15,0 0,-40"
+       id="path4228"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,277.3622 25,0 0,-70"
+       id="path4232"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,292.3622 30,0 0,-85"
+       id="path4234"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#1a1a1a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="69.499512"
+       y="330.60928"
+       id="text4267"><tspan
+         sodipodi:role="line"
+         id="tspan4269"
+         x="69.499512"
+         y="330.60928">*IDN = GeigerCounter</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="346.23428"
+         id="tspan4273">*STAT = TIME={HH:MM:SS},       - Time sice last reset</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="361.85928"
+         id="tspan4443">        OPENED={BOOL[0-1]},    - Sensor switch has opened</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="377.48428"
+         id="tspan6541">        OPEN={BOOL[0-1]},      - Sensor switch is open</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="393.10928"
+         id="tspan4279">        RX_COUNT={INT},        - # of messages received from geiger</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="408.73428"
+         id="tspan6543">        RX_SIGNAL={BOOL[0-1]}, - Messages are being received</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="424.35928"
+         id="tspan4285">        BATTVOLT={FLOAT}       - Battery voltage of geiger remote</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="439.98428"
+         id="tspan7416">*RST                           - Reset the puzzle</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="455.60928"
+         id="tspan4275" /><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="471.23428"
+         id="tspan4271" /></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 109.81869,197.43073 20.18131,0 0,0.93146 -20,0 z"
+       id="path4409"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 126.87764,197.16557 0,-11.80338"
+       id="path4411"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4413"
+       width="65"
+       height="30.000011"
+       x="165"
+       y="177.36218" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 180,157.36219 0,5 40,0 0,15 5,0 0,-20 z"
+       id="path4415"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 192.05895,199.43074 -20.18131,0 0,0.93146 20,0 z"
+       id="path4409-5"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 175,199.16558 0,-11.80339"
+       id="path4411-1"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

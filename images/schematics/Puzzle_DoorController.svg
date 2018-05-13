@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="164.71863mm"
+   height="108.79667mm"
+   viewBox="0 0 583.64868 385.50002"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Puzzle_DoorController.svg"
+   inkscape:export-filename="/home/mark/Dropbox/Business/LockedRoom/Electronics/Puzzle_DoorController.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="217.92583"
+     inkscape:cy="90.595916"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:window-width="1280"
+     inkscape:window-height="1376"
+     inkscape:window-x="1280"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4136"
+       originx="-69.499511"
+       originy="-499.99998" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-69.499512,-166.8622)">
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4140"
+       width="30"
+       height="30"
+       x="105"
+       y="177.3622" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.195312"
+       y="236.82692"
+       id="text4142"><tspan
+         sodipodi:role="line"
+         id="tspan4144"
+         x="95.195312"
+         y="236.82692">SDA</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="96.055908"
+       y="251.82692"
+       id="text4142-6"><tspan
+         sodipodi:role="line"
+         id="tspan4144-1"
+         x="96.055908"
+         y="251.82692">SDL</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.195312"
+       y="281.76285"
+       id="text4142-0"><tspan
+         sodipodi:role="line"
+         id="tspan4144-13"
+         x="95.195312"
+         y="281.76285">5V</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="95.494385"
+       y="296.82693"
+       id="text4142-0-5"><tspan
+         sodipodi:role="line"
+         id="tspan4144-13-9"
+         x="95.494385"
+         y="296.82693">GND</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,232.3622 10,0 0,-25"
+       id="path4226"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,247.3622 15,0 0,-40"
+       id="path4228"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,277.3622 25,0 0,-70"
+       id="path4232"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 100,292.3622 30,0 0,-85"
+       id="path4234"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:start;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#1a1a1a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="69.499512"
+       y="330.60928"
+       id="text4267"><tspan
+         sodipodi:role="line"
+         id="tspan4269"
+         x="69.499512"
+         y="330.60928">*IDN = Door LED Controller          - Puzzle Identifier</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="346.23428"
+         id="tspan4273">*STAT = TIME={HH:MM:SS},            - Time since last reset</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="361.85928"
+         id="tspan4443">        LEDS_RED={INT},             - Number of LEDS glowing red</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="377.48428"
+         id="tspan4285">        LEDS_GRN={INT},             - Number of LEDS glowing green</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="393.10928"
+         id="tspan4820">        TRANSITION={BOOL},          - Are transitions enabled?</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="408.73428"
+         id="tspan4818">        TRANSITION_BLINKS={INT},    - Number of blinks during a transition</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="424.35928"
+         id="tspan5643">*SET_PROG={INT 0-145 || -1}         - Set number of green LEDs</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="439.98428"
+         id="tspan4169">          0-145 = LEDS TO TURN GRN</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="455.60928"
+         id="tspan4167">          -1 = ALL OFF</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="471.23428"
+         id="tspan4165">*SET_BRIG={INT 0-255}               - Set brightness of all LEDs</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="486.85928"
+         id="tspan4171">          0-255 = BRIGHTNESS</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="502.48428"
+         id="tspan4830">*SET_TRANS={BOOL}                   - Enable or disable change transitions</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="518.10925"
+         id="tspan4832">*SET_TRANS_BLINKS={INT}             - Set number of blinks during a transition</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="533.73425"
+         id="tspan4834">*BLINK={INT}                        - Blink LEDs specified number of times</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="549.35925"
+         id="tspan5645">*RST                                - Reset the controller to start-up state</tspan><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="564.98425"
+         id="tspan4275" /><tspan
+         sodipodi:role="line"
+         x="69.499512"
+         y="580.60925"
+         id="tspan4271" /></text>
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1, 4;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 180,302.3622 0,-135 85,0 0,135"
+       id="rect5590"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 135,202.36219 45,1e-5"
+       id="path5597"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 135,182.36219 45,1e-5"
+       id="path5599"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="168.49438"
+       y="200.82692"
+       id="text4142-7"><tspan
+         sodipodi:role="line"
+         id="tspan4144-6"
+         x="168.49438"
+         y="200.82692">GND</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;font-family:'Droid Sans Mono';-inkscape-font-specification:'Droid Sans Mono';text-align:end;writing-mode:lr-tb;text-anchor:end;opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       x="171.6759"
+       y="180.84218"
+       id="text4142-7-5"><tspan
+         sodipodi:role="line"
+         id="tspan4144-6-1"
+         x="171.6759"
+         y="180.84218">DATA</tspan></text>
+  </g>
+</svg>
